@@ -4,6 +4,8 @@
 
 package com.mycompany.oceanicwars;
 
+import Cliente.MenuPrincipal;
+
 /**
  *
  * @author kokoju
@@ -11,6 +13,7 @@ package com.mycompany.oceanicwars;
 public class OceanicWars {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        // Lanzar el menú principal
+        MenuPrincipal.main(args);
     }
 }
