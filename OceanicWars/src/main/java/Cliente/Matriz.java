@@ -6,7 +6,6 @@ package Cliente;
 import Hero.Hero;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
@@ -18,8 +17,8 @@ import javax.swing.JPanel;
 public class Matriz extends JPanel {  // Hereda de JPanel para la creación de componentes visuales
     // Atributos
     // Cantidades (tanto de filas como columnas)
-    private final int cantidadFilas;
-    private final int cantidadColumnas;
+    private int cantidadFilas;
+    private int cantidadColumnas;
     
     // Medidas (tanto de filas como columnas)
     private int sizeAlto;
@@ -90,18 +89,16 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
     }
     
     // Los ataques son ejecutados en las matrices de los jugadores, así que deberían ser programados aquí
-    
-    // ATAQUES QUE PUEDE HACER THUNDERS UNDER THE SEA
     public void thunder_rain(Hero hero) {  // Reciben un héroe para ver sus estadísticas
         for (int i = 0; i < 100 ; i++) {  // For para hacer 100 rayos
             
             // Elección de potencia
-            int golpeRayo = (10 + rand.nextInt(11)) * (1 + hero.getFuerzaAtaque());  // Calcula la potencia del golpe de cada rayo (cada uno hace entre 10 y 20 (porque nextInt va hasta n-1) * fuerza del héroe
+            int potenciaGolpe = (10 + rand.nextInt(11)) * (1 + hero.getFuerzaAtaque());  // Calcula la potencia del golpe de cada rayo (cada uno hace entre 10 y 20 (porque nextInt va hasta n-1) * fuerza del héroe
             
             // Elección de casilla
             Casilla casilla = this.casillasActivas.get(rand.nextInt(casillasActivas.size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
-            casilla.recibirGolpe(golpeRayo);  // Golpea a la casilla
-            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por un rayo de 'Thunder Rain', recibiendo " + golpeRayo + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+            casilla.recibirGolpe(potenciaGolpe);  // Golpea a la casilla
+            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por un rayo, recibiendo " + potenciaGolpe + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
         }
     }
     
@@ -116,103 +113,34 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
             // Elección de casilla
             Casilla casilla = this.casillasActivas.get(rand.nextInt(casillasActivas.size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
             casilla.recibirGolpe(casilla.getVida());  // Recibe el mismo daño de su vida ('instakill')
-            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada como epicentro de una onda de 'Poseidon Thunders', recibiendo " + casilla.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada como epicentro de una onda de Poseidon Thunders, recibiendo " + casilla.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
             
             for (Casilla c : casillasActivas) {  // Revisamos en las casillas activas
                 if (IsCasillaEnRadio(casilla.getX(), casilla.getY(), c.getX(), c.getY(), radioObtenido)) {
                     c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                    c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por una onda expansiva de 'Poseidon Thunders', recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+                    c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por una onda expansiva, recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                 }
             }
         }
     }
     
-    public void eel_attack(Hero hero) {
+    public void eel_attack (Hero hero) {
         // Cantidad de anguilas generadas
-        int cantidadAnguilas = (25 + rand.nextInt(76));  // Se generan entre 25 y 100 anguilas
+        int cantidadAnguilas = (25 + rand.nextInt(76)) * (1 + hero.getFuerzaAtaque());  // Se generan entre 25 y 100 anguilas * fuerza del héroe
         for (int i = 0; i < cantidadAnguilas; i++) {
             // Cantidad de descargas de una anguila
             int cantidadDescargas = 1 + rand.nextInt(10);  // Entre 1 y 10 descargas
        
             // Elección de casilla
             Casilla casilla = this.casillasActivas.get(rand.nextInt(casillasActivas.size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
-            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada por una anguila de 'Eel Attack'");
+            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada por una anguila de Eel Attack");
              
             for (int j = 0; j < cantidadDescargas; j++) {  // For para dar las descargas
-                int golpeDescarga = 10  * (1 + hero.getFuerzaAtaque());  // Se hace daño basado en la fuerza del heroe
+                int golpeDescarga = 10;
                 casilla.recibirGolpe(golpeDescarga);  // Golpea a la casilla
-                casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por una descarga de anguila de 'Eel Attack', recibiendo " + golpeDescarga + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+                casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por una descarga de anguila, recibiendo " + golpeDescarga + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
             }
 
         }
     }
-    
-    // ATAQUES QUE PUEDE HACER FISH TELEPATHY
-    public void cardumen(Hero hero) {
-        // Cantidad de peces generados
-        int cantidadPeces = (100 + rand.nextInt(201));
-        
-        for (int i = 0; i < cantidadPeces; i++) {  // Para cada pez
-            int golpePez = 30 * (1 + hero.getFuerzaAtaque());  // Se hace daño basado en la fuerza del heroe
-     
-            // Elección de casilla
-            Casilla casilla = this.casillasActivas.get(rand.nextInt(casillasActivas.size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
-            casilla.recibirGolpe(golpePez);  // Golpea a la casilla
-            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por un pez de 'Cardumen', recibiendo " + golpePez + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
-        }
-    }
-    
-    public void shark_attack(Hero hero) {
-        // Creación de los puntos para todas las esquinas
-        enum Esquina {
-            SUP_IZQ,
-            SUP_DER,
-            INF_IZQ,
-            INF_DER;
-        }
-        
-        // Para cada esquina, hacemos algo 
-        for (Esquina val : Esquina.values()) {
-            // Elección del radio
-            int radioObtenido =  1 + rand.nextInt(10);  // Radio entre 1 y 10
-            
-            switch(val) {  // Se hace un switch en función del val revisado
-                case SUP_IZQ:
-                    for (Casilla c : casillasActivas) {  // Revisamos en las casillas activas
-                        if (IsCasillaEnRadio(0, 0, c.getX(), c.getY(), radioObtenido)) {
-                            c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón de 'Shark Attack', recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
-                        }
-                    }
-                    break;
-                case SUP_DER:
-                    for (Casilla c : casillasActivas) {  // Revisamos en las casillas activas
-                        if (IsCasillaEnRadio(this.cantidadColumnas - 1, 0, c.getX(), c.getY(), radioObtenido)) {
-                            c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón de 'Shark Attack', recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
-                        }
-                    }
-                    break;
-                case INF_IZQ:
-                    for (Casilla c : casillasActivas) {  // Revisamos en las casillas activas
-                        if (IsCasillaEnRadio(0, this.cantidadFilas - 1, c.getX(), c.getY(), radioObtenido)) {
-                            c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón de 'Shark Attack', recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
-                        }
-                    }
-                    break;
-                case INF_DER:
-                    for (Casilla c : casillasActivas) {  // Revisamos en las casillas activas
-                        if (IsCasillaEnRadio(this.cantidadColumnas - 1, this.cantidadFilas - 1, c.getX(), c.getY(), radioObtenido)) {
-                            c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón de 'Shark Attack', recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
-                        }
-                    }
-                    break;
-            }
-        }
-    }
-    
-    
-    
 }
