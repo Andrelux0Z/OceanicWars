@@ -78,6 +78,8 @@ public void actualizarPnlMatriz() {
 
         txaMessages.setColumns(20);
         txaMessages.setRows(5);
+        txaMessages.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txaMessages.setFocusable(false);
         jScrollPane1.setViewportView(txaMessages);
 
         javax.swing.GroupLayout pnlLuchadoresLayout = new javax.swing.GroupLayout(pnlLuchadores);
@@ -106,6 +108,7 @@ public void actualizarPnlMatriz() {
 
         txaLastMove.setColumns(20);
         txaLastMove.setRows(5);
+        txaLastMove.setFocusable(false);
         jScrollPane2.setViewportView(txaLastMove);
 
         btnSend.setBackground(new java.awt.Color(51, 255, 51));

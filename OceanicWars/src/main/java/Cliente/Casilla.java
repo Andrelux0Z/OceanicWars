@@ -38,7 +38,14 @@ public class Casilla {
     }
     
     // Métodos
-    // TODO
+    public void recibirGolpe(int golpe) {
+        this.vida -= golpe;
+        if (this.vida <= 0) {
+            this.vida = 0;  // No deja la vida en negativos
+            this.estado = false;  // Casilla deja de estar activa
+            this.bitacora.add("La casilla (" + x + ", " + y + ") fue derrotada");  // Mensaje a la bitácora
+        }
+    }
     
     
     // Getters
