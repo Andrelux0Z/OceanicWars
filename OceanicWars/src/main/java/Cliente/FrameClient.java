@@ -37,18 +37,24 @@ public class FrameClient extends javax.swing.JFrame {
         this.setTitle("Cliente de " + name);  // Se pone el nombre introducido como título de la ventana 
         client =  new Client(this, name);  // Creamos un nuevo cliente c
         matriz = new Matriz(20, 30, this);  // Creación de la matriz (20 filas, 30 columnas y la referencia al frame del cliente)
-        pnlMatriz.add(matriz);
         actualizarPnlMatriz();  // Se actualiza el pnl
+        pnlMatriz.add(matriz);
+        
     }
     
     public void writeMessage(String msg){
         txaMessages.append(msg + "\n");
     }
     
-    public void actualizarPnlMatriz() {
-        pnlMatriz.revalidate();  // Reorganiza el panel
-        pnlMatriz.repaint();  // Redibuja la pantalla
-    }
+public void actualizarPnlMatriz() {
+    System.out.println("Actualizando panel matriz...");
+    System.out.println("Matriz visible: " + matriz.isVisible());
+    System.out.println("Matriz tamaño: " + matriz.getWidth() + "x" + matriz.getHeight());
+    System.out.println("Matriz preferred size: " + matriz.getPreferredSize());
+    
+    pnlMatriz.revalidate();
+    pnlMatriz.repaint();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

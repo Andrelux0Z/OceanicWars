@@ -74,7 +74,7 @@ public class Casilla {
         return elementoPresente;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
     
