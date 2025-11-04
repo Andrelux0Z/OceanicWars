@@ -65,6 +65,7 @@ public class Hero {
     
     public int getFuerzaAtaque() {  // Función que SI devuelve la fuerza que se usa en base al valor de 'siguiente_potenciado'
         if (this.siguiente_potenciado) {
+            this.siguiente_potenciado = false;  // Vuelve a su estado original
             return fuerza;
         }
         else {
