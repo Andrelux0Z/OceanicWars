@@ -5,7 +5,6 @@
 package Ataques;
 
 import Cliente.Casilla;
-import Cliente.Matriz;
 import Hero.Hero;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class Tentaculos extends Ataque {
     ArrayList<Point> casillasElegidas;  // Arreglo para recorrer cada casilla elegida
     
     // Constructor
-    public Tentaculos(Hero hero, Matriz matriz, ArrayList<Point> casillasElegidas) {
+    public Tentaculos(Hero hero, ArrayList<Point> casillasElegidas) {
         super(hero);
         this.casillasElegidas = casillasElegidas;  // Se asignan las casillas elegidas (podría incluso tenerse una construcción escalable
     }
@@ -28,7 +27,7 @@ public class Tentaculos extends Ataque {
     // Métodos
     @Override
     public void ejecutar() { 
-        int radioObtenido = 1 + (1 * hero.getFuerzaAtaque());  // Se tiene un radio de tentáculos en función de la fuerza del héroe (fuera del for para mantenerse estable)
+        int radioObtenido = 1 + (4 * hero.getFuerzaAtaque());  // Se tiene un radio de tentáculos en función de la fuerza del héroe SIN DECIMALES (fuera del for para mantenerse estable)
         for (Point punto : casillasElegidas) {
             // Elección de casilla
             try {

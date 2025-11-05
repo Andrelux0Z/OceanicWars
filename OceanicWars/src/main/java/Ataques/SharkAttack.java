@@ -5,7 +5,6 @@
 package Ataques;
 
 import Cliente.Casilla;
-import Cliente.Matriz;
 import Hero.Hero;
 
 /**
@@ -15,7 +14,7 @@ import Hero.Hero;
 
 public class SharkAttack extends Ataque {
     // Constructor
-    public SharkAttack(Hero hero, Matriz matriz) {
+    public SharkAttack(Hero hero) {
         super(hero);
     }
     

@@ -5,7 +5,6 @@
 package Ataques;
 
 import Cliente.Casilla;
-import Cliente.Matriz;
 import Hero.Hero;
 
 /**
@@ -15,7 +14,7 @@ import Hero.Hero;
 
 public class Cardumen extends Ataque {
     // Constructor
-    public Cardumen(Hero hero, Matriz matriz) {
+    public Cardumen(Hero hero) {
         super(hero);
     }
     

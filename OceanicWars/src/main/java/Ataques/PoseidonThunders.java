@@ -5,7 +5,6 @@
 package Ataques;
 
 import Cliente.Casilla;
-import Cliente.Matriz;
 import Hero.Hero;
 
 /**
@@ -15,7 +14,7 @@ import Hero.Hero;
 
 public class PoseidonThunders extends Ataque {
     // Constructor
-    public PoseidonThunders(Hero hero, Matriz matriz) {
+    public PoseidonThunders(Hero hero) {
         super(hero);
     }
     

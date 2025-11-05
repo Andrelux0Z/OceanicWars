@@ -5,7 +5,6 @@
 package Ataques;
 
 import Cliente.Casilla;
-import Cliente.Matriz;
 import Hero.Hero;
 
 /**
@@ -15,7 +14,7 @@ import Hero.Hero;
 
 public class ThunderRain extends Ataque {
     // Constructor
-    public ThunderRain(Hero hero, Matriz matriz) {
+    public ThunderRain(Hero hero) {
         super(hero);
     }
     

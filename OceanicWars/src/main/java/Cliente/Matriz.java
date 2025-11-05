@@ -85,6 +85,14 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
         int dy = y - centro_y; // Se calcula la distancia y entre ambas casilla
         return dx * dx + dy * dy <= radio * radio;  // Pitágoras (a**2 + b**2 = c**2)
     }
+    
+    public boolean IsCasillaEnActivas(int x, int y) {
+        for (Casilla c : this.casillasActivas)
+            if (c.getX() == x && c.getY() == y) {
+                return true;
+            }
+        return false;
+    }
 
     // Getters
     public int getCantidadFilas() {
