@@ -4,6 +4,7 @@
  */
 package Hero;
 
+import Cliente.Matriz;
 import java.awt.Color;
 
 /**
@@ -21,7 +22,8 @@ public abstract class Hero {
     int sanidad;  // Curación a las casillas no muertas
     int fuerza;  // Fuerza del siguiente ataque del jugador
     int resistencia;  // Protección brindada a casillas
-    boolean siguiente_potenciado;  // Booleano que indica si el usuario pasó turno y su siguiente ataque se potencia
+    boolean siguientePotenciado;  // Booleano que indica si el usuario pasó turno y su siguiente ataque se potencia
+    Matriz matrizAtaque;  // Matriz que va a atacar el héroe en su próximo movimiento
 
     // Constructor
     public Hero (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
@@ -32,7 +34,7 @@ public abstract class Hero {
         this.sanidad = sanidad;
         this.fuerza = fuerza;
         this.resistencia = resistencia;
-        this.siguiente_potenciado = false;
+        this.siguientePotenciado = false;
     }
 
     // Métodos
@@ -67,7 +69,7 @@ public abstract class Hero {
     }
     
     public int getFuerzaAtaque() {  // Función que SI devuelve la fuerza que se usa en base al valor de 'siguiente_potenciado'
-        if (this.siguiente_potenciado) {
+        if (this.siguientePotenciado) {
             return fuerza;
         }
         else {
@@ -77,7 +79,14 @@ public abstract class Hero {
 
     public int getResistencia() {
         return resistencia;
+    } 
+
+    public Matriz getMatrizAtaque() {
+        return matrizAtaque;
     }
     
-    
+    // Setters
+    public void setMatrizAAtacar(Matriz matrizAtaque) {  // Set para configurar la matriz atacada
+        this.matrizAtaque = matrizAtaque;
+    } 
 }

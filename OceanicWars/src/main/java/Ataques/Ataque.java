@@ -18,11 +18,10 @@ public abstract class Ataque {
     Matriz matriz;
     
     // Constructor
-    public Ataque(Hero hero, Matriz matriz) {  // Ejecución del ataque
+    public Ataque(Hero hero) {  // Ejecución del ataque
         this.hero = hero;  // Héroe para ver sus características
         this.rand = new Random();  // Variable random (utilidad para los ataques)
-        this.matriz = matriz;  // Matriz que se piensa atacar
-        this.ejecutar();  // Se ejecuta el ataque: cada ataque hace algo distinto, entonces se deja abstract
+        this.matriz = hero.getMatrizAtaque();
     }
     
     // Métodos

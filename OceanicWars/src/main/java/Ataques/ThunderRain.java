@@ -4,26 +4,24 @@
  */
 package Ataques;
 
-import Cliente.Matriz;
 import Cliente.Casilla;
+import Cliente.Matriz;
 import Hero.Hero;
-import java.util.Random;
 
 /**
  *
  * @author kokoju
  */
+
 public class ThunderRain extends Ataque {
-    
-    public ThunderRain(Hero hero) {
+    // Constructor
+    public ThunderRain(Hero hero, Matriz matriz) {
         super(hero);
-        this.rand = new Random();
-        this.matriz = Cliente.Matriz;
     }
     
-    // ATAQUES QUE PUEDE HACER THUNDERS UNDER THE SEA
+    // Métodos
     @Override
-    public void ejecutar() {  // Reciben un héroe para ver sus estadísticas
+    public void ejecutar() {
         for (int i = 0; i < 100 ; i++) {  // For para hacer 100 rayos
             
             // Elección de potencia
@@ -32,7 +30,7 @@ public class ThunderRain extends Ataque {
             // Elección de casilla
             Casilla casilla = matriz.getCasillasActivas().get(rand.nextInt(matriz.getCasillasActivas().size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
             casilla.recibirGolpe(golpeRayo);  // Golpea a la casilla
-            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por un rayo de 'Thunder Rain', recibiendo " + golpeRayo + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por un rayo del 'Thunder Rain' de " + hero.getNombre() + ", recibiendo " + golpeRayo + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
         }
     }
 }
