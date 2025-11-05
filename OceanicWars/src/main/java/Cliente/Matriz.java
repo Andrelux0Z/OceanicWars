@@ -25,9 +25,6 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
     private int sizeAlto;
     private int sizeLargo;
     
-    // Valor aleatorio utilizado en las funciones
-    private final Random rand = new Random();
-    
     // Matriz que almacena casillas
     private Casilla[][] matriz;
     
@@ -89,44 +86,6 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
         return dx * dx + dy * dy <= radio * radio;  // Pitágoras (a**2 + b**2 = c**2)
     }
     
-    // Los ataques son ejecutados en las matrices de los jugadores, así que deberían ser programados aquí
-    
-    // ATAQUES QUE PUEDE HACER THUNDERS UNDER THE SEA
-    public void thunder_rain(Hero hero) {  // Reciben un héroe para ver sus estadísticas
-        for (int i = 0; i < 100 ; i++) {  // For para hacer 100 rayos
-            
-            // Elección de potencia
-            int golpeRayo = (10 + rand.nextInt(11)) * (1 + hero.getFuerzaAtaque());  // Calcula la potencia del golpe de cada rayo (cada uno hace entre 10 y 20 (porque nextInt va hasta n-1) * fuerza del héroe
-            
-            // Elección de casilla
-            Casilla casilla = this.casillasActivas.get(rand.nextInt(casillasActivas.size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
-            casilla.recibirGolpe(golpeRayo);  // Golpea a la casilla
-            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por un rayo de 'Thunder Rain', recibiendo " + golpeRayo + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
-        }
-    }
-    
-    public void poseidon_thunders(Hero hero) {
-        // Cantidad de rayos generada
-        // Al ser un ataque "Instakill", el elemento que aumenta la fuerza será la cantidad de rayos, no su alcance
-        int cantidadRayos = (5 + rand.nextInt(6)) * (1 + hero.getFuerzaAtaque()); // Crea de 5 a 10 rayos (porque nextInt va hasta n-1) * fuerza del héroe
-        for (int i = 0; i < cantidadRayos; i++) {
-            // Elección de radio 
-            int radioObtenido = (2 + rand.nextInt(9));  // Radio de 2 hasta 10
-            
-            // Elección de casilla
-            Casilla casilla = this.casillasActivas.get(rand.nextInt(casillasActivas.size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
-            casilla.recibirGolpe(casilla.getVida());  // Recibe el mismo daño de su vida ('instakill')
-            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada como epicentro de una onda de 'Poseidon Thunders', recibiendo " + casilla.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
-            
-            for (Casilla c : casillasActivas) {  // Revisamos en las casillas activas
-                if (IsCasillaEnRadio(casilla.getX(), casilla.getY(), c.getX(), c.getY(), radioObtenido)) {
-                    c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                    c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por una onda expansiva de 'Poseidon Thunders', recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
-                }
-            }
-        }
-    }
-    
     public void eel_attack(Hero hero) {
         // Cantidad de anguilas generadas
         int cantidadAnguilas = (25 + rand.nextInt(76));  // Se generan entre 25 y 100 anguilas
@@ -171,6 +130,7 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
             INF_DER;
         }
         
+        // No es la mejor ejecución, pero al ser esquinas y no ser escalables, me parece más lógico
         // Para cada esquina, hacemos algo 
         for (Esquina val : Esquina.values()) {
             // Elección del radio
@@ -212,6 +172,39 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
             }
         }
     }
+    // Getters
+    public int getCantidadFilas() {
+        return cantidadFilas;
+    }
+
+    public int getCantidadColumnas() {
+        return cantidadColumnas;
+    }
+
+    public int getSizeAlto() {
+        return sizeAlto;
+    }
+
+    public int getSizeLargo() {
+        return sizeLargo;
+    }
+
+    public Casilla[][] getMatriz() {
+        return matriz;
+    }
+
+    public ArrayList<Casilla> getCasillasActivas() {
+        return casillasActivas;
+    }
+
+    public ArrayList<Casilla> getCasillasInactivas() {
+        return casillasInactivas;
+    }
+
+    public FrameClient getRefCliente() {
+        return refCliente;
+    }
+    
     
     
     

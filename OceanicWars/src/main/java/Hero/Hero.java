@@ -10,7 +10,7 @@ import java.awt.Color;
  *
  * @author kokoju
  */
-public class Hero {
+public abstract class Hero {
     // Atributos
     String nombre;  // Nombre mostrado
     String imagen;  // Dirección de la imágen
@@ -36,7 +36,10 @@ public class Hero {
     }
 
     // Métodos
-    
+    // Habilidades que tiene cada tipo de heroe 
+    public abstract void habilidad1(Hero this);
+    public abstract void habilidad2(Hero this);
+    public abstract void habilidad3(Hero this);
     
     // Getters
     public String getNombre() {
