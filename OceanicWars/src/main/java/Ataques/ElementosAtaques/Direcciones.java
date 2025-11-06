@@ -8,6 +8,7 @@ package Ataques.ElementosAtaques;
  *
  * @author kokoju
  */
+
 public enum Direcciones {  // Enum de direcciones, ya que varios ataques las utilizan
     ARRIBA,
     ABAJO,

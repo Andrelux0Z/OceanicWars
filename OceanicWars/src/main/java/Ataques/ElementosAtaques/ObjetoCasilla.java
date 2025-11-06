@@ -8,7 +8,8 @@ package Ataques.ElementosAtaques;
  *
  * @author kokoju
  */
-public abstract class ObjetoCasilla {
+
+public abstract class ObjetoCasilla {  // Clase vacía: solo se encarga de que todos los ObjetoCasilla se reagrupen bajo un mismo nombre
     
     
 }

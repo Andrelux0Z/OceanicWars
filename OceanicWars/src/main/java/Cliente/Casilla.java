@@ -43,12 +43,14 @@ public class Casilla {
     
     // Métodos
     public void recibirGolpe(int golpe) {
-        this.vida -= (golpe) * (1 - this.defensa);
-        if (this.vida <= 0) {
-            this.vida = 0;  // No deja la vida en negativos
-            this.estado = false;  // Casilla deja de estar activa
-            this.bitacora.add("La casilla (" + x + ", " + y + ") fue derrotada");  // Mensaje a la bitácora
-            this.matriz.getCasillasActivas().remove(this);  // La casilla se elimina del las casillas activas
+    if (this.estado) {  // Si la casilla está viva, esta recibe daño
+            this.vida -= (golpe) * (1 - this.defensa);
+            if (this.vida <= 0) {
+                this.vida = 0;  // No deja la vida en negativos
+                this.estado = false;  // Casilla deja de estar activa
+                this.bitacora.add("La casilla (" + x + ", " + y + ") fue derrotada");  // Mensaje a la bitácora
+                this.matriz.getCasillasActivas().remove(this);  // La casilla se elimina del las casillas activas
+            }
         }
     }
     

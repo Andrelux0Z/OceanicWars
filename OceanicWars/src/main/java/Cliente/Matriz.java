@@ -14,6 +14,7 @@ import javax.swing.JPanel;
  *
  * @author kokoju
  */
+
 public class Matriz extends JPanel {  // Hereda de JPanel para la creación de componentes visuales
     // Atributos
     // Cantidades (tanto de filas como columnas)

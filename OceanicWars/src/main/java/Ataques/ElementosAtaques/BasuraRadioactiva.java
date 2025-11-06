@@ -8,6 +8,7 @@ package Ataques.ElementosAtaques;
  *
  * @author kokoju
  */
+
 public class BasuraRadioactiva extends ObjetoCasilla {
     // Atributos
     boolean isToxico;  // Booleano que indica si es tóxico o no
