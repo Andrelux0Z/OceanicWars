@@ -4,6 +4,7 @@
  */
 package Ataques;
 
+import Ataques.ElementosAtaques.Direcciones;
 import Cliente.Casilla;
 import Hero.Hero;
 import java.awt.Point;
@@ -12,6 +13,7 @@ import java.awt.Point;
  *
  * @author kokoju
  */
+
 public class KrakenBreath extends Ataque {
     // Atributos
     Point casillaElegida;
@@ -31,6 +33,7 @@ public class KrakenBreath extends Ataque {
         // Elección de casilla
         try {
             Casilla casilla = matriz.getMatriz()[this.casillaElegida.x][this.casillaElegida.y];  // Toma la casilla elegida por el usuario
+            casilla.recibirGolpe(casilla.getVida());  // Golpea la casilla inicial del ataque
             casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada como lugar de apararición del aliento del 'Kraken Breath' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
             switch(direccion) {
                 case ARRIBA:  // Al elegir la dirección ARRIBA

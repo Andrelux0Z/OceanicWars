@@ -11,6 +11,7 @@ import java.util.Random;
  *
  * @author kokoju
  */
+
 public abstract class Ataque {
     // Atributos
     Hero hero;  // El ataque tiene un atributo héroe

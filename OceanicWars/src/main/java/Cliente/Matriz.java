@@ -6,9 +6,8 @@ package Cliente;
 import Hero.Hero;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 import javax.swing.JPanel;
 
 /**
@@ -20,6 +19,8 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
     // Cantidades (tanto de filas como columnas)
     private final int cantidadFilas;
     private final int cantidadColumnas;
+        
+    private int cantidadCasillas;
     
     // Medidas (tanto de filas como columnas)
     private int sizeAlto;
@@ -28,8 +29,11 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
     // Matriz que almacena casillas
     private Casilla[][] matriz;
     
+    // Arreglo para almacenar los héroes
+    private ArrayList<Hero> heroes;
+    
     private ArrayList<Casilla> casillasActivas;  // Arreglo para el guardado de casillas vivas (útil para dirigir los ataques a casillas que realmente siguen funcionando)
-    private ArrayList<Casilla> casillasInactivas;  // Arreglo para guardar casillas asesinadas (puede no ser tan útil)
+    private ArrayList<Casilla> casillasTotales;  // Arreglo para guardar el total de casillas
     
     
     private FrameClient refCliente;  // Referencia al Cliente para acceder a sus espacios
@@ -42,11 +46,15 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
         this.refCliente = refCliente;
         this.cantidadFilas = cantidadFilas;
         this.cantidadColumnas = cantidadColumnas;
+        this.cantidadCasillas = this.cantidadFilas * this.cantidadColumnas;
         this.sizeAlto = this.refCliente.getPnlMatriz().getHeight() / this.cantidadFilas;  // Conseguimos la altura del componente pnlMatriz para crear casillas con la medida correcta
         this.sizeLargo = this.refCliente.getPnlMatriz().getWidth() / this.cantidadColumnas;  // Conseguimos el largo del componente pnlMatriz para crear casillas con la medida correta
         this.matriz = new Casilla[this.cantidadFilas][this.cantidadColumnas];  // Creamos una matriz del tamaño desado
+        
+        this.heroes = new ArrayList<Hero>();  // Una matriz está conformada por casillas pertenecientes a 3 héroes: suena lógico hacer un arreglo de estos
+        
         this.casillasActivas = new ArrayList<Casilla>();
-        this.casillasInactivas = new ArrayList<Casilla>();
+        this.casillasTotales = new ArrayList<Casilla>();
         
         this.crearMatriz();  // Se crea la matriz
     }
@@ -70,9 +78,25 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
     }
     
     public void crearMatriz() {
+        // Variables iniciales para asignar héroes
+        ArrayList<Casilla> casillasPorPintar= new ArrayList<Casilla>();
+        
+        
         for (int i = 0; i < this.cantidadFilas; i++) {
             for (int j = 0; j < this.cantidadColumnas; j++) {
-                matriz[i][j] = new Casilla(i, j, " ", Color.GREEN);
+                Casilla c = new Casilla(i, j, this);
+                matriz[i][j] = c;
+                casillasTotales.add(c);
+                casillasPorPintar.add(c);
+                casillasActivas.add(c);
+            }
+        }
+        
+        Collections.shuffle(casillasPorPintar);  // Hace un suffle, es decir, que reparte las casillas de manera aleatoria
+        for (Hero hero: heroes) {  // Se revisa la lista de héroes
+            int cantidadCasillasPorHeroe = hero.getOcupacion() * this.cantidadCasillas;
+            for (int k = 0; k < cantidadCasillasPorHeroe && !casillasPorPintar.isEmpty(); k++) {  // Mientras que sigan habíendo casillas y no se haya llegado a la cantidad de casillas por peleador
+                (casillasPorPintar.remove(0)).setHero(hero);  // Se toma una casilla cualquiera de las que quedan por pintar y se le asigna el héroe
             }
         }
     }
@@ -119,8 +143,8 @@ public class Matriz extends JPanel {  // Hereda de JPanel para la creación de c
         return casillasActivas;
     }
 
-    public ArrayList<Casilla> getCasillasInactivas() {
-        return casillasInactivas;
+    public ArrayList<Casilla> getCasillasTotales() {
+        return casillasTotales;
     }
 
     public FrameClient getRefCliente() {
