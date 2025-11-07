@@ -16,8 +16,8 @@ import java.awt.Point;
 
 public class ReleaseTheKraken extends Ataque{
     // Atributos
-    Point casillaElegida;
-    Direcciones direccion;
+    private Point casillaElegida;
+    private Direcciones direccion;
     
     // Constructor
     public ReleaseTheKraken(Hero hero, Point casillaElegida) {

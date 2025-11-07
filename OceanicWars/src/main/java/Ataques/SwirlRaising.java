@@ -16,7 +16,7 @@ import java.awt.Point;
 
 public class SwirlRaising extends Ataque {
     // Atributos
-    Point casillaElegida;
+    private Point casillaElegida;
     
     // Constructor
     public SwirlRaising(Hero hero, Point casillaElegida) {

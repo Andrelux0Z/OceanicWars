@@ -14,9 +14,9 @@ import java.util.Random;
 
 public abstract class Ataque {
     // Atributos
-    Hero hero;  // El ataque tiene un atributo héroe
-    Random rand ;
-    Matriz matriz;
+    public Hero hero;  // El ataque tiene un atributo héroe
+    public Random rand ;
+    public Matriz matriz;
     
     // Constructor
     public Ataque(Hero hero) {  // Ejecución del ataque

@@ -4,38 +4,39 @@
  */
 package Ataques;
 
-import Ataques.ElementosAtaques.Direcciones;
 import Cliente.Casilla;
+import Ataques.ElementosAtaques.Direcciones;
 import Hero.Hero;
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  *
  * @author kokoju
  */
 
-public class KrakenBreath extends Ataque {
+public class ThreeLines extends Ataque {
     // Atributos
-    private Point casillaElegida;
-    private Direcciones direccion;
+    private ArrayList<Point> casillasElegidas;  // Arreglo para recorrer cada casilla elegida
     
     // Constructor
-    public KrakenBreath(Hero hero, Point casillaElegida, Direcciones direccion) {
+    public ThreeLines(Hero hero, ArrayList<Point> casillasElegidas) {
         super(hero);
-        this.casillaElegida = casillaElegida;  // Se asigna la casilla
-        this.direccion = direccion;
+        this.casillasElegidas = casillasElegidas;  // Se asignan las casillas elegidas (podría incluso tenerse una construcción escalable)
     }
     
     // Métodos
     @Override
     public void ejecutar() { 
-        int alcanceObtenido = (1 + rand.nextInt(8)) * (1 + hero.getFuerzaAtaque());  // Se tiene un alcance de tentáculos en función de la fuerza del héroe (fuera del for para mantenerse estable)
-        // Elección de casilla
-        try {
-            Casilla casilla = matriz.getMatriz()[this.casillaElegida.x][this.casillaElegida.y];  // Toma la casilla elegida por el usuario
-            casilla.recibirGolpe(casilla.getVida());  // Golpea la casilla inicial del ataque
-            casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada como lugar de apararición del aliento del 'Kraken Breath' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
-            switch(direccion) {
+        int alcanceObtenido = (1 + rand.nextInt(4)) * (1 + hero.getFuerzaAtaque());  // Se tiene un alcance de ataque en función de la fuerza del héroe SIN DECIMALES (fuera del for para mantenerse estable)
+        for (Point punto : casillasElegidas) {
+            // Elección de casilla
+            try {
+                Casilla casilla = matriz.getMatriz()[punto.x][punto.y];  // Toma la casilla elegida por el usuario
+                casilla.recibirGolpe(casilla.getVida());  // Golpea la casilla inicial del ataque
+                casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada como lugar de apararición del ataque del 'Three Lines' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                Direcciones direccion = Direcciones.values()[rand.nextInt(Direcciones.values().length)];  // Se elige una dirección aleatoria (de los Direcciones.values(), se consigue un índice aleatorio)
+                switch(direccion) {
                 case ARRIBA:  // Al elegir la dirección ARRIBA
                     for (int i = 0; i < alcanceObtenido; i++) {
                         if ((casilla.getY() - i) < 0) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
@@ -43,7 +44,7 @@ public class KrakenBreath extends Ataque {
                         }
                         Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i];  // Se elige la casilla
                         c.recibirGolpe(c.getVida());  // La casilla recibe el mismo daño que su vida: 'instakill'
-                        c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por el aliento del 'Kraken Breath' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                        c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por el ataque del 'Three Lines' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
                     }
                     break;
                 case ABAJO:  // Al elegir la dirección ABAJO
@@ -53,7 +54,7 @@ public class KrakenBreath extends Ataque {
                         }
                         Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i];
                         c.recibirGolpe(c.getVida());  // La casilla recibe el mismo daño que su vida: 'instakill'
-                        c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por el aliento del 'Kraken Breath' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                        c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por el ataque del 'Three Lines' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
                     }
                     break;
                 case IZQUIERDA:  // Al elegir la dirección IZQUIERDA
@@ -63,7 +64,7 @@ public class KrakenBreath extends Ataque {
                         }
                         Casilla c = matriz.getMatriz()[casilla.getX() - i][casilla.getY()];
                         c.recibirGolpe(c.getVida());  // La casilla recibe el mismo daño que su vida: 'instakill'
-                        c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por el aliento del 'Kraken Breath' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                        c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por el ataque del 'Three Lines' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
                     }
                     break;
                 case DERECHA:  // Al elegir la dirección DERECHA
@@ -73,14 +74,14 @@ public class KrakenBreath extends Ataque {
                         }
                         Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i];
                         c.recibirGolpe(c.getVida());  // La casilla recibe el mismo daño que su vida: 'instakill'
-                        c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por el aliento del 'Kraken Breath' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                        c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por el ataque del 'Three Lines' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
                     }
                     break;
+                }
             }
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("ERROR: CASILLA FUERA DE LOS LIMITES - Coordenadas inválidas");
+            catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("ERROR: CASILLA FUERA DE LOS LIMITES - Coordenadas inválidas");
+            }
         }
     }
 }
-

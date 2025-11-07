@@ -16,7 +16,7 @@ import java.awt.Point;
 
 public class SendHumanGarbage extends Ataque {
     // Atributos
-    Point casillaElegida;
+    private Point casillaElegida;
     
     // Constructor
     public SendHumanGarbage(Hero hero, Point casillaElegida) {

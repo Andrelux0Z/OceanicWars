@@ -16,12 +16,12 @@ import java.util.ArrayList;
 
 public class Tentaculos extends Ataque {
     // Atributos
-    ArrayList<Point> casillasElegidas;  // Arreglo para recorrer cada casilla elegida
+    private ArrayList<Point> casillasElegidas;  // Arreglo para recorrer cada casilla elegida
     
     // Constructor
     public Tentaculos(Hero hero, ArrayList<Point> casillasElegidas) {
         super(hero);
-        this.casillasElegidas = casillasElegidas;  // Se asignan las casillas elegidas (podría incluso tenerse una construcción escalable
+        this.casillasElegidas = casillasElegidas;  // Se asignan las casillas elegidas (podría incluso tenerse una construcción escalable)
     }
     
     // Métodos
