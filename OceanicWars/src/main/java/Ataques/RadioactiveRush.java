@@ -14,9 +14,13 @@ import Hero.Hero;
  */
 
 public class RadioactiveRush extends Ataque {    
+    // Atributos
+    private int tiempoActiva;
+
     // Constructor
     public RadioactiveRush(Hero hero) {
         super(hero);
+        this.tiempoActiva = (1 + rand.nextInt(10)) * (1 + hero.getFuerzaAtaque());  // El tiempo que la basura esté activa también depende del poder del usuario (debe estar fuera del for para que la fuerza del héroe se siga aplicando)
     }
     
     // Métodos
@@ -24,14 +28,19 @@ public class RadioactiveRush extends Ataque {
     
     @Override
     public void ejecutar() {
-        int tiempoActiva = (1 + rand.nextInt(10)) * (1 + hero.getFuerzaAtaque());  // El tiempo que la basura esté activa también depende del poder del usuario (debe estar fuera del for para que la fuerza del héroe se siga aplicando)
         for (Casilla  c : matriz.getCasillasActivas()) {  // Se revisan las casillas, y se ejecuta una acción si tienen basura
             if (c.getObjetoPresente() instanceof BasuraRadioactiva) {
                 BasuraRadioactiva b = (BasuraRadioactiva) c.getObjetoPresente();
                 if (b.getIsToxico()) {
-                    c.recibirGolpe(10 * tiempoActiva);  // La casilla recibe los 10 ticks de daño, multiplicados por el tiempo que la basura está activa
+                    c.recibirGolpe(10 * this.tiempoActiva);  // La casilla recibe los 10 ticks de daño, multiplicados por el tiempo que la basura está activa
                 }
             }
         }               
     }
+    
+    // Getters
+    public int getTiempoActiva() {
+        return tiempoActiva;
+    }
+    
 }

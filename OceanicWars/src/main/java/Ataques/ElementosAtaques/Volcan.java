@@ -8,13 +8,12 @@ package Ataques.ElementosAtaques;
  *
  * @author kokoju
  */
-
-public class Remolino extends ObjetoCasilla {
+public class Volcan extends ObjetoCasilla{  // Viendo su estructura, el volcán es igual a un remolino, pero lo hacemos de esta manera para evitar problemas al hacer cambios entre objetos
     // Atributos
     int radio;
     
     // Constructor
-    public Remolino(int radio) {
+    public Volcan(int radio) {
         this.radio = radio;
     }
     
@@ -23,3 +22,4 @@ public class Remolino extends ObjetoCasilla {
         return radio;
     }
 }
+

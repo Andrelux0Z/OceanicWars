@@ -18,18 +18,19 @@ public class KrakenBreath extends Ataque {
     // Atributos
     private Point casillaElegida;
     private Direcciones direccion;
+    private int alcanceObtenido;
     
     // Constructor
     public KrakenBreath(Hero hero, Point casillaElegida, Direcciones direccion) {
         super(hero);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.direccion = direccion;
+        this.alcanceObtenido = (1 + rand.nextInt(8)) * (1 + hero.getFuerzaAtaque());  // Se tiene un alcance de tentáculos en función de la fuerza del héroe (fuera del for para mantenerse estable)
     }
     
     // Métodos
     @Override
     public void ejecutar() { 
-        int alcanceObtenido = (1 + rand.nextInt(8)) * (1 + hero.getFuerzaAtaque());  // Se tiene un alcance de tentáculos en función de la fuerza del héroe (fuera del for para mantenerse estable)
         // Elección de casilla
         try {
             Casilla casilla = matriz.getMatriz()[this.casillaElegida.x][this.casillaElegida.y];  // Toma la casilla elegida por el usuario
@@ -37,7 +38,7 @@ public class KrakenBreath extends Ataque {
             casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue seleccionada como lugar de apararición del aliento del 'Kraken Breath' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
             switch(direccion) {
                 case ARRIBA:  // Al elegir la dirección ARRIBA
-                    for (int i = 0; i < alcanceObtenido; i++) {
+                    for (int i = 0; i < this.alcanceObtenido; i++) {
                         if ((casilla.getY() - i) < 0) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
                             break;
                         }
@@ -47,7 +48,7 @@ public class KrakenBreath extends Ataque {
                     }
                     break;
                 case ABAJO:  // Al elegir la dirección ABAJO
-                    for (int i = 0; i < alcanceObtenido; i++) {
+                    for (int i = 0; i < this.alcanceObtenido; i++) {
                         if ((casilla.getY() + i) > this.matriz.getCantidadFilas() - 1) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
                             break;
                         }
@@ -57,7 +58,7 @@ public class KrakenBreath extends Ataque {
                     }
                     break;
                 case IZQUIERDA:  // Al elegir la dirección IZQUIERDA
-                    for (int i = 0; i < alcanceObtenido; i++) {
+                    for (int i = 0; i < this.alcanceObtenido; i++) {
                         if ((casilla.getX() - i) < 0) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
                             break;
                         }
@@ -67,7 +68,7 @@ public class KrakenBreath extends Ataque {
                     }
                     break;
                 case DERECHA:  // Al elegir la dirección DERECHA
-                    for (int i = 0; i < alcanceObtenido; i++) {
+                    for (int i = 0; i < this.alcanceObtenido; i++) {
                         if ((casilla.getX() + i) > this.matriz.getCantidadColumnas() - 1) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
                             break;
                         }
@@ -82,5 +83,19 @@ public class KrakenBreath extends Ataque {
             System.out.println("ERROR: CASILLA FUERA DE LOS LIMITES - Coordenadas inválidas");
         }
     }
+    
+    // Getters
+    public Point getCasillaElegida() {
+        return casillaElegida;
+    }
+
+    public Direcciones getDireccion() {
+        return direccion;
+    }
+
+    public int getAlcanceObtenido() {
+        return alcanceObtenido;
+    }
+    
 }
 

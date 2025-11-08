@@ -13,16 +13,19 @@ import Hero.Hero;
  */
 
 public class Pulp extends Ataque {
+    // Atributos
+    private int cantidadPulpos;  // Cantidad de pulpos
+
     // Constructor
     public Pulp(Hero hero) {
         super(hero);
+        this.cantidadPulpos = (20 + rand.nextInt(31));  // Cantidad de pulpos generada
     }
     
     // Métodos
     @Override
     public void ejecutar() { 
-        int cantidadPulpos = (20 + rand.nextInt(31));  // Cantidad de pulpos generada
-        for (int i = 0; i < cantidadPulpos; i++) {
+        for (int i = 0; i < this.cantidadPulpos; i++) {
             for (int j = 0; j < 8; j++) {  // Va desde 0 a 7 para representar los 8 tentáculos
                 // Elección de casilla
                 int golpeTentaculo = 25 * (1 + hero.getFuerzaAtaque());  // Se hace daño basado en la fuerza del heroe
@@ -32,4 +35,10 @@ public class Pulp extends Ataque {
             }
         }
     }
+    
+    // Getters
+    public int getCantidadPulpos() {
+        return cantidadPulpos;
+    }
+    
 }

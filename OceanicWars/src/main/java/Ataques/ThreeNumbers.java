@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 public class ThreeNumbers extends Ataque {    
     // Atributos
-    Jugador contrincante;  // Contrincante al que se le lanza el ataque
-    ArrayList<Integer> numerosElegidos;  // Arreglo para recorrer cada número elegido
+    private Jugador contrincante;  // Contrincante al que se le lanza el ataque
+    private ArrayList<Integer> numerosElegidos;  // Arreglo para recorrer cada número elegido
     // No puede usarse un array con tipos primitivos (como lo es el int): solo acepta objetos
     
     // TODO: COMPROBACIÓN AL RECIBIR COMANDO DE CONSEGUIR INTS DE 0 A 9 (PARA DARLE FALLA AL USER)
@@ -69,4 +69,14 @@ public class ThreeNumbers extends Ataque {
         }
     */
     }
+    
+    // Getters
+    public Jugador getContrincante() {
+        return contrincante;
+    }
+
+    public ArrayList<Integer> getNumerosElegidos() {
+        return numerosElegidos;
+    }
+    
 }

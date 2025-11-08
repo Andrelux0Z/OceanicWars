@@ -13,9 +13,13 @@ import Hero.Hero;
  */
 
 public class SharkAttack extends Ataque {
+    // Atributos
+    private int radioObtenido;  // Radio del ataque de cada tiburón
+    
     // Constructor
     public SharkAttack(Hero hero) {
         super(hero);
+        this.radioObtenido = 1 + rand.nextInt(10);  // Radio entre 1 y 10
     }
     
     // Métodos
@@ -32,13 +36,10 @@ public class SharkAttack extends Ataque {
         // No es la mejor ejecución, pero al ser esquinas y no ser escalables, me parece más lógico
         // Para cada esquina, hacemos algo 
         for (Esquina val : Esquina.values()) {
-            // Elección del radio
-            int radioObtenido =  1 + rand.nextInt(10);  // Radio entre 1 y 10
-            
             switch(val) {  // Se hace un switch en función del val revisado
                 case SUP_IZQ:
                     for (Casilla c : matriz.getCasillasActivas()) {  // Revisamos en las casillas activas
-                        if (matriz.IsCasillaEnRadio(0, 0, c.getX(), c.getY(), radioObtenido)) {
+                        if (matriz.IsCasillaEnRadio(0, 0, c.getX(), c.getY(), this.radioObtenido)) {
                             c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
                             c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                         }
@@ -46,7 +47,7 @@ public class SharkAttack extends Ataque {
                     break;
                 case SUP_DER:
                     for (Casilla c : matriz.getCasillasActivas()) {  // Revisamos en las casillas activas
-                        if (matriz.IsCasillaEnRadio(matriz.getCantidadColumnas() - 1, 0, c.getX(), c.getY(), radioObtenido)) {
+                        if (matriz.IsCasillaEnRadio(matriz.getCantidadColumnas() - 1, 0, c.getX(), c.getY(), this.radioObtenido)) {
                             c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
                             c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                         }
@@ -54,7 +55,7 @@ public class SharkAttack extends Ataque {
                     break;
                 case INF_IZQ:
                     for (Casilla c : matriz.getCasillasActivas()) {  // Revisamos en las casillas activas
-                        if (matriz.IsCasillaEnRadio(0, matriz.getCantidadFilas() - 1, c.getX(), c.getY(), radioObtenido)) {
+                        if (matriz.IsCasillaEnRadio(0, matriz.getCantidadFilas() - 1, c.getX(), c.getY(), this.radioObtenido)) {
                             c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
                             c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                         }
@@ -62,7 +63,7 @@ public class SharkAttack extends Ataque {
                     break;
                 case INF_DER:
                     for (Casilla c : matriz.getCasillasActivas()) {  // Revisamos en las casillas activas
-                        if (matriz.IsCasillaEnRadio(matriz.getCantidadColumnas() - 1, matriz.getCantidadFilas() - 1, c.getX(), c.getY(), radioObtenido)) {
+                        if (matriz.IsCasillaEnRadio(matriz.getCantidadColumnas() - 1, matriz.getCantidadFilas() - 1, c.getX(), c.getY(), this.radioObtenido)) {
                             c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
                             c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                         }
@@ -71,4 +72,10 @@ public class SharkAttack extends Ataque {
             }
         }
     }
+    
+    // Getters
+    public int getRadioObtenido() {
+        return radioObtenido;
+    }
+    
 }

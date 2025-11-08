@@ -27,4 +27,18 @@ public abstract class Ataque {
     
     // Métodos
     public abstract void ejecutar();
+    
+    // Getters
+    public Hero getHero() {
+        return hero;
+    }
+
+    public Random getRand() {
+        return rand;
+    }
+
+    public Matriz getMatriz() {
+        return matriz;
+    }
+    
 }

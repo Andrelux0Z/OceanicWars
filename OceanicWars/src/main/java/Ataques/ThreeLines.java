@@ -18,17 +18,18 @@ import java.util.ArrayList;
 public class ThreeLines extends Ataque {
     // Atributos
     private ArrayList<Point> casillasElegidas;  // Arreglo para recorrer cada casilla elegida
+    private int alcanceObtenido;
     
     // Constructor
     public ThreeLines(Hero hero, ArrayList<Point> casillasElegidas) {
         super(hero);
         this.casillasElegidas = casillasElegidas;  // Se asignan las casillas elegidas (podría incluso tenerse una construcción escalable)
+        this.alcanceObtenido = (1 + rand.nextInt(4)) * (1 + hero.getFuerzaAtaque());  // Se tiene un alcance de ataque en función de la fuerza del héroe SIN DECIMALES (fuera del for para mantenerse estable)
     }
     
     // Métodos
     @Override
     public void ejecutar() { 
-        int alcanceObtenido = (1 + rand.nextInt(4)) * (1 + hero.getFuerzaAtaque());  // Se tiene un alcance de ataque en función de la fuerza del héroe SIN DECIMALES (fuera del for para mantenerse estable)
         for (Point punto : casillasElegidas) {
             // Elección de casilla
             try {
@@ -38,7 +39,7 @@ public class ThreeLines extends Ataque {
                 Direcciones direccion = Direcciones.values()[rand.nextInt(Direcciones.values().length)];  // Se elige una dirección aleatoria (de los Direcciones.values(), se consigue un índice aleatorio)
                 switch(direccion) {
                 case ARRIBA:  // Al elegir la dirección ARRIBA
-                    for (int i = 0; i < alcanceObtenido; i++) {
+                    for (int i = 0; i < this.alcanceObtenido; i++) {
                         if ((casilla.getY() - i) < 0) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
                             break;
                         }
@@ -48,7 +49,7 @@ public class ThreeLines extends Ataque {
                     }
                     break;
                 case ABAJO:  // Al elegir la dirección ABAJO
-                    for (int i = 0; i < alcanceObtenido; i++) {
+                    for (int i = 0; i < this.alcanceObtenido; i++) {
                         if ((casilla.getY() + i) > this.matriz.getCantidadFilas() - 1) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
                             break;
                         }
@@ -58,7 +59,7 @@ public class ThreeLines extends Ataque {
                     }
                     break;
                 case IZQUIERDA:  // Al elegir la dirección IZQUIERDA
-                    for (int i = 0; i < alcanceObtenido; i++) {
+                    for (int i = 0; i < this.alcanceObtenido; i++) {
                         if ((casilla.getX() - i) < 0) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
                             break;
                         }
@@ -68,7 +69,7 @@ public class ThreeLines extends Ataque {
                     }
                     break;
                 case DERECHA:  // Al elegir la dirección DERECHA
-                    for (int i = 0; i < alcanceObtenido; i++) {
+                    for (int i = 0; i < this.alcanceObtenido; i++) {
                         if ((casilla.getX() + i) > this.matriz.getCantidadColumnas() - 1) {  // Verifica para no salirse de los límites: haciendo un break si llega a un borde
                             break;
                         }
@@ -84,4 +85,14 @@ public class ThreeLines extends Ataque {
             }
         }
     }
+    
+    // Getters
+    public ArrayList<Point> getCasillasElegidas() {
+        return casillasElegidas;
+    }
+
+    public int getAlcanceObtenido() {
+        return alcanceObtenido;
+    }
+    
 }

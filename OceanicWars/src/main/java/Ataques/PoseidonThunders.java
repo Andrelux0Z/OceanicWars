@@ -13,9 +13,13 @@ import Hero.Hero;
  */
 
 public class PoseidonThunders extends Ataque {
+    // Atributos
+    private int cantidadRayos;  // Cantidad de rayos que se lanzan
+    
     // Constructor
     public PoseidonThunders(Hero hero) {
         super(hero);
+        this.cantidadRayos = (5 + rand.nextInt(6)) * (1 + hero.getFuerzaAtaque()); // Crea de 5 a 10 rayos (porque nextInt va hasta n-1) * fuerza del héroe
     }
     
     // Métodos
@@ -23,8 +27,7 @@ public class PoseidonThunders extends Ataque {
     public void ejecutar() {
     // Cantidad de rayos generada
         // Al ser un ataque "Instakill", el elemento que aumenta la fuerza será la cantidad de rayos, no su alcance
-        int cantidadRayos = (5 + rand.nextInt(6)) * (1 + hero.getFuerzaAtaque()); // Crea de 5 a 10 rayos (porque nextInt va hasta n-1) * fuerza del héroe
-        for (int i = 0; i < cantidadRayos; i++) {
+        for (int i = 0; i < this.cantidadRayos; i++) {
             // Elección de radio 
             int radioObtenido = (2 + rand.nextInt(9));  // Radio de 2 hasta 10
             
@@ -40,6 +43,11 @@ public class PoseidonThunders extends Ataque {
                 }
             }
         }
+    }
+    
+    // Getters
+    public int getCantidadRayos() {
+        return cantidadRayos;
     }
 }
 
