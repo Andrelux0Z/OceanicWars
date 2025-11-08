@@ -5,13 +5,17 @@
 package Hero;
 
 import Ataques.Ataque;
-import Ataques.ThunderRain;
+import Ataques.Cardumen;
+import Ataques.Pulp;
+import Ataques.SharkAttack;
+import Cliente.Jugador;
 import java.awt.Color;
 
 /**
  *
  * @author kokoju
  */
+
 public class FishTelepathy extends Hero {
     // Constructor
     // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia)
@@ -19,20 +23,19 @@ public class FishTelepathy extends Hero {
         super("Fish Telepathy", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
     
-    @Override
-    public void habilidad1() {
-        // Ataque habilidad1 = new ThunderRain(this);
-        // habilidad1.ejecutar();
+    public void habilidad1(Jugador contrincante) {
+        Ataque habilidad1 = new Cardumen(this, contrincante);
+        habilidad1.ejecutar();
     }
 
-    @Override
-    public void habilidad2() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void habilidad2(Jugador contrincante) {
+        Ataque habilidad2 = new SharkAttack(this, contrincante);
+        habilidad2.ejecutar();
     }
 
-    @Override
-    public void habilidad3() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void habilidad3(Jugador contrincante) {
+        Ataque habilidad3 = new Pulp(this, contrincante);
+        habilidad3.ejecutar();
     }
     
 } 

@@ -3,8 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Hero;
+
 import Ataques.Ataque;
+import Ataques.EelAttack;
+import Ataques.PoseidonThunders;
 import Ataques.ThunderRain;
+import Cliente.Jugador;
 import java.awt.Color;
 
 /**
@@ -18,20 +22,19 @@ public class ThundersUnderTheSea extends Hero {
         super("Thunders Under The Sea", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
     
-    @Override
-    public void habilidad1() {
-        Ataque habilidad1 = new ThunderRain(this);
+    public void habilidad1(Jugador contrincante) {
+        Ataque habilidad1 = new ThunderRain(this, contrincante);
         habilidad1.ejecutar();
     }
 
-    @Override
-    public void habilidad2() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void habilidad2(Jugador contrincante) {
+        Ataque habilidad2 = new PoseidonThunders(this, contrincante);
+        habilidad2.ejecutar();
     }
 
-    @Override
-    public void habilidad3() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void habilidad3(Jugador contrincante) {
+        Ataque habilidad3 = new EelAttack(this, contrincante);
+        habilidad3.ejecutar();
     }
     
 }

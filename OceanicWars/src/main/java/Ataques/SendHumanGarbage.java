@@ -6,6 +6,7 @@ package Ataques;
 
 import Ataques.ElementosAtaques.*;
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 
@@ -20,8 +21,8 @@ public class SendHumanGarbage extends Ataque {
     private int golpeTonelada;
     
     // Constructor
-    public SendHumanGarbage(Hero hero, Point casillaElegida) {
-        super(hero);
+    public SendHumanGarbage(Hero hero, Jugador contrincante, Point casillaElegida) {
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.golpeTonelada = (25 * (1 + hero.getFuerzaAtaque()));  // La basura pega más si el ataque está potenciado (fuera del cíclo para que se aplique a todos los pedazos)
     }

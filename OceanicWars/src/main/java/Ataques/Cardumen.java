@@ -5,6 +5,7 @@
 package Ataques;
 
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 
 /**
@@ -17,8 +18,8 @@ public class Cardumen extends Ataque {
     private int golpePez;  // Guarda el daño que harán los peces
 
 // Constructor
-    public Cardumen(Hero hero) {
-        super(hero);
+    public Cardumen(Hero hero, Jugador contrincante) {
+        super(hero, contrincante);
         this.golpePez = 30 * (1 + hero.getFuerzaAtaque());  // Se hace daño basado en la fuerza del heroe
     }
     

@@ -6,6 +6,7 @@ package Ataques;
 
 import Ataques.ElementosAtaques.Volcan;
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 
@@ -20,8 +21,8 @@ public class TermalRush extends Ataque {
     private int tiempoActiva;
     
     // Constructor
-    public TermalRush(Hero hero, Point casillaElegida) { 
-        super(hero);
+    public TermalRush(Hero hero, Jugador contrincante, Point casillaElegida) { 
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.radioObtenido = (5) * (1 + hero.getFuerzaAtaque());  // Se consigue el radio de alcance adicional
         this.tiempoActiva = 5 + rand.nextInt(2);  // Tiempo que el calentamiento estará activo

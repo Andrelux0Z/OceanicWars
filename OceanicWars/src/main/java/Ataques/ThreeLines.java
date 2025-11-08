@@ -6,6 +6,7 @@ package Ataques;
 
 import Cliente.Casilla;
 import Ataques.ElementosAtaques.Direcciones;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ public class ThreeLines extends Ataque {
     private int alcanceObtenido;
     
     // Constructor
-    public ThreeLines(Hero hero, ArrayList<Point> casillasElegidas) {
-        super(hero);
+    public ThreeLines(Hero hero, Jugador contrincante, ArrayList<Point> casillasElegidas) {
+        super(hero, contrincante);
         this.casillasElegidas = casillasElegidas;  // Se asignan las casillas elegidas (podría incluso tenerse una construcción escalable)
         this.alcanceObtenido = (1 + rand.nextInt(4)) * (1 + hero.getFuerzaAtaque());  // Se tiene un alcance de ataque en función de la fuerza del héroe SIN DECIMALES (fuera del for para mantenerse estable)
     }
@@ -93,6 +94,5 @@ public class ThreeLines extends Ataque {
 
     public int getAlcanceObtenido() {
         return alcanceObtenido;
-    }
-    
+    } 
 }

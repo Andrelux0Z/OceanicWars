@@ -6,6 +6,7 @@ package Ataques;
 
 import Ataques.ElementosAtaques.BasuraRadioactiva;
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 
 /**
@@ -18,8 +19,8 @@ public class RadioactiveRush extends Ataque {
     private int tiempoActiva;
 
     // Constructor
-    public RadioactiveRush(Hero hero) {
-        super(hero);
+    public RadioactiveRush(Hero hero, Jugador contrincante) {
+        super(hero, contrincante);
         this.tiempoActiva = (1 + rand.nextInt(10)) * (1 + hero.getFuerzaAtaque());  // El tiempo que la basura esté activa también depende del poder del usuario (debe estar fuera del for para que la fuerza del héroe se siga aplicando)
     }
     

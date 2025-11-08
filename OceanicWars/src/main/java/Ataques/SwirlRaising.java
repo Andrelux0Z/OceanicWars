@@ -6,6 +6,7 @@ package Ataques;
 
 import Ataques.ElementosAtaques.Remolino;
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 
@@ -20,8 +21,8 @@ public class SwirlRaising extends Ataque {
     private int radioObtenido;
     
     // Constructor
-    public SwirlRaising(Hero hero, Point casillaElegida) {
-        super(hero);
+    public SwirlRaising(Hero hero, Jugador contrincante, Point casillaElegida) {
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.radioObtenido = (2 + rand.nextInt(9)) * (1 + hero.getFuerzaAtaque());  // Se tiene un radio del remolino en función de la fuerza del héroe (fuera del for para mantenerse estable)
     }

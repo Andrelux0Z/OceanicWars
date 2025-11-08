@@ -4,6 +4,7 @@
  */
 package Hero;
 
+import Cliente.Jugador;
 import Cliente.Matriz;
 import java.awt.Color;
 
@@ -11,6 +12,7 @@ import java.awt.Color;
  *
  * @author kokoju
  */
+
 public abstract class Hero {
     // Atributos
     String nombre;  // Nombre mostrado
@@ -38,11 +40,6 @@ public abstract class Hero {
     }
 
     // Métodos
-    // Habilidades que tiene cada tipo de heroe 
-    public abstract void habilidad1(Hero this);
-    public abstract void habilidad2(Hero this);
-    public abstract void habilidad3(Hero this);
-    
     // Getters
     public String getNombre() {
         return nombre;

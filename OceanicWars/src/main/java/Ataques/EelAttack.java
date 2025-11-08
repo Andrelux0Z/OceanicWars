@@ -5,7 +5,7 @@
 package Ataques;
 
 import Cliente.Casilla;
-import Cliente.Matriz;
+import Cliente.Jugador;
 import Hero.Hero;
 
 /**
@@ -20,8 +20,8 @@ public class EelAttack extends Ataque {
     private int golpeDescarga;  // Golpe para cada descarga
 
     // Constructor
-    public EelAttack(Hero hero, Matriz matriz) {
-        super(hero);
+    public EelAttack(Hero hero, Jugador contrincante) {
+        super(hero, contrincante);
         this.cantidadAnguilas = (25 + rand.nextInt(76));  // Se generan entre 25 y 100 anguilas
         this.cantidadDescargas = 1 + rand.nextInt(10);  // Entre 1 y 10 descargas
         this.golpeDescarga = 10  * (1 + hero.getFuerzaAtaque());  // Se hace daño basado en la fuerza del heroe

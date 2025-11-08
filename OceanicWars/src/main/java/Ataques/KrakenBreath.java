@@ -6,6 +6,7 @@ package Ataques;
 
 import Ataques.ElementosAtaques.Direcciones;
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 
@@ -21,8 +22,8 @@ public class KrakenBreath extends Ataque {
     private int alcanceObtenido;
     
     // Constructor
-    public KrakenBreath(Hero hero, Point casillaElegida, Direcciones direccion) {
-        super(hero);
+    public KrakenBreath(Hero hero, Jugador contrincante, Point casillaElegida, Direcciones direccion) {
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.direccion = direccion;
         this.alcanceObtenido = (1 + rand.nextInt(8)) * (1 + hero.getFuerzaAtaque());  // Se tiene un alcance de tentáculos en función de la fuerza del héroe (fuera del for para mantenerse estable)

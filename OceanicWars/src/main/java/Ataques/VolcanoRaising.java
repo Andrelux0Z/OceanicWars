@@ -6,6 +6,7 @@ package Ataques;
 
 import Ataques.ElementosAtaques.Volcan;
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 
@@ -20,8 +21,8 @@ public class VolcanoRaising extends Ataque {
     private int radioObtenido;
     
     // Constructor
-    public VolcanoRaising(Hero hero, Point casillaElegida) { 
-        super(hero);
+    public VolcanoRaising(Hero hero, Jugador contrincante, Point casillaElegida) { 
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.radioObtenido = (1 + rand.nextInt(9)) * (1 + hero.getFuerzaAtaque());  // Se tiene un radio del volcán en función de la fuerza del héroe (fuera del for para mantenerse estable)
     }

@@ -4,8 +4,9 @@
  */
 package Ataques;
 
-import Ataques.ElementosAtaques.Direcciones;
+import Ataques.ElementosAtaques.Kraken;
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 
@@ -13,34 +14,30 @@ import java.awt.Point;
  *
  * @author kokoju
  */
+
 public class ControlTheKraken extends Ataque {
     // Atributos
     private Point casillaElegida;  // Espacio para la casilla en dónde se inicio el ataque
-    private int radioObtenido;  // Espacio para recibir el radio que se obtuvo
     
     // TODO: AL RECIBIR ATAQUES, BUSCAR UNA FORMA DE RECUPERAR LOS ATRIBUTOS
 
     // Constructor
-    public ControlTheKraken(Hero hero, Point casillaElegida, int radioObtenido) {
-        super(hero);
+    public ControlTheKraken(Hero hero, Jugador contrincante, Point casillaElegida) {
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;
-        this.radioObtenido = radioObtenido;
     }
     
     // Métodos
     @Override
     public void ejecutar() {
-        ReleaseTheKraken ataque = new ReleaseTheKraken(hero, casillaElegida, radioObtenido);  // Se crea una copia exacta del ataque
+        Casilla casilla = matriz.getMatriz()[casillaElegida.x][casillaElegida.y];
+        Kraken kraken = (Kraken) casilla.getObjetoPresente();
+        Ataque ataque = new ReleaseTheKraken(hero, contrincante, casillaElegida, kraken.getRadio());  // Se crea una copia exacta del ataque
         ataque.ejecutar();  // Se ejecuta
     }
     
     // Getters
     public Point getCasillaElegida() {
         return casillaElegida;
-    }
-
-    public int getRadioObtenido() {
-        return radioObtenido;
-    }
-    
+    }    
 }

@@ -5,6 +5,7 @@
 package Ataques;
 
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 
 /**
@@ -17,8 +18,8 @@ public class ThunderRain extends Ataque {
     private int golpeRayo;
     
     // Constructor
-    public ThunderRain(Hero hero) {
-        super(hero);
+    public ThunderRain(Hero hero, Jugador contrincante) {
+        super(hero, contrincante);
         this.golpeRayo = (10 + rand.nextInt(11)) * (1 + hero.getFuerzaAtaque());  // Calcula la potencia del golpe de cada rayo (cada uno hace entre 10 y 20 (porque nextInt va hasta n-1) * fuerza del héroe
     }
     

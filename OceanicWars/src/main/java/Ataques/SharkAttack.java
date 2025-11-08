@@ -5,6 +5,7 @@
 package Ataques;
 
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 
 /**
@@ -17,8 +18,8 @@ public class SharkAttack extends Ataque {
     private int radioObtenido;  // Radio del ataque de cada tiburón
     
     // Constructor
-    public SharkAttack(Hero hero) {
-        super(hero);
+    public SharkAttack(Hero hero, Jugador contrincante) {
+        super(hero, contrincante);
         this.radioObtenido = 1 + rand.nextInt(10);  // Radio entre 1 y 10
     }
     

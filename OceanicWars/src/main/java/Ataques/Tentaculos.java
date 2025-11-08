@@ -5,6 +5,7 @@
 package Ataques;
 
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -20,8 +21,8 @@ public class Tentaculos extends Ataque {
     private int radioObtenido;
     
     // Constructor
-    public Tentaculos(Hero hero, ArrayList<Point> casillasElegidas) {
-        super(hero);
+    public Tentaculos(Hero hero, Jugador contrincante, ArrayList<Point> casillasElegidas) {
+        super(hero, contrincante);
         this.casillasElegidas = casillasElegidas;  // Se asignan las casillas elegidas (podría incluso tenerse una construcción escalable)
         this.radioObtenido = 1 + (4 * hero.getFuerzaAtaque());  // Se tiene un radio de tentáculos en función de la fuerza del héroe SIN DECIMALES (fuera del for para mantenerse estable)
     }

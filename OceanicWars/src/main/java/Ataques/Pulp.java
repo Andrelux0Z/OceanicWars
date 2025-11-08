@@ -5,6 +5,7 @@
 package Ataques;
 
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 
 /**
@@ -17,8 +18,8 @@ public class Pulp extends Ataque {
     private int cantidadPulpos;  // Cantidad de pulpos
 
     // Constructor
-    public Pulp(Hero hero) {
-        super(hero);
+    public Pulp(Hero hero, Jugador contrincante) {
+        super(hero, contrincante);
         this.cantidadPulpos = (20 + rand.nextInt(31));  // Cantidad de pulpos generada
     }
     

@@ -5,6 +5,7 @@
 package Ataques;
 
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 
@@ -13,20 +14,20 @@ import java.awt.Point;
  * @author kokoju
  */
 
-public class ReleaseTheKraken extends Ataque{
+public class ReleaseTheKraken extends Ataque {
     // Atributos
     private Point casillaElegida;
     private int radioObtenido;  // Almacena el radio desde el constructor: necesario para recuperar datos por si hay un 'Control The Kraken'
     
     // Constructores
-    public ReleaseTheKraken(Hero hero, Point casillaElegida) {  // Constructor inicial, por si no se pasa un radio
-        super(hero);
+    public ReleaseTheKraken(Hero hero, Jugador contrincante, Point casillaElegida) {  // Constructor inicial, por si no se pasa un radio
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.radioObtenido = (1 + rand.nextInt(9)) * (1 + hero.getFuerzaAtaque());  // Se tiene un radio del Kraken en función de la fuerza del héroe (fuera del for para mantenerse estable)
     }
     
-        public ReleaseTheKraken(Hero hero, Point casillaElegida, int radioObtenido) {  // Constructor para poder recibir un radio
-        super(hero);
+    public ReleaseTheKraken(Hero hero, Jugador contrincante, Point casillaElegida, int radioObtenido) {  // Constructor para poder recibir un radio
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.radioObtenido = radioObtenido;
     }
@@ -59,5 +60,4 @@ public class ReleaseTheKraken extends Ataque{
     public int getRadioObtenido() {
         return radioObtenido;
     }
-    
 }

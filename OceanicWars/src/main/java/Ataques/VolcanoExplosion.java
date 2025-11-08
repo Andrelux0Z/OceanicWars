@@ -6,6 +6,7 @@ package Ataques;
 
 import Ataques.ElementosAtaques.Volcan;
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
 
@@ -19,8 +20,8 @@ public class VolcanoExplosion extends Ataque {
     private int golpePiedra;
     
     // Constructor
-    public VolcanoExplosion(Hero hero, Point casillaElegida) {
-        super(hero);
+    public VolcanoExplosion(Hero hero, Jugador contrincante, Point casillaElegida) {
+        super(hero, contrincante);
         this.casillaElegida = casillaElegida;  // Se asigna la casilla
         this.golpePiedra = (20 * (1 + hero.getFuerzaAtaque()));  // Golpe aplicado por cada piedra de la erupción
     }
@@ -55,5 +56,4 @@ public class VolcanoExplosion extends Ataque {
     public int getGolpePiedra() {
         return golpePiedra;
     }
-    
 }

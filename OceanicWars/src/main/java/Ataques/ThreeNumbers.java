@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class ThreeNumbers extends Ataque {    
     // Atributos
-    private Jugador contrincante;  // Contrincante al que se le lanza el ataque
     private ArrayList<Integer> numerosElegidos;  // Arreglo para recorrer cada número elegido
     // No puede usarse un array con tipos primitivos (como lo es el int): solo acepta objetos
     
@@ -26,8 +25,7 @@ public class ThreeNumbers extends Ataque {
     // Constructor
     public ThreeNumbers(Hero hero, Jugador contrincante, ArrayList<Integer> numerosElegidos) {
         // TODO: CAMBIAR EL HERO DE CONTRINCANTE POR UNA CLASE "JUGADOR", QUE REAGRUPE SU MATRIZ Y SUS 3 HÉROES
-        super(hero);
-        this.contrincante = contrincante;
+        super(hero, contrincante);
         this.numerosElegidos = numerosElegidos;  // Se asignan los números elegidos (podría incluso tenerse una construcción escalable)
     }
     

@@ -5,6 +5,7 @@
 package Ataques;
 
 import Cliente.Casilla;
+import Cliente.Jugador;
 import Hero.Hero;
 
 /**
@@ -17,8 +18,8 @@ public class PoseidonThunders extends Ataque {
     private int cantidadRayos;  // Cantidad de rayos que se lanzan
     
     // Constructor
-    public PoseidonThunders(Hero hero) {
-        super(hero);
+    public PoseidonThunders(Hero hero, Jugador contrincante) {
+        super(hero, contrincante);
         this.cantidadRayos = (5 + rand.nextInt(6)) * (1 + hero.getFuerzaAtaque()); // Crea de 5 a 10 rayos (porque nextInt va hasta n-1) * fuerza del héroe
     }
     
