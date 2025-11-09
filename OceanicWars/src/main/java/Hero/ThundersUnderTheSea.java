@@ -16,12 +16,16 @@ import java.awt.Color;
  * @author kokoju
  */
 public class ThundersUnderTheSea extends Hero {
+    // Color por defecto para este héroe
+    public static final Color COLOR_DEFAULT = Color.BLUE;
+
     // Constructor
-    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia)
+    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
+    // fuerza, int resistencia)
     public ThundersUnderTheSea(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         super("Thunders Under The Sea", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
-    
+
     public void habilidad1(Jugador contrincante) {
         Ataque habilidad1 = new ThunderRain(this, contrincante);
         habilidad1.ejecutar();
@@ -36,5 +40,5 @@ public class ThundersUnderTheSea extends Hero {
         Ataque habilidad3 = new EelAttack(this, contrincante);
         habilidad3.ejecutar();
     }
-    
+
 }

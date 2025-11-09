@@ -18,12 +18,16 @@ import java.awt.Point;
  */
 
 public class UnderseaFire extends Hero {
+    // Color por defecto para este héroe
+    public static final Color COLOR_DEFAULT = Color.RED;
+
     // Constructor
-    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia)
+    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
+    // fuerza, int resistencia)
     public UnderseaFire(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         super("Undersea Fire", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
-    
+
     public void habilidad1(Jugador contrincante, Point casillaElegida) {
         Ataque habilidad1 = new VolcanoRaising(this, contrincante, casillaElegida);
         habilidad1.ejecutar();

@@ -20,12 +20,16 @@ import java.util.ArrayList;
  */
 
 public class ReleaseTheKrakenHero extends Hero {
-        // Constructor
-    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia)
+    // Color por defecto para este héroe
+    public static final Color COLOR_DEFAULT = Color.MAGENTA;
+
+    // Constructor
+    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
+    // fuerza, int resistencia)
     public ReleaseTheKrakenHero(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         super("Release The Kraken", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
-    
+
     public void habilidad1(Jugador contrincante, ArrayList<Point> casillasElegidas) {
         Ataque habilidad1 = new Tentaculos(this, contrincante, casillasElegidas);
         habilidad1.ejecutar();

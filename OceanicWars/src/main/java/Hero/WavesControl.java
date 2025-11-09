@@ -18,12 +18,16 @@ import java.awt.Point;
  */
 
 public class WavesControl extends Hero {
+    // Color por defecto para este héroe
+    public static final Color COLOR_DEFAULT = Color.ORANGE;
+
     // Constructor
-    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia)
+    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
+    // fuerza, int resistencia)
     public WavesControl(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         super("Waves Control", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
-    
+
     public void habilidad1(Jugador contrincante, Point casillaElegida) {
         Ataque habilidad1 = new SwirlRaising(this, contrincante, casillaElegida);
         habilidad1.ejecutar();
