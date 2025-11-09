@@ -17,16 +17,12 @@ import java.awt.Color;
  */
 
 public class FishTelepathy extends Hero {
-    // Color por defecto para este héroe
-    public static final Color COLOR_DEFAULT = Color.CYAN;
-
     // Constructor
-    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
-    // fuerza, int resistencia)
+    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia)
     public FishTelepathy(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         super("Fish Telepathy", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
-
+    
     public void habilidad1(Jugador contrincante) {
         Ataque habilidad1 = new Cardumen(this, contrincante);
         habilidad1.ejecutar();
@@ -41,5 +37,6 @@ public class FishTelepathy extends Hero {
         Ataque habilidad3 = new Pulp(this, contrincante);
         habilidad3.ejecutar();
     }
+    
+} 
 
-}
