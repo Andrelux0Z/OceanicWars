@@ -15,20 +15,21 @@ import java.awt.Color;
 
 public abstract class Hero {
     // Atributos
-    String nombre;  // Nombre mostrado
-    String imagen;  // Dirección de la imágen
-    Color color;  // Color del que pintan las casillas en donde se encuentran
-    
-    // DATOS EN PORCENTAJES (DE 0 A 1, PASANDO POR DÉCIMALES)
-    int ocupacion;  // Porcentaje de las casillas que les pertenece
-    int sanidad;  // Curación a las casillas no muertas
-    int fuerza;  // Fuerza del siguiente ataque del jugador
-    int resistencia;  // Protección brindada a casillas
-    boolean siguientePotenciado;  // Booleano que indica si el usuario pasó turno y su siguiente ataque se potencia
-    Matriz matrizAtaque;  // Matriz que va a atacar el héroe en su próximo movimiento
+    String nombre; // Nombre mostrado
+    String imagen; // Dirección de la imágen
+    Color color; // Color del que pintan las casillas en donde se encuentran
+
+    // DATOS EN PORCENTAJES (DE 0 A 100)
+    int ocupacion; // Porcentaje de las casillas que les pertenece (0 a 100)
+    int sanidad; // Curación a las casillas no muertas
+    int fuerza; // Fuerza del siguiente ataque del jugador
+    int resistencia; // Protección brindada a casillas
+    boolean siguientePotenciado; // Booleano que indica si el usuario pasó turno y su siguiente ataque se
+                                 // potencia
+    Matriz matrizAtaque; // Matriz que va a atacar el héroe en su próximo movimiento
 
     // Constructor
-    public Hero (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
+    public Hero(String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         this.nombre = nombre;
         this.imagen = imagen;
         this.color = color;
@@ -61,29 +62,30 @@ public abstract class Hero {
         return sanidad;
     }
 
-    public int getFuerza() {  // Devuelve el stat de fuerza que tiene el héroe, no si ataca con más fuerza o no
+    public int getFuerza() { // Devuelve el stat de fuerza que tiene el héroe, no si ataca con más fuerza o
+                             // no
         return fuerza;
     }
-    
-    public int getFuerzaAtaque() {  // Función que SI devuelve la fuerza que se usa en base al valor de 'siguiente_potenciado'
+
+    public int getFuerzaAtaque() { // Función que SI devuelve la fuerza que se usa en base al valor de
+                                   // 'siguiente_potenciado'
         if (this.siguientePotenciado) {
             return fuerza;
-        }
-        else {
+        } else {
             return 0;
         }
     }
 
     public int getResistencia() {
         return resistencia;
-    } 
+    }
 
     public Matriz getMatrizAtaque() {
         return matrizAtaque;
     }
-    
+
     // Setters
-    public void setMatrizAAtacar(Matriz matrizAtaque) {  // Set para configurar la matriz atacada
+    public void setMatrizAAtacar(Matriz matrizAtaque) { // Set para configurar la matriz atacada
         this.matrizAtaque = matrizAtaque;
-    } 
+    }
 }

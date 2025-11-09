@@ -19,12 +19,16 @@ import java.util.ArrayList;
  */
 
 public class PoseidonTrident extends Hero {
+    // Color por defecto para este héroe
+    public static final Color COLOR_DEFAULT = Color.GREEN;
+
     // Constructor
-    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia)
+    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
+    // fuerza, int resistencia)
     public PoseidonTrident(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         super("Poseidon Trident", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
-    
+
     public void habilidad1(Jugador contrincante, ArrayList<Point> casillasElegidas) {
         Ataque habilidad1 = new ThreeLines(this, contrincante, casillasElegidas);
         habilidad1.ejecutar();
