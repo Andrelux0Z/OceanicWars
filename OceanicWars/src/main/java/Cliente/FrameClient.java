@@ -21,6 +21,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -158,6 +162,8 @@ public class FrameClient extends javax.swing.JFrame {
             // Obtener el color e imagen por defecto según el tipo de héroe seleccionado
             java.awt.Color colorHeroe;
             String imagePath;
+            String arquetipoHeroe;
+            Hero heroeCreado;
             javax.swing.JLabel labelHeroe;
             javax.swing.JTextPane textoHeroe;
 
@@ -175,67 +181,77 @@ public class FrameClient extends javax.swing.JFrame {
 
             switch (tipoSeleccionado) {
                 case "Goku":
-                    colorHeroe = ThundersUnderTheSea.COLOR_DEFAULT;
+                    colorHeroe = Goku.COLOR;
                     imagePath = Goku.IMAGE_PATH;
-                    matriz.getHeroes().add(new Goku(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Goku(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Zanka":
-                    colorHeroe = ThundersUnderTheSea.COLOR_DEFAULT;
+                    colorHeroe = Zanka.COLOR;
                     imagePath = Zanka.IMAGE_PATH;
-                    matriz.getHeroes().add(new Zanka(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Zanka(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Alien":
-                    colorHeroe = FishTelepathy.COLOR_DEFAULT;
+                    colorHeroe = Alien.COLOR;
                     imagePath = Alien.IMAGE_PATH;
-                    matriz.getHeroes().add(new Alien(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Alien(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Frisk":
-                    colorHeroe = FishTelepathy.COLOR_DEFAULT;
+                    colorHeroe = Frisk.COLOR;
                     imagePath = Frisk.IMAGE_PATH;
-                    matriz.getHeroes().add(new Frisk(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Frisk(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Omniman":
-                    colorHeroe = PoseidonTrident.COLOR_DEFAULT;
+                    colorHeroe = Omniman.COLOR;
                     imagePath = Omniman.IMAGE_PATH;
-                    matriz.getHeroes().add(new Omniman(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Omniman(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "James":
-                    colorHeroe = PoseidonTrident.COLOR_DEFAULT;
+                    colorHeroe = James.COLOR;
                     imagePath = James.IMAGE_PATH;
-                    matriz.getHeroes().add(new James(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new James(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Tentaculo":
-                    colorHeroe = ReleaseTheKrakenHero.COLOR_DEFAULT;
+                    colorHeroe = Tentaculo.COLOR;
                     imagePath = Tentaculo.IMAGE_PATH;
-                    matriz.getHeroes().add(new Tentaculo(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Tentaculo(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Papaleta":
-                    colorHeroe = ReleaseTheKrakenHero.COLOR_DEFAULT;
+                    colorHeroe = Papaleta.COLOR;
                     imagePath = Papaleta.IMAGE_PATH;
-                    matriz.getHeroes().add(new Papaleta(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Papaleta(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Luffy":
-                    colorHeroe = WavesControl.COLOR_DEFAULT;
+                    colorHeroe = Luffy.COLOR;
                     imagePath = Luffy.IMAGE_PATH;
-                    matriz.getHeroes().add(new Luffy(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Luffy(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Popeye":
-                    colorHeroe = WavesControl.COLOR_DEFAULT;
+                    colorHeroe = Popeye.COLOR;
                     imagePath = Popeye.IMAGE_PATH;
-                    matriz.getHeroes().add(new Popeye(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Popeye(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Forky":
-                    colorHeroe = UnderseaFire.COLOR_DEFAULT;
+                    colorHeroe = Forky.COLOR;
                     imagePath = Forky.IMAGE_PATH;
-                    matriz.getHeroes().add(new Forky(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Forky(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 case "Penitente":
-                    colorHeroe = UnderseaFire.COLOR_DEFAULT;
+                    colorHeroe = Penitente.COLOR;
                     imagePath = Penitente.IMAGE_PATH;
-                    matriz.getHeroes().add(new Penitente(colorHeroe, porcentaje, 10, 10, 10));
+                    heroeCreado = new Penitente(colorHeroe, porcentaje, 10, 10, 10);
                     break;
                 default:
+                    colorHeroe = java.awt.Color.BLACK;
                     imagePath = "";
+                    heroeCreado = null;
+            }
+
+            // Agregar el héroe a la matriz si se creó correctamente
+            if (heroeCreado != null) {
+                matriz.getHeroes().add(heroeCreado);
+                arquetipoHeroe = heroeCreado.getArquetipo();
+            } else {
+                arquetipoHeroe = "Desconocido";
             }
 
             // Cargar y asignar la imagen al label
@@ -267,13 +283,8 @@ public class FrameClient extends javax.swing.JFrame {
                 System.err.println("Error al cargar imagen para héroe #" + (i + 1) + ": " + e.getMessage());
             }
 
-            // Llenar el TextPane con la información del héroe
-            String infoHeroe = porcentaje + "%\n" +
-                    tipoSeleccionado + "\n" +
-                    "Fuerza: 10\n" +
-                    "Resistencia: 10\n" +
-                    "Sanidad: 10";
-            textoHeroe.setText(infoHeroe);
+            // Llenar el TextPane con la información del héroe usando el método con colores
+            llenarInfoHeroe(textoHeroe, porcentaje, tipoSeleccionado, arquetipoHeroe, colorHeroe);
         }
 
         // Crear la matriz con los héroes configurados
@@ -286,6 +297,43 @@ public class FrameClient extends javax.swing.JFrame {
 
     public void writeMessage(String msg) {
         txaMessages.append(msg + "\n");
+    }
+
+    private void llenarInfoHeroe(javax.swing.JTextPane textPane, int porcentaje, String nombreHeroe,
+            String arquetipoHeroe, java.awt.Color colorHeroe) {
+        StyledDocument doc = textPane.getStyledDocument();
+
+        try {
+            // Estilo normal (negro)
+            SimpleAttributeSet estiloNormal = new SimpleAttributeSet();
+            StyleConstants.setForeground(estiloNormal, java.awt.Color.BLACK);
+
+            // Estilo para el color del héroe
+            SimpleAttributeSet estiloHeroe = new SimpleAttributeSet();
+            StyleConstants.setForeground(estiloHeroe, colorHeroe);
+            StyleConstants.setBold(estiloHeroe, true);
+
+            // Estilo para el arquetipo (gris, cursiva)
+            SimpleAttributeSet estiloArquetipo = new SimpleAttributeSet();
+            StyleConstants.setForeground(estiloArquetipo, java.awt.Color.GRAY);
+            StyleConstants.setItalic(estiloArquetipo, true);
+
+            // Insertar el porcentaje (negro)
+            doc.insertString(doc.getLength(), porcentaje + "%\n", estiloNormal);
+
+            // Insertar el nombre del héroe (color)
+            doc.insertString(doc.getLength(), nombreHeroe + "\n", estiloHeroe);
+
+            // Insertar el arquetipo (gris, cursiva)
+            doc.insertString(doc.getLength(), arquetipoHeroe + "\n", estiloArquetipo);
+
+            // Insertar el resto de la información (negro)
+            doc.insertString(doc.getLength(), "Fuerza: 10\n", estiloNormal);
+            doc.insertString(doc.getLength(), "Resistencia: 10\n", estiloNormal);
+            doc.insertString(doc.getLength(), "Sanidad: 10", estiloNormal);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
     }
 
     public void actualizarPnlMatriz() {
@@ -309,7 +357,8 @@ public class FrameClient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -373,54 +422,62 @@ public class FrameClient extends javax.swing.JFrame {
         javax.swing.GroupLayout pnlLuchadoresLayout = new javax.swing.GroupLayout(pnlLuchadores);
         pnlLuchadores.setLayout(pnlLuchadoresLayout);
         pnlLuchadoresLayout.setHorizontalGroup(
-            pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5))
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4)))
-                .addContainerGap())
-        );
+                pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pnlLuchadoresLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe1, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 126,
+                                                        Short.MAX_VALUE))
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe3, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane5))
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe2, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane4)))
+                                .addContainerGap()));
         pnlLuchadoresLayout.setVerticalGroup(
-            pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLuchadoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addComponent(IconHeroe1, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4)
-                    .addComponent(IconHeroe2, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(IconHeroe3, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                pnlLuchadoresLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jScrollPane3)
+                                                .addComponent(IconHeroe1, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jScrollPane4)
+                                                .addComponent(IconHeroe2, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(IconHeroe3, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(jScrollPane5))
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         pnlMatriz.setForeground(new java.awt.Color(255, 102, 102));
 
         javax.swing.GroupLayout pnlMatrizLayout = new javax.swing.GroupLayout(pnlMatriz);
         pnlMatriz.setLayout(pnlMatrizLayout);
         pnlMatrizLayout.setHorizontalGroup(
-            pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 780, Short.MAX_VALUE)
-        );
+                pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 780, Short.MAX_VALUE));
         pnlMatrizLayout.setVerticalGroup(
-            pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
-        );
+                pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 520, Short.MAX_VALUE));
 
         txaLastMove.setColumns(20);
         txaLastMove.setRows(5);
@@ -440,47 +497,69 @@ public class FrameClient extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))
-                        .addGap(31, 31, 31)
-                        .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(pnlLuchadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txfCommand)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSend)
-                        .addGap(33, 33, 33))))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                false)
+                                                        .addComponent(jScrollPane1,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, 250,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(jScrollPane2))
+                                                .addGap(31, 31, 31)
+                                                .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(pnlLuchadores, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(13, 13, 13))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txfCommand)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnSend)
+                                                .addGap(33, 33, 33)))));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlLuchadores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))
-                        .addGap(18, 18, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(61, Short.MAX_VALUE)
-                        .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(11, 11, 11)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                false)
+                                                        .addComponent(pnlLuchadores,
+                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jScrollPane1,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 380,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jScrollPane2,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE, 214,
+                                                                        Short.MAX_VALUE)))
+                                                .addGap(18, 18, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                layout.createSequentialGroup()
+                                                        .addContainerGap(61, Short.MAX_VALUE)
+                                                        .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(48, 48, 48)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txfCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 75,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 75,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

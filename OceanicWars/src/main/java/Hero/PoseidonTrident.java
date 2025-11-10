@@ -44,4 +44,9 @@ public abstract class PoseidonTrident extends Hero {
         Ataque habilidad3 = new ControlTheKraken(this, contrincante, casillaElegida);
         habilidad3.ejecutar();
     }
+
+    @Override
+    public String getArquetipo() {
+        return "Poseidon Trident";
+    }
 }
