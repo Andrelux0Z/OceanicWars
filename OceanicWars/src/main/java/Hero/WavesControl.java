@@ -17,15 +17,16 @@ import java.awt.Point;
  * @author kokoju
  */
 
-public class WavesControl extends Hero {
-    // Color por defecto para este héroe
+public abstract class WavesControl extends Hero {
+    // Color por defecto para este arquetipo
     public static final Color COLOR_DEFAULT = Color.ORANGE;
 
     // Constructor
     // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
     // fuerza, int resistencia)
-    public WavesControl(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
-        super("Waves Control", imagen, color, ocupacion, sanidad, fuerza, resistencia);
+    public WavesControl(String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza,
+            int resistencia) {
+        super(nombre, imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
     public void habilidad1(Jugador contrincante, Point casillaElegida) {

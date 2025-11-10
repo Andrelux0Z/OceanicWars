@@ -16,15 +16,16 @@ import java.awt.Color;
  * @author kokoju
  */
 
-public class FishTelepathy extends Hero {
-    // Color por defecto para este héroe
+public abstract class FishTelepathy extends Hero {
+    // Color por defecto para este arquetipo
     public static final Color COLOR_DEFAULT = Color.CYAN;
 
     // Constructor
     // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
     // fuerza, int resistencia)
-    public FishTelepathy(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
-        super("Fish Telepathy", imagen, color, ocupacion, sanidad, fuerza, resistencia);
+    public FishTelepathy(String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza,
+            int resistencia) {
+        super(nombre, imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
     public void habilidad1(Jugador contrincante) {

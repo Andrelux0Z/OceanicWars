@@ -19,15 +19,16 @@ import java.util.ArrayList;
  * @author kokoju
  */
 
-public class ReleaseTheKrakenHero extends Hero {
-    // Color por defecto para este héroe
+public abstract class ReleaseTheKrakenHero extends Hero {
+    // Color por defecto para este arquetipo
     public static final Color COLOR_DEFAULT = Color.MAGENTA;
 
     // Constructor
     // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
     // fuerza, int resistencia)
-    public ReleaseTheKrakenHero(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
-        super("Release The Kraken", imagen, color, ocupacion, sanidad, fuerza, resistencia);
+    public ReleaseTheKrakenHero(String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza,
+            int resistencia) {
+        super(nombre, imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
     public void habilidad1(Jugador contrincante, ArrayList<Point> casillasElegidas) {
