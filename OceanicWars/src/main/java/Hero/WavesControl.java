@@ -43,4 +43,9 @@ public abstract class WavesControl extends Hero {
         Ataque habilidad3 = new RadioactiveRush(this, contrincante);
         habilidad3.ejecutar();
     }
+
+    @Override
+    public String getArquetipo() {
+        return "Waves Control";
+    }
 }

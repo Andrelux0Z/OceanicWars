@@ -43,4 +43,9 @@ public abstract class FishTelepathy extends Hero {
         habilidad3.ejecutar();
     }
 
+    @Override
+    public String getArquetipo() {
+        return "Fish Telepathy";
+    }
+
 }

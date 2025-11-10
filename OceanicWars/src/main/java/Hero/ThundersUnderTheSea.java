@@ -42,4 +42,9 @@ public abstract class ThundersUnderTheSea extends Hero {
         habilidad3.ejecutar();
     }
 
+    @Override
+    public String getArquetipo() {
+        return "Thunders Under The Sea";
+    }
+
 }

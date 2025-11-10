@@ -9,6 +9,7 @@ import java.awt.Color;
  */
 public class Tentaculo extends ReleaseTheKrakenHero {
     public static final String IMAGE_PATH = "/tentaculo.png";
+    public static final Color COLOR = new Color(128, 0, 128); // Púrpura
 
     public Tentaculo(Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         super("Tentaculo", IMAGE_PATH, color, ocupacion, sanidad, fuerza, resistencia);

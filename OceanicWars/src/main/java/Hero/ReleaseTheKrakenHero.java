@@ -45,4 +45,9 @@ public abstract class ReleaseTheKrakenHero extends Hero {
         Ataque habilidad3 = new ReleaseTheKraken(this, contrincante, casillaElegida);
         habilidad3.ejecutar();
     }
+
+    @Override
+    public String getArquetipo() {
+        return "Release The Kraken";
+    }
 }

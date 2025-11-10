@@ -43,4 +43,9 @@ public abstract class UnderseaFire extends Hero {
         Ataque habilidad3 = new TermalRush(this, contrincante, casillaElegida);
         habilidad3.ejecutar();
     }
+
+    @Override
+    public String getArquetipo() {
+        return "Undersea Fire";
+    }
 }
