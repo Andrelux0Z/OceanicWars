@@ -28,6 +28,10 @@ public class WavesControl extends Hero {
         super("Waves Control", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
+    public WavesControl() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void habilidad1(Jugador contrincante, Point casillaElegida) {
         Ataque habilidad1 = new SwirlRaising(this, contrincante, casillaElegida);
         habilidad1.ejecutar();
@@ -41,5 +45,15 @@ public class WavesControl extends Hero {
     public void habilidad3(Jugador contrincante) {
         Ataque habilidad3 = new RadioactiveRush(this, contrincante);
         habilidad3.ejecutar();
+    }
+
+    @Override
+    public boolean buscarAtaque(String[] comando) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void realizarAtaque(Jugador atacado,String[] comando) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

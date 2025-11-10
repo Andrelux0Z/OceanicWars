@@ -29,6 +29,10 @@ public class PoseidonTrident extends Hero {
         super("Poseidon Trident", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
+    public PoseidonTrident() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void habilidad1(Jugador contrincante, ArrayList<Point> casillasElegidas) {
         Ataque habilidad1 = new ThreeLines(this, contrincante, casillasElegidas);
         habilidad1.ejecutar();
@@ -42,5 +46,15 @@ public class PoseidonTrident extends Hero {
     public void habilidad3(Jugador contrincante, Point casillaElegida) {
         Ataque habilidad3 = new ControlTheKraken(this, contrincante, casillaElegida);
         habilidad3.ejecutar();
+    }
+
+    @Override
+    public boolean buscarAtaque(String[] comando) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void realizarAtaque(Jugador atacado,String[] comando) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

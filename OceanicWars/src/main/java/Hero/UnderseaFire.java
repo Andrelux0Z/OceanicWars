@@ -28,6 +28,10 @@ public class UnderseaFire extends Hero {
         super("Undersea Fire", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
+    public UnderseaFire() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void habilidad1(Jugador contrincante, Point casillaElegida) {
         Ataque habilidad1 = new VolcanoRaising(this, contrincante, casillaElegida);
         habilidad1.ejecutar();
@@ -41,5 +45,15 @@ public class UnderseaFire extends Hero {
     public void habilidad3(Jugador contrincante, Point casillaElegida) {
         Ataque habilidad3 = new TermalRush(this, contrincante, casillaElegida);
         habilidad3.ejecutar();
+    }
+
+    @Override
+    public boolean buscarAtaque(String[] comando) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void realizarAtaque(Jugador atacado,String[] comando) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

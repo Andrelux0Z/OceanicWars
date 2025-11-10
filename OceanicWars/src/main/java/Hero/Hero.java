@@ -4,6 +4,7 @@
  */
 package Hero;
 
+import Ataques.Ataque;
 import Cliente.Jugador;
 import Cliente.Matriz;
 import java.awt.Color;
@@ -39,8 +40,30 @@ public abstract class Hero {
         this.resistencia = resistencia;
         this.siguientePotenciado = false;
     }
+    
+    public Hero(){
+        //Heroe provisional creado para acceder a sus ataques
+    }
 
-    // Métodos
+    // Métodos 
+    //TODO CREAR LOGICA
+    public void Heal(){
+        
+    }
+    
+    public void Strenghten() {
+        this.siguientePotenciado = true;
+    }
+    
+    public void Protect() {
+        
+    }
+    
+    
+    public abstract void realizarAtaque(Jugador atacado,String[] comando);
+    
+    public abstract boolean buscarAtaque(String[] comando); //Es boolean para indicar si el ataque se realizo con exito
+    
     // Getters
     public String getNombre() {
         return nombre;

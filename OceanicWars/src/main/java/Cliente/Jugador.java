@@ -27,6 +27,14 @@ public class Jugador {  // Clase del Jugador: guarda su matriz, sus 3 héroes el
         this.bitacora = bitacora;
     }
     
+    public Hero buscarHeroe(String nombre){
+        for(int i=0;i<this.heroes.size();i++)
+            if(this.heroes.get(i).getNombre().toUpperCase().equals(nombre)){
+                return this.heroes.get(i);
+            }
+        return null;
+    }
+    
     // Métodos
     // Getters
     public String getNombre() {

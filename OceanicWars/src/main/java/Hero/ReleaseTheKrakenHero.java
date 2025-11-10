@@ -30,6 +30,10 @@ public class ReleaseTheKrakenHero extends Hero {
         super("Release The Kraken", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
+    public ReleaseTheKrakenHero() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void habilidad1(Jugador contrincante, ArrayList<Point> casillasElegidas) {
         Ataque habilidad1 = new Tentaculos(this, contrincante, casillasElegidas);
         habilidad1.ejecutar();
@@ -43,5 +47,15 @@ public class ReleaseTheKrakenHero extends Hero {
     public void habilidad3(Jugador contrincante, Point casillaElegida) {
         Ataque habilidad3 = new ReleaseTheKraken(this, contrincante, casillaElegida);
         habilidad3.ejecutar();
+    }
+
+    @Override
+    public boolean buscarAtaque(String[] comando) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void realizarAtaque(Jugador atacado,String[] comando) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

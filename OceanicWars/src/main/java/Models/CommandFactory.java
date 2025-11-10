@@ -25,6 +25,8 @@ public class CommandFactory {
                 return new CommandGiveup(args);
             case "NAME":
                 return new CommandName(args);
+            case "BOOST":
+                return new CommandBoost(args);
             default:
                 return null;
         }

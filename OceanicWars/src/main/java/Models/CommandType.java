@@ -10,10 +10,12 @@ package Models;
  */
 public enum CommandType {
     ATTACK (4),  //attack Andres 4 5
+    APPLYATTACK (4),
     MESSAGE (2), //message hola a todos
     PRIVATE_MESSAGE(3), //private Andres hola andres
     GIVEUP (1), //giveup
-    NAME (2);
+    NAME (2),
+    BOOST (3); //BOOST <HERO> <HEAL/PROTECT/STRENGHTEN>
     //.. AGREGARÍAN MÁS TIPOS DE COMANDO
     
     

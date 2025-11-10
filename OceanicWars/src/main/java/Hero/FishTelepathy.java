@@ -27,6 +27,10 @@ public class FishTelepathy extends Hero {
         super("Fish Telepathy", imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
+    public FishTelepathy() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void habilidad1(Jugador contrincante) {
         Ataque habilidad1 = new Cardumen(this, contrincante);
         habilidad1.ejecutar();
@@ -42,4 +46,36 @@ public class FishTelepathy extends Hero {
         habilidad3.ejecutar();
     }
 
+    @Override
+    public boolean buscarAtaque(String[] comando) {   //Si encuentra el ataque o no
+        String tipoAtaque = comando[3].toUpperCase();
+        
+        switch (tipoAtaque) {
+            case "CARDUMEN":
+                return true;
+            case "SHARKATTACK":
+                return true;
+            case "PULP":
+                return true;
+            default:
+                return false;
+        }
+    }
+     
+    
+    @Override
+    public void realizarAtaque(Jugador atacado,String[] comando) {  
+        String tipoAtaque = comando[3].toUpperCase();
+        
+        switch (tipoAtaque) {
+            case "CARDUMEN":
+                this.habilidad1(atacado);
+            case "SHARKATTACK":
+                this.habilidad2(atacado);
+            case "PULP":
+                this.habilidad3(atacado);
+        }
+    }
+    
+    
 }

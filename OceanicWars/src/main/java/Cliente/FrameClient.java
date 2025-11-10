@@ -340,7 +340,7 @@ public class FrameClient extends javax.swing.JFrame {
             if (args.length > 0) {
                 Command comando = CommandFactory.getCommand(args);
                 if (comando != null) {
-                    try {
+                    try {   
                         client.objectSender.writeObject(comando);
                     } catch (IOException ex) {
 
@@ -435,5 +435,10 @@ public class FrameClient extends javax.swing.JFrame {
     public JTextField getTxfCommand() {
         return txfCommand;
     }
+
+    public Matriz getMatriz() {
+        return matriz;
+    }
+    
 
 }
