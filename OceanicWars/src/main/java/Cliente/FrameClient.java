@@ -15,11 +15,16 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -71,14 +76,20 @@ public class FrameClient extends javax.swing.JFrame {
     }
 
     private boolean inicializarHeroes() {
-        // Arreglo con los tipos de héroes disponibles
+        // Arreglo con los héroes disponibles (2 por cada arquetipo)
         String[] tiposHeroes = {
-                "Thunders Under The Sea",
-                "Fish Telepathy",
-                "Poseidon Trident",
-                "Release The Kraken",
-                "Waves Control",
-                "Undersea Fire"
+                "Goku",
+                "Zanka",
+                "Alien",
+                "Frisk",
+                "Omniman",
+                "James",
+                "Tentaculo",
+                "Papaleta",
+                "Luffy",
+                "Popeye",
+                "Forky",
+                "Penitente"
         };
 
         int porcentajeTotal = 0;
@@ -148,34 +159,132 @@ public class FrameClient extends javax.swing.JFrame {
 
             porcentajeTotal += porcentaje;
 
-            // Obtener el color por defecto según el tipo de héroe seleccionado
+            // Obtener el color e imagen por defecto según el tipo de héroe seleccionado
             java.awt.Color colorHeroe;
-            switch (tipoSeleccionado) {
-                case "Thunders Under The Sea":
-                    colorHeroe = ThundersUnderTheSea.COLOR_DEFAULT;
-                    matriz.getHeroes().add(new ThundersUnderTheSea("", colorHeroe, porcentaje, 10, 10, 10));
-                    break;
-                case "Fish Telepathy":
-                    colorHeroe = FishTelepathy.COLOR_DEFAULT;
-                    matriz.getHeroes().add(new FishTelepathy("", colorHeroe, porcentaje, 10, 10, 10));
-                    break;
-                case "Poseidon Trident":
-                    colorHeroe = PoseidonTrident.COLOR_DEFAULT;
-                    matriz.getHeroes().add(new PoseidonTrident("", colorHeroe, porcentaje, 10, 10, 10));
-                    break;
-                case "Release The Kraken":
-                    colorHeroe = ReleaseTheKrakenHero.COLOR_DEFAULT;
-                    matriz.getHeroes().add(new ReleaseTheKrakenHero("", colorHeroe, porcentaje, 10, 10, 10));
-                    break;
-                case "Waves Control":
-                    colorHeroe = WavesControl.COLOR_DEFAULT;
-                    matriz.getHeroes().add(new WavesControl("", colorHeroe, porcentaje, 10, 10, 10));
-                    break;
-                case "Undersea Fire":
-                    colorHeroe = UnderseaFire.COLOR_DEFAULT;
-                    matriz.getHeroes().add(new UnderseaFire("", colorHeroe, porcentaje, 10, 10, 10));
-                    break;
+            String imagePath;
+            String arquetipoHeroe;
+            Hero heroeCreado;
+            javax.swing.JLabel labelHeroe;
+            javax.swing.JTextPane textoHeroe;
+
+            // Determinar qué label y texto usar según el índice
+            if (i == 0) {
+                labelHeroe = IconHeroe1;
+                textoHeroe = TextoHeroe1;
+            } else if (i == 1) {
+                labelHeroe = IconHeroe2;
+                textoHeroe = TextoHeroe2;
+            } else {
+                labelHeroe = IconHeroe3;
+                textoHeroe = TextoHeroe3;
             }
+
+            switch (tipoSeleccionado) {
+                case "Goku":
+                    colorHeroe = Goku.COLOR;
+                    imagePath = Goku.IMAGE_PATH;
+                    heroeCreado = new Goku(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Zanka":
+                    colorHeroe = Zanka.COLOR;
+                    imagePath = Zanka.IMAGE_PATH;
+                    heroeCreado = new Zanka(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Alien":
+                    colorHeroe = Alien.COLOR;
+                    imagePath = Alien.IMAGE_PATH;
+                    heroeCreado = new Alien(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Frisk":
+                    colorHeroe = Frisk.COLOR;
+                    imagePath = Frisk.IMAGE_PATH;
+                    heroeCreado = new Frisk(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Omniman":
+                    colorHeroe = Omniman.COLOR;
+                    imagePath = Omniman.IMAGE_PATH;
+                    heroeCreado = new Omniman(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "James":
+                    colorHeroe = James.COLOR;
+                    imagePath = James.IMAGE_PATH;
+                    heroeCreado = new James(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Tentaculo":
+                    colorHeroe = Tentaculo.COLOR;
+                    imagePath = Tentaculo.IMAGE_PATH;
+                    heroeCreado = new Tentaculo(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Papaleta":
+                    colorHeroe = Papaleta.COLOR;
+                    imagePath = Papaleta.IMAGE_PATH;
+                    heroeCreado = new Papaleta(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Luffy":
+                    colorHeroe = Luffy.COLOR;
+                    imagePath = Luffy.IMAGE_PATH;
+                    heroeCreado = new Luffy(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Popeye":
+                    colorHeroe = Popeye.COLOR;
+                    imagePath = Popeye.IMAGE_PATH;
+                    heroeCreado = new Popeye(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Forky":
+                    colorHeroe = Forky.COLOR;
+                    imagePath = Forky.IMAGE_PATH;
+                    heroeCreado = new Forky(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                case "Penitente":
+                    colorHeroe = Penitente.COLOR;
+                    imagePath = Penitente.IMAGE_PATH;
+                    heroeCreado = new Penitente(colorHeroe, porcentaje, 10, 10, 10);
+                    break;
+                default:
+                    colorHeroe = java.awt.Color.BLACK;
+                    imagePath = "";
+                    heroeCreado = null;
+            }
+
+            // Agregar el héroe a la matriz si se creó correctamente
+            if (heroeCreado != null) {
+                matriz.getHeroes().add(heroeCreado);
+                arquetipoHeroe = heroeCreado.getArquetipo();
+            } else {
+                arquetipoHeroe = "Desconocido";
+            }
+
+            // Cargar y asignar la imagen al label
+            try {
+                java.net.URL imageUrl = getClass().getResource(imagePath);
+                if (imageUrl != null) {
+                    ImageIcon icon = new ImageIcon(imageUrl);
+                    // Escalar la imagen para que se ajuste al label
+                    int ancho = 100;
+                    int alto = 100;
+
+                    if (labelHeroe.getWidth() > 0) {
+                        ancho = labelHeroe.getWidth();
+                    }
+
+                    if (labelHeroe.getHeight() > 0) {
+                        alto = labelHeroe.getHeight();
+                    }
+
+                    java.awt.Image scaledImage = icon.getImage().getScaledInstance(
+                            ancho,
+                            alto,
+                            java.awt.Image.SCALE_SMOOTH);
+                    labelHeroe.setIcon(new ImageIcon(scaledImage));
+                } else {
+                    System.err.println("No se encontró la imagen: " + imagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Error al cargar imagen para héroe #" + (i + 1) + ": " + e.getMessage());
+            }
+
+            // Llenar el TextPane con la información del héroe usando el método con colores
+            llenarInfoHeroe(textoHeroe, porcentaje, tipoSeleccionado, arquetipoHeroe, colorHeroe);
         }
 
         // Crear la matriz con los héroes configurados
@@ -188,6 +297,43 @@ public class FrameClient extends javax.swing.JFrame {
 
     public void writeMessage(String msg) {
         txaMessages.append(msg + "\n");
+    }
+
+    private void llenarInfoHeroe(javax.swing.JTextPane textPane, int porcentaje, String nombreHeroe,
+            String arquetipoHeroe, java.awt.Color colorHeroe) {
+        StyledDocument doc = textPane.getStyledDocument();
+
+        try {
+            // Estilo normal (negro)
+            SimpleAttributeSet estiloNormal = new SimpleAttributeSet();
+            StyleConstants.setForeground(estiloNormal, java.awt.Color.BLACK);
+
+            // Estilo para el color del héroe
+            SimpleAttributeSet estiloHeroe = new SimpleAttributeSet();
+            StyleConstants.setForeground(estiloHeroe, colorHeroe);
+            StyleConstants.setBold(estiloHeroe, true);
+
+            // Estilo para el arquetipo (gris, cursiva)
+            SimpleAttributeSet estiloArquetipo = new SimpleAttributeSet();
+            StyleConstants.setForeground(estiloArquetipo, java.awt.Color.GRAY);
+            StyleConstants.setItalic(estiloArquetipo, true);
+
+            // Insertar el porcentaje (negro)
+            doc.insertString(doc.getLength(), porcentaje + "%\n", estiloNormal);
+
+            // Insertar el nombre del héroe (color)
+            doc.insertString(doc.getLength(), nombreHeroe + "\n", estiloHeroe);
+
+            // Insertar el arquetipo (gris, cursiva)
+            doc.insertString(doc.getLength(), arquetipoHeroe + "\n", estiloArquetipo);
+
+            // Insertar el resto de la información (negro)
+            doc.insertString(doc.getLength(), "Fuerza: 10\n", estiloNormal);
+            doc.insertString(doc.getLength(), "Resistencia: 10\n", estiloNormal);
+            doc.insertString(doc.getLength(), "Sanidad: 10", estiloNormal);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
     }
 
     public void actualizarPnlMatriz() {
@@ -207,6 +353,11 @@ public class FrameClient extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -214,6 +365,15 @@ public class FrameClient extends javax.swing.JFrame {
         txaMessages = new javax.swing.JTextArea();
         txfCommand = new javax.swing.JTextField();
         pnlLuchadores = new javax.swing.JPanel();
+        IconHeroe3 = new javax.swing.JLabel();
+        IconHeroe1 = new javax.swing.JLabel();
+        IconHeroe2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TextoHeroe1 = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        TextoHeroe2 = new javax.swing.JTextPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TextoHeroe3 = new javax.swing.JTextPane();
         pnlMatriz = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txaLastMove = new javax.swing.JTextArea();
@@ -223,18 +383,90 @@ public class FrameClient extends javax.swing.JFrame {
 
         txaMessages.setColumns(20);
         txaMessages.setRows(5);
-        txaMessages.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txaMessages.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         txaMessages.setFocusable(false);
+        txaMessages.setOpaque(false);
         jScrollPane1.setViewportView(txaMessages);
+
+        pnlLuchadores.setBackground(new java.awt.Color(153, 255, 255));
+        pnlLuchadores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlLuchadores.setForeground(new java.awt.Color(102, 102, 102));
+        pnlLuchadores.setOpaque(false);
+
+        IconHeroe3.setBackground(new java.awt.Color(51, 255, 153));
+        IconHeroe3.setForeground(new java.awt.Color(255, 51, 51));
+
+        IconHeroe1.setBackground(new java.awt.Color(51, 255, 153));
+        IconHeroe1.setForeground(new java.awt.Color(255, 51, 51));
+
+        IconHeroe2.setBackground(new java.awt.Color(51, 255, 153));
+        IconHeroe2.setForeground(new java.awt.Color(255, 51, 51));
+
+        TextoHeroe1.setCaretColor(new java.awt.Color(204, 255, 204));
+        TextoHeroe1.setDisabledTextColor(new java.awt.Color(255, 51, 0));
+        TextoHeroe1.setFocusable(false);
+        TextoHeroe1.setOpaque(false);
+        TextoHeroe1.setSelectedTextColor(new java.awt.Color(0, 102, 102));
+        TextoHeroe1.setSelectionColor(new java.awt.Color(102, 102, 255));
+        jScrollPane3.setViewportView(TextoHeroe1);
+
+        TextoHeroe2.setFocusable(false);
+        TextoHeroe2.setOpaque(false);
+        jScrollPane4.setViewportView(TextoHeroe2);
+
+        TextoHeroe3.setDisabledTextColor(new java.awt.Color(153, 255, 153));
+        TextoHeroe3.setFocusable(false);
+        TextoHeroe3.setOpaque(false);
+        jScrollPane5.setViewportView(TextoHeroe3);
 
         javax.swing.GroupLayout pnlLuchadoresLayout = new javax.swing.GroupLayout(pnlLuchadores);
         pnlLuchadores.setLayout(pnlLuchadoresLayout);
         pnlLuchadoresLayout.setHorizontalGroup(
                 pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 275, Short.MAX_VALUE));
+                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pnlLuchadoresLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe1, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 126,
+                                                        Short.MAX_VALUE))
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe3, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane5))
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe2, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane4)))
+                                .addContainerGap()));
         pnlLuchadoresLayout.setVerticalGroup(
                 pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE));
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                pnlLuchadoresLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jScrollPane3)
+                                                .addComponent(IconHeroe1, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jScrollPane4)
+                                                .addComponent(IconHeroe2, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(IconHeroe3, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(jScrollPane5))
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         pnlMatriz.setForeground(new java.awt.Color(255, 102, 102));
 
@@ -281,7 +513,7 @@ public class FrameClient extends javax.swing.JFrame {
                                                 .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                         javax.swing.GroupLayout.DEFAULT_SIZE,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35,
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31,
                                                         Short.MAX_VALUE)
                                                 .addComponent(pnlLuchadores, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                         javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -397,9 +629,18 @@ public class FrameClient extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IconHeroe1;
+    private javax.swing.JLabel IconHeroe2;
+    private javax.swing.JLabel IconHeroe3;
+    private javax.swing.JTextPane TextoHeroe1;
+    private javax.swing.JTextPane TextoHeroe2;
+    private javax.swing.JTextPane TextoHeroe3;
     private javax.swing.JButton btnSend;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPanel pnlLuchadores;
     private javax.swing.JPanel pnlMatriz;
     private javax.swing.JTextArea txaLastMove;

@@ -111,4 +111,7 @@ public abstract class Hero {
     public void setMatrizAAtacar(Matriz matrizAtaque) { // Set para configurar la matriz atacada
         this.matrizAtaque = matrizAtaque;
     }
+
+    // Método abstracto para obtener el arquetipo
+    public abstract String getArquetipo();
 }

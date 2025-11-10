@@ -18,15 +18,16 @@ import java.util.ArrayList;
  * @author kokoju
  */
 
-public class PoseidonTrident extends Hero {
-    // Color por defecto para este héroe
+public abstract class PoseidonTrident extends Hero {
+    // Color por defecto para este arquetipo
     public static final Color COLOR_DEFAULT = Color.GREEN;
 
     // Constructor
     // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
     // fuerza, int resistencia)
-    public PoseidonTrident(String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
-        super("Poseidon Trident", imagen, color, ocupacion, sanidad, fuerza, resistencia);
+    public PoseidonTrident(String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza,
+            int resistencia) {
+        super(nombre, imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
     public PoseidonTrident() {
@@ -56,5 +57,7 @@ public class PoseidonTrident extends Hero {
     @Override
     public void realizarAtaque(Jugador atacado,String[] comando) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getArquetipo() {
+        return "Poseidon Trident";
     }
 }
