@@ -121,8 +121,9 @@ public class Matriz extends JPanel { // Hereda de JPanel para la creación de co
                                                                                                  // la cantidad de
                                                                                                  // casillas por
                                                                                                  // peleador
-                (casillasPorPintar.remove(0)).setHero(hero); // Se toma una casilla cualquiera de las que quedan por
-                                                             // pintar y se le asigna el héroe
+                Casilla c = casillasPorPintar.remove(0);
+                c.setHero(hero); // Se toma una casilla cualquiera de las que quedan por pintar y se le asigna el héroe
+                c.getHero().getCasillasEnPosesion().add(c);  // Se añade la casilla a las que tiene el héroe
             }
         }
     }
