@@ -27,6 +27,8 @@ public class Client {
     public ObjectOutputStream objectSender;
     private ThreadClient threadClient;
     
+    private Jugador jugador;
+    
     public String name;
 
     public Client(FrameClient refFrame, String name) {
@@ -64,7 +66,14 @@ public class Client {
     public ObjectOutputStream getObjectSender() {
         return objectSender;
     }
-    
+
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
+    }
+
+    public Jugador getJugador() {
+        return jugador;
+    }
     
 
     public FrameClient getRefFrame() {

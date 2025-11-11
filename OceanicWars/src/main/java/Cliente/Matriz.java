@@ -7,6 +7,7 @@ package Cliente;
 import Hero.Hero;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JPanel;
@@ -16,7 +17,7 @@ import javax.swing.JPanel;
  * @author kokoju
  */
 
-public class Matriz extends JPanel { // Hereda de JPanel para la creación de componentes visuales
+public class Matriz extends JPanel implements Serializable { // Hereda de JPanel para la creación de componentes visuales
     // Atributos
     // Cantidades (tanto de filas como columnas)
     private final int cantidadFilas;

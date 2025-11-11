@@ -49,7 +49,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(102, 255, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,7 +58,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(102, 255, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Iniciar Servidor");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,7 +67,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(102, 255, 255));
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Entrar a servidor");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

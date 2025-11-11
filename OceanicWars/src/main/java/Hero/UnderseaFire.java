@@ -8,6 +8,7 @@ import Ataques.Ataque;
 import Ataques.TermalRush;
 import Ataques.VolcanoExplosion;
 import Ataques.VolcanoRaising;
+import Cliente.Casilla;
 import Cliente.Jugador;
 import java.awt.Color;
 import java.awt.Point;
@@ -17,7 +18,7 @@ import java.awt.Point;
  * @author kokoju
  */
 
-public abstract class UnderseaFire extends Hero {
+public class UnderseaFire extends Hero {
     // Color por defecto para este arquetipo
     public static final Color COLOR_DEFAULT = Color.RED;
 
@@ -28,6 +29,7 @@ public abstract class UnderseaFire extends Hero {
             int resistencia) {
         super(nombre, imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
+
 
     public void habilidad1(Jugador contrincante, Point casillaElegida) {
         Ataque habilidad1 = new VolcanoRaising(this, contrincante, casillaElegida);
@@ -44,8 +46,55 @@ public abstract class UnderseaFire extends Hero {
         habilidad3.ejecutar();
     }
 
+    //TODO buscarAtaque y realizarAtaque estan hechos con copilot, es algo provisional
     @Override
-    public String getArquetipo() {
-        return "Undersea Fire";
+    public boolean buscarAtaque(String[] comando) {
+        if (comando == null || comando.length < 4) return false;
+        String tipo = comando[3].toUpperCase();
+        switch (tipo) {
+            case "VOLCANORAISING":
+            case "VOLCANOEXPLOSION":
+            case "TERMALRUSH": {
+                if (comando.length < 6) return false;
+                if (this.getMatrizAtaque() == null) return false;
+                try {
+                    int x = Integer.parseInt(comando[4]);
+                    int y = Integer.parseInt(comando[5]);
+                    if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
+                    Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
+                    if (c == null) return false;
+                    if (c.getObjetoPresente() != null) return false;
+                } catch (NumberFormatException ex) { return false; }
+                return true;
+            }
+            default:
+                return false;
+        }
     }
+
+    @Override
+    public void realizarAtaque(Jugador atacado, String[] comando) {
+        if (comando == null || comando.length < 4) return;
+        String tipo = comando[3].toUpperCase();
+        switch (tipo) {
+            case "VOLCANORAISING":
+            case "VOLCANOEXPLOSION":
+            case "TERMALRUSH": {
+                try {
+                    int x = Integer.parseInt(comando[4]);
+                    int y = Integer.parseInt(comando[5]);
+                    Point p = new Point(x, y);
+                    if ("VOLCANORAISING".equals(tipo)) this.habilidad1(atacado, p);
+                    else if ("VOLCANOEXPLOSION".equals(tipo)) this.habilidad2(atacado, p);
+                    else this.habilidad3(atacado, p);
+                } catch (Exception ex) { }
+                break;
+            }
+        }
+    }
+
+    public String getArquetipo() { 
+        return "Undersea Fire"; 
+    }
+
 }

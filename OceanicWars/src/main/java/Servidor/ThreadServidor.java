@@ -5,6 +5,8 @@
 package Servidor;
 
 import Models.Command;
+import Models.CommandType;
+import static Models.CommandType.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -56,8 +58,10 @@ public class ThreadServidor extends Thread{
                 server.refFrame.writeMessage("ThreadServer recibió: " + comando);
                 comando.processForServer(this);
                 
-                if (isActive)
-                    server.executeCommand(comando);
+                if (isActive) { 
+                    server.executeCommand(comando, this);
+                }
+                        
                 
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -65,6 +69,26 @@ public class ThreadServidor extends Thread{
                 System.out.println(ex.getMessage());
             }  
         } 
+    }
+    
+    //Funcion para ejecutar el comadno en la consola propia del que lo envia
+    public void processOwnCommand(Command comando){
+        if (comando.getParameters().length <= 0)
+            return;
+        
+        String searchName = this.name;
+        
+        for (ThreadServidor client : server.getConnectedClients()) {
+            if (client.name.toUpperCase().equals(searchName)){
+                try {
+                //simulo enviar solo al primero, pero debe buscarse por nombre
+                    client.objectSender.writeObject(comando);
+                    break;
+                } catch (IOException ex) {
+                
+                }
+            }
+        }
     }
     
     public void showAllClients (){

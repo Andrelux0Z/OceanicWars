@@ -8,6 +8,7 @@ import Cliente.Casilla;
 import Cliente.Jugador;
 import Cliente.Matriz;
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  * @author kokoju
  */
 
-public abstract class Hero {
+public abstract class Hero implements Serializable {
     // Atributos
     private String nombre; // Nombre mostrado
     private String imagen; // Dirección de la imágen
@@ -45,7 +46,43 @@ public abstract class Hero {
         this.resistencia = resistencia;
         this.siguientePotenciado = false;
     }
+    
 
+    // Métodos 
+    //TODO CREAR LOGICA
+    public void Heal(){
+        
+    }
+    
+    public void Strenghten() {
+        this.siguientePotenciado = true;
+    }
+    
+    public void Protect() {
+        
+    }
+    
+    public abstract void realizarAtaque(Jugador atacado,String[] comando);
+    
+    public abstract boolean buscarAtaque(String[] comando); //Es boolean para indicar si el ataque se realizo con exito
+    
+    public boolean activarBoost(String boostCommand){ //Boolean para validar si es correcto o no el boost enviado
+        
+        switch(boostCommand) {   
+            case "PROTECT":
+                this.Protect();
+                return true;
+            case "STRENGHTEN":
+                this.Strenghten();
+                return true;
+            case "HEAL":
+                this.Heal();
+                return true;
+            default:
+                return false;     
+        }
+    }
+    
     // Métodos
     public void verificarMuerte() {  // Función para correr cada que una casilla es golpeada
         boolean algunaViva = false;  // Booleano que lleva la cuenta de si existe alguna casilla viva
@@ -102,6 +139,10 @@ public abstract class Hero {
 
     public Matriz getMatrizAtaque() {
         return matrizAtaque;
+    }
+
+    public boolean isSiguientePotenciado() {
+        return siguientePotenciado;
     }
 
     // Setters

@@ -13,6 +13,7 @@ import Models.CommandUtil;
 import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -287,7 +288,8 @@ public class FrameClient extends javax.swing.JFrame {
             llenarInfoHeroe(textoHeroe, porcentaje, tipoSeleccionado, arquetipoHeroe, colorHeroe);
         }
 
-        // Crear la matriz con los héroes configurados
+        // Crear la matriz con los héroes configurados y el jugador respectivo
+        this.client.setJugador(new Jugador(this.client.name,matriz,matriz.getHeroes(),new ArrayList<String>()));
         matriz.crearMatriz();
         matriz.repaint();
 
@@ -572,7 +574,7 @@ public class FrameClient extends javax.swing.JFrame {
             if (args.length > 0) {
                 Command comando = CommandFactory.getCommand(args);
                 if (comando != null) {
-                    try {
+                    try {   
                         client.objectSender.writeObject(comando);
                     } catch (IOException ex) {
 
@@ -676,5 +678,10 @@ public class FrameClient extends javax.swing.JFrame {
     public JTextField getTxfCommand() {
         return txfCommand;
     }
+
+    public Matriz getMatriz() {
+        return matriz;
+    }
+    
 
 }
