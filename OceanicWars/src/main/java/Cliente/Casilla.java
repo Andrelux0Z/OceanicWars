@@ -72,6 +72,10 @@ public class Casilla {
         return defensa;
     }
 
+    public Hero getHero() {
+        return hero;
+    }
+    
     public String getNombreHero() {
         return hero.getNombre();
     }
