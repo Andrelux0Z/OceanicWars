@@ -14,6 +14,8 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -77,35 +79,64 @@ public class FrameClient extends javax.swing.JFrame {
     }
 
     private boolean inicializarHeroes() {
-        // Arreglo con los héroes disponibles (2 por cada arquetipo)
-        String[] tiposHeroes = {
-                "Goku",
-                "Zanka",
-                "Alien",
-                "Frisk",
-                "Omniman",
-                "James",
-                "Tentaculo",
-                "Papaleta",
-                "Luffy",
-                "Popeye",
-                "Forky",
-                "Penitente"
+        // Definir los arquetipos disponibles
+        String[] arquetipos = {
+                "Thunders Under The Sea",
+                "Fish Telepathy",
+                "Release The Kraken",
+                "Waves Control",
+                "The Trident",
+                "Undersea Volcanoes"
         };
+        
+        // Mapear arquetipos a héroes disponibles
+        Map<String, String[]> heroesPorArquetipo = new HashMap<>();
+        heroesPorArquetipo.put("Thunders Under The Sea", new String[]{"Goku", "Zanka"});
+        heroesPorArquetipo.put("Fish Telepathy", new String[]{"Alien", "Frisk"});
+        heroesPorArquetipo.put("Release The Kraken", new String[]{"Omniman", "James"});
+        heroesPorArquetipo.put("Waves Control", new String[]{"Tentaculo", "Papaleta"});
+        heroesPorArquetipo.put("The Trident", new String[]{"Luffy", "Popeye"});
+        heroesPorArquetipo.put("Undersea Volcanoes", new String[]{"Forky", "Penitente"});
 
         int porcentajeTotal = 0;
+        
+        // Estadísticas disponibles
+        int disponibles100 = 3;
+        int disponibles75 = 3;
+        int disponibles50 = 3;
+        
+        // Guardar las estadísticas de cada héroe 
+        ArrayList<int[]> estadisticasHeroes = new ArrayList<>();
 
         // Pedir datos para cada uno de los 3 héroes
         for (int i = 0; i != 3; i++) {
-            // Seleccionar tipo de héroe
+            // Primero, seleccionar el arquetipo
+            String arquetipoSeleccionado = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Selecciona el arquetipo del héroe #" + (i + 1) + ":",
+                    "Selección de Arquetipo",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    arquetipos,
+                    arquetipos[i % arquetipos.length]);
+
+            // Si el usuario cierra la ventana, cancelar todo
+            if (arquetipoSeleccionado == null) {
+                return false;
+            }
+            
+            // Obtener los héroes correspondientes al arquetipo seleccionado
+            String[] heroesDisponibles = heroesPorArquetipo.get(arquetipoSeleccionado);
+            
+            // Ahora, seleccionar el héroe específico dentro del arquetipo
             String tipoSeleccionado = (String) JOptionPane.showInputDialog(
                     this,
-                    "Selecciona el tipo de héroe #" + (i + 1) + ":",
+                    "Selecciona el héroe del arquetipo \"" + arquetipoSeleccionado + "\":",
                     "Selección de Héroe",
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    tiposHeroes,
-                    tiposHeroes[i % tiposHeroes.length]);
+                    heroesDisponibles,
+                    heroesDisponibles[0]);
 
             // Si el usuario cierra la ventana, cancelar todo
             if (tipoSeleccionado == null) {
@@ -160,6 +191,88 @@ public class FrameClient extends javax.swing.JFrame {
 
             porcentajeTotal += porcentaje;
 
+            // Seleccionar las estadísticas del héroe (Sanidad, Fuerza, Resistencia)
+            String[] nombresEstadisticas = {"Sanidad", "Fuerza", "Resistencia"};
+            int[] estadisticasHeroe = new int[3];
+            
+            for (int j = 0; j < 3; j++) {
+                // Crear botones personalizados para cada opción disponible
+                Object[] opciones;
+                ArrayList<Integer> valoresDisponibles = new ArrayList<>();
+                
+                if (disponibles100 > 0) valoresDisponibles.add(100);
+                if (disponibles75 > 0) valoresDisponibles.add(75);
+                if (disponibles50 > 0) valoresDisponibles.add(50);
+                
+                // Crear las opciones de botones con el conteo
+                opciones = new Object[valoresDisponibles.size()];
+                for (int k = 0; k < valoresDisponibles.size(); k++) {
+                    int valor = valoresDisponibles.get(k);
+                    int count;
+                    String textoDisponible;
+                    
+                    if (valor == 100) {
+                        count = disponibles100;
+                        if (disponibles100 > 1) {
+                            textoDisponible = "s";
+                        } else {
+                            textoDisponible = "";
+                        }
+                    } else if (valor == 75) {
+                        count = disponibles75;
+                        if (disponibles75 > 1) {
+                            textoDisponible = "s";
+                        } else {
+                            textoDisponible = "";
+                        }
+                    } else {
+                        count = disponibles50;
+                        if (disponibles50 > 1) {
+                            textoDisponible = "s";
+                        } else {
+                            textoDisponible = "";
+                        }
+                    }
+                    
+                    opciones[k] = valor + " (" + count + " disponible" + textoDisponible + ")";
+                }
+                
+                int seleccion = JOptionPane.showOptionDialog(
+                        this,
+                        "Héroe #" + (i + 1) + " - " + tipoSeleccionado + "\n" +
+                        "Selecciona el valor para " + nombresEstadisticas[j] + ":\n\n" +
+                        "Estadísticas disponibles:\n" +
+                        "  100: " + disponibles100 + " disponible(s)\n" +
+                        "  75: " + disponibles75 + " disponible(s)\n" +
+                        "  50: " + disponibles50 + " disponible(s)",
+                        "Selección de Estadísticas",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[0]);
+                
+                // Si el usuario cierra la ventana
+                if (seleccion == JOptionPane.CLOSED_OPTION) {
+                    return false;
+                }
+                
+                int valorEstadistica = valoresDisponibles.get(seleccion);
+                estadisticasHeroe[j] = valorEstadistica;
+                
+                // Decrementar el contador correspondiente
+                if (valorEstadistica == 100) {
+                    disponibles100--;
+                } else if (valorEstadistica == 75) {
+                    disponibles75--;
+                } else if (valorEstadistica == 50) {
+                    disponibles50--;
+                }
+            }
+            
+            // Guardar las estadísticas del héroe
+            estadisticasHeroes.add(estadisticasHeroe);
+
             // Obtener el color e imagen por defecto según el tipo de héroe seleccionado
             java.awt.Color colorHeroe;
             String imagePath;
@@ -184,62 +297,62 @@ public class FrameClient extends javax.swing.JFrame {
                 case "Goku":
                     colorHeroe = Goku.COLOR;
                     imagePath = Goku.IMAGE_PATH;
-                    heroeCreado = new Goku(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Goku(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Zanka":
                     colorHeroe = Zanka.COLOR;
                     imagePath = Zanka.IMAGE_PATH;
-                    heroeCreado = new Zanka(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Zanka(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Alien":
                     colorHeroe = Alien.COLOR;
                     imagePath = Alien.IMAGE_PATH;
-                    heroeCreado = new Alien(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Alien(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Frisk":
                     colorHeroe = Frisk.COLOR;
                     imagePath = Frisk.IMAGE_PATH;
-                    heroeCreado = new Frisk(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Frisk(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Omniman":
                     colorHeroe = Omniman.COLOR;
                     imagePath = Omniman.IMAGE_PATH;
-                    heroeCreado = new Omniman(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Omniman(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "James":
                     colorHeroe = James.COLOR;
                     imagePath = James.IMAGE_PATH;
-                    heroeCreado = new James(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new James(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Tentaculo":
                     colorHeroe = Tentaculo.COLOR;
                     imagePath = Tentaculo.IMAGE_PATH;
-                    heroeCreado = new Tentaculo(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Tentaculo(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Papaleta":
                     colorHeroe = Papaleta.COLOR;
                     imagePath = Papaleta.IMAGE_PATH;
-                    heroeCreado = new Papaleta(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Papaleta(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Luffy":
                     colorHeroe = Luffy.COLOR;
                     imagePath = Luffy.IMAGE_PATH;
-                    heroeCreado = new Luffy(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Luffy(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Popeye":
                     colorHeroe = Popeye.COLOR;
                     imagePath = Popeye.IMAGE_PATH;
-                    heroeCreado = new Popeye(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Popeye(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Forky":
                     colorHeroe = Forky.COLOR;
                     imagePath = Forky.IMAGE_PATH;
-                    heroeCreado = new Forky(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Forky(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 case "Penitente":
                     colorHeroe = Penitente.COLOR;
                     imagePath = Penitente.IMAGE_PATH;
-                    heroeCreado = new Penitente(colorHeroe, porcentaje, 10, 10, 10);
+                    heroeCreado = new Penitente(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 default:
                     colorHeroe = java.awt.Color.BLACK;
@@ -285,7 +398,8 @@ public class FrameClient extends javax.swing.JFrame {
             }
 
             // Llenar el TextPane con la información del héroe usando el método con colores
-            llenarInfoHeroe(textoHeroe, porcentaje, tipoSeleccionado, arquetipoHeroe, colorHeroe);
+            llenarInfoHeroe(textoHeroe, porcentaje, tipoSeleccionado, arquetipoHeroe, colorHeroe, 
+                           estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
         }
 
         // Crear la matriz con los héroes configurados y el jugador respectivo
@@ -302,7 +416,7 @@ public class FrameClient extends javax.swing.JFrame {
     }
 
     private void llenarInfoHeroe(javax.swing.JTextPane textPane, int porcentaje, String nombreHeroe,
-            String arquetipoHeroe, java.awt.Color colorHeroe) {
+            String arquetipoHeroe, java.awt.Color colorHeroe, int sanidad, int fuerza, int resistencia) {
         StyledDocument doc = textPane.getStyledDocument();
 
         try {
@@ -329,10 +443,10 @@ public class FrameClient extends javax.swing.JFrame {
             // Insertar el arquetipo (gris, cursiva)
             doc.insertString(doc.getLength(), arquetipoHeroe + "\n", estiloArquetipo);
 
-            // Insertar el resto de la información (negro)
-            doc.insertString(doc.getLength(), "Fuerza: 10\n", estiloNormal);
-            doc.insertString(doc.getLength(), "Resistencia: 10\n", estiloNormal);
-            doc.insertString(doc.getLength(), "Sanidad: 10", estiloNormal);
+            // Insertar las estadísticas reales del héroe (negro)
+            doc.insertString(doc.getLength(), "Sanidad: " + sanidad + "\n", estiloNormal);
+            doc.insertString(doc.getLength(), "Fuerza: " + fuerza + "\n", estiloNormal);
+            doc.insertString(doc.getLength(), "Resistencia: " + resistencia, estiloNormal);
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
