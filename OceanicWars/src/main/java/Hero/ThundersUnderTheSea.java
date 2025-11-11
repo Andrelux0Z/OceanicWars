@@ -15,7 +15,7 @@ import java.awt.Color;
  *
  * @author kokoju
  */
-public abstract class ThundersUnderTheSea extends Hero {
+public class ThundersUnderTheSea extends Hero {
     // Color por defecto para este arquetipo
     public static final Color COLOR_DEFAULT = Color.BLUE;
 
@@ -27,9 +27,7 @@ public abstract class ThundersUnderTheSea extends Hero {
         super(nombre, imagen, color, ocupacion, sanidad, fuerza, resistencia);
     }
 
-    public ThundersUnderTheSea() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
 
     public void habilidad1(Jugador contrincante) {
         Ataque habilidad1 = new ThunderRain(this, contrincante);
@@ -48,14 +46,35 @@ public abstract class ThundersUnderTheSea extends Hero {
 
     @Override
     public boolean buscarAtaque(String[] comando) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (comando == null || comando.length < 4) return false;
+        String tipo = comando[3].toUpperCase();
+        switch (tipo) {
+            case "THUNDERRAIN":
+            case "POSEIDONTHUNDERS":
+            case "EELATTACK":
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override
-    public void realizarAtaque(Jugador atacado,String[] comando) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    public String getArquetipo() {
-        return "Thunders Under The Sea";
+    public void realizarAtaque(Jugador atacado, String[] comando) {
+        if (comando == null || comando.length < 4) return;
+        String tipo = comando[3].toUpperCase();
+        switch (tipo) {
+            case "THUNDERRAIN":
+                this.habilidad1(atacado);
+                break;
+            case "POSEIDONTHUNDERS":
+                this.habilidad2(atacado);
+                break;
+            case "EELATTACK":
+                this.habilidad3(atacado);
+                break;
+        }
     }
+
+    public String getArquetipo() { return "Thunders Under The Sea"; }
 
 }

@@ -4,17 +4,17 @@
  */
 package Hero;
 
-import Ataques.Ataque;
 import Cliente.Jugador;
 import Cliente.Matriz;
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  *
  * @author kokoju
  */
 
-public abstract class Hero {
+public abstract class Hero implements Serializable {
     // Atributos
     String nombre; // Nombre mostrado
     String imagen; // Dirección de la imágen
@@ -41,9 +41,6 @@ public abstract class Hero {
         this.siguientePotenciado = false;
     }
     
-    public Hero(){
-        //Heroe provisional creado para acceder a sus ataques
-    }
 
     // Métodos 
     //TODO CREAR LOGICA
@@ -59,10 +56,26 @@ public abstract class Hero {
         
     }
     
-    
     public abstract void realizarAtaque(Jugador atacado,String[] comando);
     
     public abstract boolean buscarAtaque(String[] comando); //Es boolean para indicar si el ataque se realizo con exito
+    
+    public boolean activarBoost(String boostCommand){ //Boolean para validar si es correcto o no el boost enviado
+        
+        switch(boostCommand) {   
+            case "PROTECT":
+                this.Protect();
+                return true;
+            case "STRENGHTEN":
+                this.Strenghten();
+                return true;
+            case "HEAL":
+                this.Heal();
+                return true;
+            default:
+                return false;     
+        }
+    }
     
     // Getters
     public String getNombre() {
@@ -105,6 +118,10 @@ public abstract class Hero {
 
     public Matriz getMatrizAtaque() {
         return matrizAtaque;
+    }
+
+    public boolean isSiguientePotenciado() {
+        return siguientePotenciado;
     }
 
     // Setters

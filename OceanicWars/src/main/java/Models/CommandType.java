@@ -10,7 +10,8 @@ package Models;
  */
 public enum CommandType {
     ATTACK (4),  //attack Andres 4 5
-    APPLYATTACK (4),
+    APPLYATTACK (4), //
+    ATTACK_RESULT (3), // attack result notifications: ATTACK_RESULT <recipient> <message>
     MESSAGE (2), //message hola a todos
     PRIVATE_MESSAGE(3), //private Andres hola andres
     GIVEUP (1), //giveup

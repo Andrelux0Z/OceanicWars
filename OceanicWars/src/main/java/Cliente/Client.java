@@ -67,6 +67,10 @@ public class Client {
         return objectSender;
     }
 
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
+    }
+
     public Jugador getJugador() {
         return jugador;
     }

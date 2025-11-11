@@ -4,6 +4,7 @@
  */
 package Cliente;
 import Hero.Hero;
+import Hero.HeroPackage;
 import java.util.ArrayList;
 
 /**
@@ -28,12 +29,36 @@ public class Jugador {  // Clase del Jugador: guarda su matriz, sus 3 héroes el
     }
     
     public Hero buscarHeroe(String nombre){
+        if (nombre == null) 
+            return null;
+
         for(int i=0;i<this.heroes.size();i++)
-            if(this.heroes.get(i).getNombre().toUpperCase().equals(nombre)){
+            if(this.heroes.get(i).getNombre().equalsIgnoreCase(nombre)){
                 return this.heroes.get(i);
             }
         return null;
     }
+
+    // Construye un HeroPackage serializable a partir de un héroe local
+    public HeroPackage buildHeroPackage(String nombreHero) {
+        Hero heroe = this.buscarHeroe(nombreHero);
+
+        if (heroe == null) 
+            return null;
+
+        // Verificacion de superclase para obtener el tipo correcto
+        Class<?> cls = heroe.getClass();
+        String heroTypeRaw = cls.getSimpleName();
+        //Validacion que no deberia suceder pero por si acaso: si la superclase es hero, se usa esta misma
+        if (cls.getSuperclass() != null && !cls.getSuperclass().getSimpleName().equals("Hero")) {
+            heroTypeRaw = cls.getSuperclass().getSimpleName();
+        }
+
+        String heroType = heroTypeRaw.toUpperCase();
+        return 
+            new HeroPackage(heroType, this.nombre, heroe.getOcupacion(), heroe.getSanidad(), heroe.getFuerza(), heroe.getResistencia(), heroe.isSiguientePotenciado());
+    }
+    
     
     // Métodos
     // Getters

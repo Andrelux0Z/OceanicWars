@@ -12,24 +12,13 @@ import Cliente.Jugador;
 import java.awt.Color;
 
 /**
- *
- * @author kokoju
+ * FishTelepathy hero implementation
  */
-
-public abstract class FishTelepathy extends Hero {
-    // Color por defecto para este arquetipo
+public class FishTelepathy extends Hero {
     public static final Color COLOR_DEFAULT = Color.CYAN;
 
-    // Constructor
-    // (String nombre, String imagen, Color color, int ocupacion, int sanidad, int
-    // fuerza, int resistencia)
-    public FishTelepathy(String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza,
-            int resistencia) {
+    public FishTelepathy(String nombre,String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
         super(nombre, imagen, color, ocupacion, sanidad, fuerza, resistencia);
-    }
-
-    public FishTelepathy() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public void habilidad1(Jugador contrincante) {
@@ -48,39 +37,39 @@ public abstract class FishTelepathy extends Hero {
     }
 
     @Override
-    public boolean buscarAtaque(String[] comando) {   //Si encuentra el ataque o no
+    public boolean buscarAtaque(String[] comando) {
+        if (comando == null || comando.length < 4) return false;
         String tipoAtaque = comando[3].toUpperCase();
-        
         switch (tipoAtaque) {
             case "CARDUMEN":
-                return true;
             case "SHARKATTACK":
-                return true;
             case "PULP":
+                // No requieren parámetros extra de posicionamiento
                 return true;
             default:
                 return false;
         }
     }
-     
-    
+
     @Override
-    public void realizarAtaque(Jugador atacado,String[] comando) {  
+    public void realizarAtaque(Jugador atacado, String[] comando) {
+        if (comando == null || comando.length < 4) return;
         String tipoAtaque = comando[3].toUpperCase();
-        
         switch (tipoAtaque) {
             case "CARDUMEN":
                 this.habilidad1(atacado);
+                break;
             case "SHARKATTACK":
                 this.habilidad2(atacado);
+                break;
             case "PULP":
                 this.habilidad3(atacado);
+                break;
         }
     }
-    
-    
-    public String getArquetipo() {
-        return "Fish Telepathy";
-    }
 
+    @Override
+    public String getArquetipo() {
+        return "Undersea Fire"; 
+    }
 }

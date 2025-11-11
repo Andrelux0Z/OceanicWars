@@ -7,6 +7,7 @@ package Models;
 import Cliente.Client;
 import Cliente.Jugador;
 import Hero.Hero;
+import Hero.HeroPackage;
 import Servidor.ThreadServidor;
 import java.io.IOException;
 
@@ -26,28 +27,60 @@ public class CommandAttack extends Command{
     }
             
     @Override
-    public void processInClient(Client cliente) { //Cliente
-        //Forma: ATTACK <contrincante> <Heroe> <TipoAtaque> <x> <y>
-        //Crear una forma para realizar un ataque en la matriz del cliente enemigo, el cliente recibido es el enemigo, por lo que se deberia buscar la forma de implementar los ataque
-        //de los heres dependiendo de cual sea en esta funcion, proponer soluciones tanto en esta funcion, como modificaciones en la logica de otras clases (como una clase similar a commandFactory
-        //pero para el heroe typeado y el ataque typeado)
+    public void processInClient(Client cliente) { //Cliente     
         
-        
-        
+        Command sendComando;
+        boolean flag = false;       //Indica si se detecta un error
         Jugador atacante = cliente.getJugador();
-        Hero heroeAtacante = atacante.buscarHeroe(this.getParameters()[2]);       
-        if(!heroeAtacante.buscarAtaque(this.getParameters()))
-            cliente.getRefFrame().writeMessage("No se ha podido realizar el ataque, comando incorrecto"); //En caso de que algo falle al realizar el ataque
-        else {
-            Command sendComando = new CommandApplyAttack(this.getParameters());
-            try {
-                cliente.objectSender.writeObject(sendComando);
-            } catch (IOException ex) {
-                System.getLogger(CommandAttack.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
+
+        // Validar que el jugador local esté inicializado
+        if (atacante == null) {
+            if (cliente.getRefFrame() != null) cliente.getRefFrame().writeMessage("Imposible realizar ataque: jugador local no inicializado");
+            return;
         }
-        
+
+        String[] params = this.getParameters();
+        if (params == null || params.length < 4) {
+            cliente.getRefFrame().writeMessage("Parámetros insuficientes para ATTACK");
+            return;
+        }
+
+        Hero heroeAtacante = atacante.buscarHeroe(params[2]);
+        // Ver si el heroe existe
+        if (heroeAtacante == null) {
+            cliente.getRefFrame().writeMessage("El heroe escrito no existe");
+            flag = true;
+            
+        // Ver si el ataque y parametros extra son correctos
+        } else if (!heroeAtacante.buscarAtaque(params)) {   // Ya valida parametros extra
+            cliente.getRefFrame().writeMessage("El ataque escrito no existe");
+            flag = true;
+        }
+
+        if (flag) return;
+
+        // Construir payload con HeroPackage
+        String attackerName = cliente.name;
+        String targetName = params[1];
+        String heroType = params[2];
+        String attackType = params[3];
+        String[] extras = new String[params.length - 4];
+        for (int i = 4; i < params.length; i++) extras[i - 4] = params[i];
+
+        HeroPackage hp = null;
+        if (atacante != null) hp = atacante.buildHeroPackage(params[2]);
+
+        AttackPayload payload = new AttackPayload(attackerName, targetName, heroType, attackType, extras, hp);
+        sendComando = new CommandApplyAttack(payload);
+
+        try {
+            cliente.objectSender.writeObject(sendComando);
+        } catch (IOException ex) {
+            System.getLogger(CommandAttack.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
     }
-   
-    
+
+
+
 }

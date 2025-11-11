@@ -28,7 +28,7 @@ public abstract class Command implements Serializable{
     public void processInClient(Client client){
         client.getRefFrame().writeMessage(this.toString());
     }
-
+    
     public CommandType getType() {
         return type;
     }

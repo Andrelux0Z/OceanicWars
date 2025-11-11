@@ -5,6 +5,13 @@
 package Servidor;
 
 import Models.Command;
+import Models.CommandFactory;
+import Models.CommandType;
+import Models.CommandApplyAttack;
+import Models.AttackPayload;
+import Hero.HeroFactory;
+import Hero.Hero;
+import static Models.CommandType.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -43,13 +50,55 @@ public class Server {
         }
     }
     
-    void executeCommand(Command comando) {
+    void executeCommand(Command comando, ThreadServidor origin) {
+        // Si es un ApplyyAttack, validar el payload antes de reenviar
+        try {
+            if (comando.getType() == APPLYATTACK) {
+
+                if (comando instanceof CommandApplyAttack) {
+
+                    CommandApplyAttack ca = (CommandApplyAttack) comando;
+                    AttackPayload payload = ca.getPayload();
+
+                    if (payload != null && payload.getHeroPackage() != null) {
+                        Hero prueba = HeroFactory.createFromPackage(payload.getHeroPackage());
+                        if (prueba == null) {
+                            
+                            // Noticar al que envia el ataque que hubo un error utilizando ATTACK_RESULT
+                            String msg = "Server: invalid HeroPackage in attack from '" + payload.getAttackerName() + "'";
+                            String[] args = new String[]{"ATTACK_RESULT", origin.name, msg};
+                            
+                            try {
+                                origin.objectSender.writeObject(CommandFactory.getCommand(args));
+                            } catch (IOException e) {
+                                // ignore
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            // validation failure; notify origin and stop
+            try {
+                String[] args = new String[]{"ATTACK_RESULT", origin.name, "Server: error validating attack payload"};
+                origin.objectSender.writeObject(CommandFactory.getCommand(args));
+            } catch (IOException e) {
+            }
+            return;
+        }
+        
+
+        // Reenviar el comando según su tipo de difusión
         if (comando.getIsBroadcast())
             this.broadcast(comando);
         else
-            this.sendPrivate(comando);
-
+            if(comando.getType() == PRIVATE_MESSAGE)
+                this.sendPrivate(comando);
+            else
+                processPrivate(comando,origin);
     }
+
     
     public void broadcast(Command comando){
         for (ThreadServidor client : connectedClients) {
@@ -60,6 +109,19 @@ public class Server {
             }
         }
 
+    }
+    
+    
+    public void processPrivate(Command comando,ThreadServidor own){
+        if (comando.getParameters().length <= 1)
+            return;
+        
+                try {
+                    own.objectSender.writeObject(comando);
+                    
+                } catch (IOException ex) {
+                
+                }
     }
     
     public void sendPrivate(Command comando){
@@ -82,25 +144,7 @@ public class Server {
         }
     }
     
-    public void attackPrivate(Command comando){
-        //asumo que el nombre del cliente viene en la posición 1 .  private_message Andres "Hola"
-        if (comando.getParameters().length <= 4)
-            return;
-        
-        String searchName =  comando.getParameters()[1].toUpperCase(); 
-        
-        for (ThreadServidor client : connectedClients) {
-            if (client.name.toUpperCase().equals(searchName)){
-                try {
-                    client.objectSender.writeObject(comando);
-                } catch (IOException ex) {
-                    System.getLogger(Server.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
-                return;
-            }
-        }
-        
-    }
+
     
     
     public void showAllNames(){

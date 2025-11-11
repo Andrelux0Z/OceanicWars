@@ -31,6 +31,7 @@ public class ThunderRain extends Ataque {
             Casilla casilla = matriz.getCasillasActivas().get(rand.nextInt(matriz.getCasillasActivas().size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
             casilla.recibirGolpe(golpeRayo);  // Golpea a la casilla
             casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por un rayo del 'Thunder Rain' de " + hero.getNombre() + ", recibiendo " + golpeRayo + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+            System.out.println(casilla.getVida());
         }
     }
     
