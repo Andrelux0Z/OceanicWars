@@ -12,7 +12,7 @@ import java.awt.Color;
  * @author kokoju
  */
 public class Pim extends ThundersUnderTheSea {
-    public static final String IMAGE_PATH = "/zanka.png";
+    public static final String IMAGE_PATH = "/pim.png";
     public static final Color COLOR = new Color(253, 181, 246); // Rosado
 
     public Pim(Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {

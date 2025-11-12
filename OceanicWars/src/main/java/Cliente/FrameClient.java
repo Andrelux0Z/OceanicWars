@@ -4,17 +4,7 @@
  */
 package Cliente;
 
-import Hero.Customs.Papaleta;
-import Hero.Customs.Omniman;
-import Hero.Customs.James;
-import Hero.Customs.Goku;
-import Hero.Customs.Frisk;
-import Hero.Customs.Forky;
-import Hero.Customs.Alien;
-import Hero.Customs.Penitente;
-import Hero.Customs.Popeye;
-import Hero.Customs.Luffy;
-import Hero.Customs.Zanka;
+import Hero.Customs.*;
 import Hero.*;
 import Models.Command;
 import Models.CommandAttack;
@@ -102,9 +92,9 @@ public class FrameClient extends javax.swing.JFrame {
         
         // Mapear arquetipos a héroes disponibles
         Map<String, String[]> heroesPorArquetipo = new HashMap<>();
-        heroesPorArquetipo.put("Thunders Under The Sea", new String[]{"Goku", "Zanka"});
+        heroesPorArquetipo.put("Thunders Under The Sea", new String[]{"Goku", "Zanka", "Pim"});
         heroesPorArquetipo.put("Fish Telepathy", new String[]{"Alien", "Frisk"});
-        heroesPorArquetipo.put("Release The Kraken", new String[]{"Omniman", "James"});
+        heroesPorArquetipo.put("Release The Kraken", new String[]{"Omniman", "James", "Charlie"});
         heroesPorArquetipo.put("Waves Control", new String[]{"Tentaculo", "Papaleta"});
         heroesPorArquetipo.put("The Trident", new String[]{"Luffy", "Popeye"});
         heroesPorArquetipo.put("Undersea Volcanoes", new String[]{"Forky", "Penitente"});
@@ -364,6 +354,16 @@ public class FrameClient extends javax.swing.JFrame {
                     colorHeroe = Penitente.COLOR;
                     imagePath = Penitente.IMAGE_PATH;
                     heroeCreado = new Penitente(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    break;
+                case "Charlie":
+                    colorHeroe = Charlie.COLOR;
+                    imagePath = Charlie.IMAGE_PATH;
+                    heroeCreado = new Charlie(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    break;
+                case "Pim":
+                    colorHeroe = Pim.COLOR;
+                    imagePath = Pim.IMAGE_PATH;
+                    heroeCreado = new Pim(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
                     break;
                 default:
                     colorHeroe = java.awt.Color.BLACK;
