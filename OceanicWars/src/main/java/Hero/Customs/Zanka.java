@@ -1,5 +1,6 @@
-package Hero;
+package Hero.Customs;
 
+import Hero.ThundersUnderTheSea;
 import java.awt.Color;
 
 /**

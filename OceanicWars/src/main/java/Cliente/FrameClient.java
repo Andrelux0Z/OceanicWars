@@ -4,6 +4,17 @@
  */
 package Cliente;
 
+import Hero.Customs.Papaleta;
+import Hero.Customs.Omniman;
+import Hero.Customs.James;
+import Hero.Customs.Goku;
+import Hero.Customs.Frisk;
+import Hero.Customs.Forky;
+import Hero.Customs.Alien;
+import Hero.Customs.Penitente;
+import Hero.Customs.Popeye;
+import Hero.Customs.Luffy;
+import Hero.Customs.Zanka;
 import Hero.*;
 import Models.Command;
 import Models.CommandAttack;
