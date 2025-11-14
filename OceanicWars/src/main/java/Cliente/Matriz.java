@@ -105,6 +105,10 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
                                                                                       // (se resta 1 para que no
                                                                                       // sobrepase los límites de la
                                                                                       // casilla
+                if (!c.getEstado()) {  // Si la casilla revisada está muerta, se hace una X encima
+                    g.drawLine(j * sizeLargo, i * sizeAlto, (j + 1) * sizeLargo, (i + 1) * sizeAlto);  // Línea diagonal desde la esquina superior izquierda a la esquina inferior derecha
+                    g.drawLine(j * sizeLargo, (i + 1) * sizeAlto, (j + 1) * sizeLargo , i * sizeAlto);  // Línea diagonal desde la esquina inferior izquierda a la esquina superior derecha
+                }
             }
         }
     }
