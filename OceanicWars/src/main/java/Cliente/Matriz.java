@@ -7,6 +7,8 @@ package Cliente;
 import Hero.Hero;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +19,7 @@ import javax.swing.JPanel;
  * @author kokoju
  */
 
-public class Matriz extends JPanel implements Serializable { // Hereda de JPanel para la creación de componentes visuales
+public class Matriz extends JPanel implements Serializable, MouseListener { // Hereda de JPanel para la creación de componentes visuales
     // Atributos
     // Cantidades (tanto de filas como columnas)
     private final int cantidadFilas;
@@ -41,6 +43,10 @@ public class Matriz extends JPanel implements Serializable { // Hereda de JPanel
 
     private FrameClient refCliente; // Referencia al Cliente para acceder a sus espacios
 
+    // Atributos para mostrar información de una casilla
+    private Casilla casillaInfoMostrada;  // Casilla que es ha sido recientemente mostrada en la bitácora
+    private javax.swing.Timer timerInfoCasilla;  // Timer que almacenará el tiempo que fue seleccionado la casilla
+    
     // Constructor
     public Matriz(int cantidadFilas, int cantidadColumnas, FrameClient refCliente) {
         // Se establece el tamaño del componente 'matriz' para que sea el mismo que el
@@ -66,7 +72,11 @@ public class Matriz extends JPanel implements Serializable { // Hereda de JPanel
 
         this.casillasActivas = new ArrayList<Casilla>();
         this.casillasTotales = new ArrayList<Casilla>();
-
+        this.casillaInfoMostrada = null;  // Inicialmente, la casilla mostrada es nula
+        
+        // La matriz misma se suma a la lista de los Listeners del Mouse. Esto es importante para acceder a las bitácoras de las casillas
+        this.addMouseListener(this);
+        
         this.crearMatriz(); // Se crea la matriz
     }
 
@@ -148,6 +158,57 @@ public class Matriz extends JPanel implements Serializable { // Hereda de JPanel
             }
         return false;
     }
+    
+    public Casilla buscarCasillaEnClick(MouseEvent e) {  // Función que, en función de un evento del mouse, consigue sus coords y revisa la casilla pisada
+        int x = e.getX();  // Se consigue el x pisado
+        int y = e.getY();  // Se consigue el y pisado
+        
+        int filaCasilla = x / this.sizeLargo;
+        int columnaCasilla = y / this.sizeAlto;
+        
+        return matriz[filaCasilla][columnaCasilla];
+    }
+    
+    public void iniciarActualizacionInfo() {  // Función que toma una Casilla y muestra su info en el panel del Cliente (txaLastMove
+        String texto = this.casillaInfoMostrada.mostrarInfoCasilla();  // Método encargado de sacar TODA la info de una casilla
+        Typewritter.typeText(this.refCliente.getTxaLastMove(), texto, this.refCliente.getDELAY());
+
+        // Crear un nuevo Timer que actualice cada segundo
+        timerInfoCasilla = new javax.swing.Timer(1000, e -> {
+            casillaInfoMostrada.mostrarInfoCasilla();
+        });
+
+        // Iniciar el Timer
+        timerInfoCasilla.start();
+    }
+
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Casilla casillaElegida = buscarCasillaEnClick(e);  // Se busca la casilla que tocó el jugador
+        this.casillaInfoMostrada = casillaElegida;  // Esta casilla se establece como la casilla de la cual se muestra su info
+        iniciarActualizacionInfo();  // Se llama a la función iniciarActualizacionInfo() para mostrar la información
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println("MOUSE - PRESIONADO");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.println("MOUSE - SOLTADO");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        System.out.println("MOUSE EN COMPONENTE");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        System.out.println("MOUSE SALIÓ DEL COMPONENTE");
+    }
 
     // Getters
     public int getCantidadFilas() {
@@ -185,5 +246,4 @@ public class Matriz extends JPanel implements Serializable { // Hereda de JPanel
     public ArrayList<Hero> getHeroes() {
         return heroes;
     }
-
 }

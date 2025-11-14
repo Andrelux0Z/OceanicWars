@@ -36,6 +36,8 @@ import javax.swing.text.StyledDocument;
  */
 public class FrameClient extends javax.swing.JFrame {
 
+    static final int DELAY = 5;  // Delay para mostrar el texto en milisegundos
+    
     private Client client;
     private Matriz matriz;
 
@@ -67,7 +69,7 @@ public class FrameClient extends javax.swing.JFrame {
         this.setTitle("Cliente de " + name); // Se pone el nombre introducido como título de la ventana
         client = new Client(this, name); // Creamos un nuevo cliente c
         matriz = new Matriz(20, 30, this); // Creación de la matriz (20 filas, 30 columnas y la referencia al frame del
-                                           // cliente)
+                                           // cliente)                               
 
         // Si inicializarHeroes retorna false, significa que el usuario canceló
         if (!inicializarHeroes()) {
@@ -776,6 +778,10 @@ public class FrameClient extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     // Getters
+    public int getDELAY() {
+        return DELAY;
+    }
+    
     public Client getClient() {
         return client;
     }

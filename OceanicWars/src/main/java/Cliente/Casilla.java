@@ -6,6 +6,7 @@ package Cliente;
 import Ataques.ElementosAtaques.ObjetoCasilla;
 import Hero.Hero;
 import java.awt.Color;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -53,6 +54,64 @@ public class Casilla {
             }
         }
     }
+    
+    public String obtenerAtributosString() {  // Función para obtener los atributos definidos de una casilla
+        StringBuilder texto = new StringBuilder();  // Creamos un constructor de Strings
+        Field[] campos = this.getClass().getDeclaredFields();  //  Se consiguen los campos declarados de la clase que revisamos
+        
+        texto.append("  Atributos");
+        
+        for (Field campo : campos) {  // Revisamos cada campo de campos individualmente
+            System.out.println(campo);
+            try {  // Se rodea con un try         
+                if (!"bitacora".equals(campo.getName()))  // Se evita mostrar elementos no textuales, como la bitácora
+                    if (campo.get(this) != null)  // Si el campo no es nulo
+                        texto.append(campo.getName())
+                             .append(": ")
+                             .append(campo.get(this))
+                             .append("\n");  // Separador entre datos
+                    else
+                        texto.append(campo.getName())  // Si lo es, pone 'no tiene' para evitar el null
+                             .append(": no  tiene")
+                             .append("\n");  // Separador entre datos
+            } catch (IllegalAccessException e) {
+                System.out.println("ERROR: " + e.getMessage());
+            }
+        }
+        return texto.toString();
+    }  
+    
+    public String obtenerBitacoraString() {  // Función para mostrar la información de la bitácora de la casilla
+        StringBuilder texto = new StringBuilder();  // Creamos un StringBuilder
+
+        texto.append("  Bitácora");
+
+        if (bitacora.isEmpty()) {
+            texto.append("  (Sin eventos registrados aún)\n");
+        } else {  // Si hay texto, lo añade al StringBuilder
+            for (String evento : bitacora) {
+                texto.append("• ").append(evento).append("\n");
+            }
+        }
+
+        return texto.toString();  // Devuelve la bitácora hecha string para mostrarla
+    }
+    
+    public String mostrarInfoCasilla() {  // Función que junta los atributos y la bitácora de una casilla
+        // Combinar los textos en un solo String
+        StringBuilder texto = new StringBuilder();
+
+        texto.append("Información de la casilla (").append(this.getX()).append(", ").append(this.getY()).append(")");  // Ponemos el mensaje sobre quién es la bitácora
+        
+        texto.append(obtenerAtributosString())  // Primero los datos generales
+            .append("\n---------------------------\n")  // Separador visual
+            .append(obtenerBitacoraString());  // Luego la bitácora
+
+            // Mostrar todo junto en el área de texto
+        
+        return texto.toString();
+    }
+    
     
     
     // Getters
