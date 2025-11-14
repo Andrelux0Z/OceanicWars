@@ -59,20 +59,30 @@ public class Casilla {
         StringBuilder texto = new StringBuilder();  // Creamos un constructor de Strings
         Field[] campos = this.getClass().getDeclaredFields();  //  Se consiguen los campos declarados de la clase que revisamos
         
-        texto.append("  Atributos");
+        texto.append("      Atributos\n");
         
         for (Field campo : campos) {  // Revisamos cada campo de campos individualmente
             System.out.println(campo);
             try {  // Se rodea con un try         
-                if (!"bitacora".equals(campo.getName()))  // Se evita mostrar elementos no textuales, como la bitácora
-                    if (campo.get(this) != null)  // Si el campo no es nulo
-                        texto.append(campo.getName())
+                if (!"bitacora".equals(campo.getName()) && !"matriz".equals(campo.getName()))  // Se evita mostrar elementos no textuales, como la bitácora y la matriz
+                    if (campo.get(this) == null)  // Si el campo está vacío
+                        texto.append("• ")
+                             .append(campo.getName())  // Si lo es, pone 'no tiene' para evitar el null
+                             .append(": no  tiene")
+                             .append("\n");  // Separador entre datos
+                    else if ("hero".equals(campo.getName())) {  // Si el campo que vemos es el del héroe
+                        Hero heroCasilla = (Hero) campo.get(this);  // Se hace un casting al campo del héroe
+                        texto.append("• ")
+                             .append(campo.getName())
+                             .append(": ")
+                             .append(heroCasilla.getNombre())  // Se imprime el nombre del héroe (si no se hiciera esto, se mostraría su dirección de memoria, y no queremos eso
+                             .append("\n");  // Separador entre datos
+                    }
+                    else
+                        texto.append("• ")
+                             .append(campo.getName())
                              .append(": ")
                              .append(campo.get(this))
-                             .append("\n");  // Separador entre datos
-                    else
-                        texto.append(campo.getName())  // Si lo es, pone 'no tiene' para evitar el null
-                             .append(": no  tiene")
                              .append("\n");  // Separador entre datos
             } catch (IllegalAccessException e) {
                 System.out.println("ERROR: " + e.getMessage());
@@ -84,13 +94,14 @@ public class Casilla {
     public String obtenerBitacoraString() {  // Función para mostrar la información de la bitácora de la casilla
         StringBuilder texto = new StringBuilder();  // Creamos un StringBuilder
 
-        texto.append("  Bitácora");
+        texto.append("      Bitácora\n");
 
         if (bitacora.isEmpty()) {
-            texto.append("  (Sin eventos registrados aún)\n");
+            texto.append("(Sin eventos registrados aún)\n");
         } else {  // Si hay texto, lo añade al StringBuilder
             for (String evento : bitacora) {
-                texto.append("• ").append(evento).append("\n");
+                texto.append("• ")
+                     .append(evento).append("\n");
             }
         }
 
@@ -101,9 +112,10 @@ public class Casilla {
         // Combinar los textos en un solo String
         StringBuilder texto = new StringBuilder();
 
-        texto.append("Información de la casilla (").append(this.getX()).append(", ").append(this.getY()).append(")");  // Ponemos el mensaje sobre quién es la bitácora
-        
-        texto.append(obtenerAtributosString())  // Primero los datos generales
+        texto.append("====================\n")
+            .append("INFORMACIÓN DE LA CASILLA (").append(this.getX()).append(", ").append(this.getY()).append(")\n")  // Ponemos el mensaje sobre quién es la bitácora
+            .append("====================\n")
+                .append(obtenerAtributosString())  // Primero los datos generales
             .append("\n---------------------------\n")  // Separador visual
             .append(obtenerBitacoraString());  // Luego la bitácora
 

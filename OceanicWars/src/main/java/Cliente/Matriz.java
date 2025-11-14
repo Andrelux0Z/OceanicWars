@@ -4,6 +4,7 @@
  */
 package Cliente;
 
+import com.mycompany.oceanicwars.Typewritter;
 import Hero.Hero;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -163,9 +164,9 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
         int x = e.getX();  // Se consigue el x pisado
         int y = e.getY();  // Se consigue el y pisado
         
-        int filaCasilla = x / this.sizeLargo;
-        int columnaCasilla = y / this.sizeAlto;
-        
+        int filaCasilla = y / this.sizeAlto;
+        int columnaCasilla = x / this.sizeLargo;
+
         return matriz[filaCasilla][columnaCasilla];
     }
     
