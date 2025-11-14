@@ -172,7 +172,7 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
     
     public void iniciarActualizacionInfo() {  // Función que toma una Casilla y muestra su info en el panel del Cliente (txaLastMove
         String texto = this.casillaInfoMostrada.mostrarInfoCasilla();  // Método encargado de sacar TODA la info de una casilla
-        Typewritter.typeText(this.refCliente.getTxaLastMove(), texto, this.refCliente.getDELAY());
+        Typewritter.typeText(this.refCliente.getTxaLastMove(), texto, this.refCliente.getDELAY());  // Escribe el texto de manera gradual con Typewritter
 
         // Crear un nuevo Timer que actualice cada segundo
         timerInfoCasilla = new javax.swing.Timer(1000, e -> {
