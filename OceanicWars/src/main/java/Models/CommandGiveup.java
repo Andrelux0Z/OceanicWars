@@ -15,6 +15,8 @@ public class CommandGiveup  extends Command{
 
     public CommandGiveup(String[] args) {
         super(CommandType.PRIVATE_MESSAGE, args);
+        this.consumesTurn = false;
+
     }
 
     @Override
@@ -23,8 +25,8 @@ public class CommandGiveup  extends Command{
         threadServidor.isActive = false;
     }
     
-//    @Override
-//    public void processInClient(Client client) {
-//        System.out.println("Procesando un attack");
-//    }
+    @Override
+    public String toString() {
+        return "El jugador ha decidido rendirse";
+    }
 }

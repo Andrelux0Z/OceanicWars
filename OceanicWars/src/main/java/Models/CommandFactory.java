@@ -19,8 +19,8 @@ public class CommandFactory {
                 return new CommandAttack(args);
             case "MESSAGE":
                 return new CommandMessage(args);
-            case "ATTACK_RESULT":
-                return new CommandAttackResult(args);
+            case "RESULT":
+                return new CommandResult(args);
             case "PRIVATE_MESSAGE":
                 return new CommandPrivateMessage(args);
             case "GIVEUP":
@@ -29,6 +29,10 @@ public class CommandFactory {
                 return new CommandName(args);
             case "BOOST":
                 return new CommandBoost(args);
+            case "READY":
+                return new CommandReady(args);
+            case "NEXT":
+                return new CommandNextTurn(args);
             default:
                 return null;
         }

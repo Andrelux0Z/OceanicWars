@@ -5,6 +5,8 @@
 package Servidor;
 
 import Models.Command;
+import Models.CommandFactory;
+import Models.CommandResult;
 import Models.CommandType;
 import static Models.CommandType.*;
 import java.io.DataInputStream;
@@ -28,9 +30,13 @@ public class ThreadServidor extends Thread{
     public ObjectOutputStream objectSender;
     public String name;
     
-    public boolean isActive = true;
+    public boolean isActive = false;
         
     public boolean isRunning = true;
+    
+    public boolean isTurn = false;
+    
+    public boolean isReady = false;
     
     
     
@@ -58,7 +64,13 @@ public class ThreadServidor extends Thread{
                 server.refFrame.writeMessage("ThreadServer recibió: " + comando);
                 comando.processForServer(this);
                 
-                if (isActive) { 
+                //Si el comando consume el turno y no es el turno del cliente
+                if(comando.isConsumesTurn() && !this.isTurn) {   
+                    String [] args = new String[]{"RESULT","No es su turno para jugar"};
+                    this.objectSender.writeObject(CommandFactory.getCommand(args));
+                   
+                //Si el jugador esta vivo
+                } else if (isActive) {
                     server.executeCommand(comando, this);
                 }
                         
@@ -71,32 +83,24 @@ public class ThreadServidor extends Thread{
         } 
     }
     
-    //Funcion para ejecutar el comadno en la consola propia del que lo envia
-    public void processOwnCommand(Command comando){
-        if (comando.getParameters().length <= 0)
-            return;
-        
-        String searchName = this.name;
-        
-        for (ThreadServidor client : server.getConnectedClients()) {
-            if (client.name.toUpperCase().equals(searchName)){
-                try {
-                //simulo enviar solo al primero, pero debe buscarse por nombre
-                    client.objectSender.writeObject(comando);
-                    break;
-                } catch (IOException ex) {
-                
-                }
-            }
-        }
-    }
+    
     
     public void showAllClients (){
         this.server.showAllNames();
     }
+
+    public void setIsTurn(boolean isTurn) {
+        this.isTurn = isTurn;
+    }
     
-    
-    
+    public void setIsActive(boolean isActive){
+        this.isActive = isActive;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
     
     
 }

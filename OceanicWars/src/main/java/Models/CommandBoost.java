@@ -7,7 +7,9 @@ package Models;
 import Cliente.Client;
 import Cliente.Jugador;
 import Hero.Hero;
+import Servidor.Server;
 import Servidor.ThreadServidor;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +20,7 @@ public class CommandBoost extends Command {
     
     public CommandBoost(String[] args) {
         super(CommandType.MESSAGE, args);
+        this.consumesTurn = true;
     }
 
     @Override
@@ -45,8 +48,15 @@ public class CommandBoost extends Command {
                 client.getRefFrame().writeMessage("Mejora seleccionada no existe: " + tipoBoost);
         }  
         
-        if(flag)
-            client.getRefFrame().writeMessage("El jugador " + client.name + " ha usado " + this.getParameters()[1] + "para ayudar a su civilizacion con " + this.getParameters()[2]);
+        if(flag) {
+            client.getRefFrame().writeMessage("El jugador " + client.name + " ha usado " + this.getParameters()[1] + " para ayudar a su civilizacion con " + this.getParameters()[2]);
+            try {
+                client.objectSender.writeObject(CommandFactory.getCommand(new String[]{"NEXT"}));
+            } catch (IOException ex) {
+                System.getLogger(CommandBoost.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+
         }
     }
+}
 

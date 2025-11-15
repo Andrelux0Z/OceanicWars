@@ -4,17 +4,17 @@
  */
 package Models;
 
-import Cliente.Client;
+import Servidor.Server;
 import Servidor.ThreadServidor;
 
 /**
  *
- * @author diego
+ * @author sando
  */
-public class CommandMessage extends Command{
-
-    public CommandMessage(String[] args) {
-        super(CommandType.MESSAGE, args);
+public class CommandReady extends Command{
+    
+    public CommandReady(String[] args) {
+        super(CommandType.READY, args);
         this.consumesTurn = false;
 
     }
@@ -22,13 +22,7 @@ public class CommandMessage extends Command{
     @Override
     public void processForServer(ThreadServidor threadServidor) {
         this.setIsBroadcast(true);
-        
-    }
-    
-    @Override
-    public void processInClient(Client client) {
-        //Message "string"
-        client.getRefFrame().writeMessage("Mensaje recibido: " + this.getParameters()[1]);
+        threadServidor.getServer().startGame(threadServidor);
     }
     
 }

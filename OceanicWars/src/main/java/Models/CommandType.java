@@ -11,11 +11,13 @@ package Models;
 public enum CommandType {
     ATTACK (4),  //attack Andres 4 5
     APPLYATTACK (4), //
-    ATTACK_RESULT (3), // attack result notifications: ATTACK_RESULT <recipient> <message>
+    RESULT (3), // result notifications: RESULT <recipient/optional> <message>
     MESSAGE (2), //message hola a todos
     PRIVATE_MESSAGE(3), //private Andres hola andres
     GIVEUP (1), //giveup
     NAME (2),
+    NEXT (1),
+    READY (1),   //ready  -> para iniciar juego
     BOOST (3); //BOOST <HERO> <HEAL/PROTECT/STRENGHTEN>
     //.. AGREGARÍAN MÁS TIPOS DE COMANDO
     
