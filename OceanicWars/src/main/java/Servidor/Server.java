@@ -79,7 +79,7 @@ public class Server {
                 }
             }
         } catch (Exception ex) {
-            // validation failure; notify origin and stop
+            // validation failure; notificar al server
             try {
                 String[] args = new String[]{"ATTACK_RESULT", origin.name, "Server: error validating attack payload"};
                 origin.objectSender.writeObject(CommandFactory.getCommand(args));
@@ -89,14 +89,28 @@ public class Server {
         }
         
 
-        // Reenviar el comando según su tipo de difusión
+        // Reenviar el comando según su tipo de difusión -> PERDON :(
+        //Si es broadcast true
         if (comando.getIsBroadcast())
             this.broadcast(comando);
-        else
-            if(comando.getType() == PRIVATE_MESSAGE)
+        
+        //Si es broadcast false y se encuentra al jugador receptor
+        else if (buscarJugador(comando.getParameters()[1])) {
+            if(comando.getType() == PRIVATE_MESSAGE || comando.getType() == APPLYATTACK)
                 this.sendPrivate(comando);
             else
                 processPrivate(comando,origin);
+            
+        //Si no se encuentra receptor
+        } else {
+            String[] args = new String[]{"ATTACK_RESULT", "Server: Jugador objetivo no encontrado"};
+            try {
+                origin.objectSender.writeObject(CommandFactory.getCommand(args));
+            } catch (IOException ex) {
+                System.getLogger(Server.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }
+        
     }
 
     
@@ -145,7 +159,15 @@ public class Server {
     }
     
 
-    
+    public boolean buscarJugador(String searchName) {
+        
+        for (ThreadServidor client : connectedClients) {
+            if (client.name.equalsIgnoreCase(searchName))
+                return true;
+                    
+        }
+        return false;
+    }
     
     public void showAllNames(){
         this.refFrame.writeMessage("Usuarios conectados");

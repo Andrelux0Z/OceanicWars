@@ -91,7 +91,7 @@ public class CommandApplyAttack extends Command {
         if (atacado == null) {
             String msg = "CommandApplyAttack: jugador atacado no inicializado";
             clienteAtacado.getRefFrame().writeMessage(msg);
-            // Notificar al atacante vía mensaje privado
+
             if (this.payload != null && this.payload.getAttackerName() != null) {
                 String[] args = new String[]{"ATTACK_RESULT", this.payload.getAttackerName(), msg};
                 try {
@@ -127,8 +127,7 @@ public class CommandApplyAttack extends Command {
         SwingUtilities.invokeLater(() -> {
             clienteAtacado.getRefFrame().actualizarPnlMatriz();
             });
-        String okMsg = "Se aplicó ataque '" + params[3] + "' de '" + params[2] + "'.";
-        clienteAtacado.getRefFrame().writeMessage(okMsg);
+        String okMsg = "Se aplicó ataque '" + params[3] + "' de '" + params[2] + "a" + clienteAtacado + "'.";
 
         // Notificar al atacante que el ataque se aplicó
         if (this.payload != null && this.payload.getAttackerName() != null) {

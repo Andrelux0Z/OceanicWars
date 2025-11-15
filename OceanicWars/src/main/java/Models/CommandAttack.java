@@ -35,7 +35,8 @@ public class CommandAttack extends Command{
 
         // Validar que el jugador local esté inicializado
         if (atacante == null) {
-            if (cliente.getRefFrame() != null) cliente.getRefFrame().writeMessage("Imposible realizar ataque: jugador local no inicializado");
+            if (cliente.getRefFrame() != null) 
+                cliente.getRefFrame().writeMessage("Imposible realizar ataque: jugador local no inicializado");
             return;
         }
 
