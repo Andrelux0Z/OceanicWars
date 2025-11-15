@@ -28,6 +28,10 @@ public class Matriz extends JPanel implements Serializable { // Hereda de JPanel
     // Medidas (tanto de filas como columnas)
     private int sizeAlto;
     private int sizeLargo;
+    
+    // Márgenes para las etiquetas de coordenadas
+    private static final int MARGEN_SUPERIOR = 25;  // Espacio para números de columnas
+    private static final int MARGEN_IZQUIERDO = 30; // Espacio para números de filas
 
     // Matriz que almacena casillas
     private Casilla[][] matriz;
@@ -51,11 +55,11 @@ public class Matriz extends JPanel implements Serializable { // Hereda de JPanel
         this.cantidadFilas = cantidadFilas;
         this.cantidadColumnas = cantidadColumnas;
         this.cantidadCasillas = this.cantidadFilas * this.cantidadColumnas;
-        this.sizeAlto = this.refCliente.getPnlMatriz().getHeight() / this.cantidadFilas; // Conseguimos la altura del
+        this.sizeAlto = (this.refCliente.getPnlMatriz().getHeight() - MARGEN_SUPERIOR) / this.cantidadFilas; // Conseguimos la altura del
                                                                                          // componente pnlMatriz para
                                                                                          // crear casillas con la medida
                                                                                          // correcta
-        this.sizeLargo = this.refCliente.getPnlMatriz().getWidth() / this.cantidadColumnas; // Conseguimos el largo del
+        this.sizeLargo = (this.refCliente.getPnlMatriz().getWidth() - MARGEN_IZQUIERDO) / this.cantidadColumnas; // Conseguimos el largo del
                                                                                             // componente pnlMatriz para
                                                                                             // crear casillas con la
                                                                                             // medida correta
@@ -71,29 +75,48 @@ public class Matriz extends JPanel implements Serializable { // Hereda de JPanel
     }
 
     // Métodos
-    // TODO: CAMBIAR COLOR EN FUNCIÓN DEL LUCHADOR
     @Override
     protected void paintComponent(Graphics g) { // Función encarga de cambiar el visual para cada casilla
         super.paintComponent(g); // Limpia el fondo (necesario para que no dibuje un elemento sobre otro anterior
-        // Se recorre toda la matriz
+        
+        // Dibujar etiquetas de coordenadas
+        g.setColor(Color.BLACK);
+        java.awt.Font fuenteOriginal = g.getFont();
+        g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+        
+        // Etiquetas de columnas
+        for (int j = 0; j < this.cantidadColumnas; j++) {
+            String label = String.valueOf(j);
+            int x = MARGEN_IZQUIERDO + j * sizeLargo + sizeLargo / 2 - 5;
+            int y = MARGEN_SUPERIOR - 8;
+            g.drawString(label, x, y);
+        }
+        
+        // Etiquetas de filas
+        for (int i = 0; i < this.cantidadFilas; i++) {
+            String label = String.valueOf(i);
+            int x = MARGEN_IZQUIERDO - 20;
+            int y = MARGEN_SUPERIOR + i * sizeAlto + sizeAlto / 2 + 5;
+            g.drawString(label, x, y);
+        }
+        
+        g.setFont(fuenteOriginal);
+        
+        // Se recorre toda la matriz para dibujar las casillas
         for (int i = 0; i < this.cantidadFilas; i++) {
             for (int j = 0; j < this.cantidadColumnas; j++) {
                 // Para cada casilla, se consigue su color, sus medidas y se dibuja
                 Casilla c = matriz[i][j]; // Se consigue la casilla
                 g.setColor(c.getColor()); // Se consigue su color
-                g.fillRect(j * sizeLargo + 1, i * sizeAlto + 1, sizeLargo - 2, sizeAlto - 2); // Se hace un rectángulo
-                                                                                              // relleno con ese color
-                                                                                              // (se suma 1 en los size
-                                                                                              // para ajustar el color,
-                                                                                              // además de restar 2 para
-                                                                                              // que no se sobrepase)
+                // Ajustamos la posición sumando los márgenes
+                int posX = MARGEN_IZQUIERDO + j * sizeLargo;
+                int posY = MARGEN_SUPERIOR + i * sizeAlto;
+                g.fillRect(posX + 1, posY + 1, sizeLargo - 2, sizeAlto - 2); // Se hace un rectángulo
+                                                                              // relleno con ese color
                 g.setColor(Color.BLACK); // Se pone en color negro
-                g.drawRect(j * sizeLargo, i * sizeAlto, sizeLargo - 1, sizeAlto - 1); // Se hace un rectángulo sin
-                                                                                      // relleno de borde negro para
-                                                                                      // hacer la ilusión de división
-                                                                                      // (se resta 1 para que no
-                                                                                      // sobrepase los límites de la
-                                                                                      // casilla
+                g.drawRect(posX, posY, sizeLargo - 1, sizeAlto - 1); // Se hace un rectángulo sin
+                                                                      // relleno de borde negro para
+                                                                      // hacer la ilusión de división
             }
         }
     }
