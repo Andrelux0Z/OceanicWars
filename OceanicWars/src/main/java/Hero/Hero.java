@@ -49,17 +49,25 @@ public abstract class Hero implements Serializable {
     
 
     // Métodos 
-    //TODO CREAR LOGICA
+    // TODO: Poner mensaje en pantalla
     public void Heal(){
-        
+        for (Casilla c : this.casillasEnPosesion) {  // Se revisan todas las casillas
+            if (!c.getEstado())  {  // Si la casilla está viva
+                c.curar(sanidad);  // Se cura por la sanidad del héroe
+            }
+        }
     }
     
-    public void Strenghten() {
+    public void Strenghten() {  // Método para potenciar el siguiente ataque del usuario
         this.siguientePotenciado = true;
     }
     
     public void Protect() {
-        
+        for (Casilla c : this.casillasEnPosesion) {  // Se revisan todas las casillas
+            if (!c.getEstado())  {  // Si la casilla está viva
+                c.establecerDefensas(resistencia);  // Se suben las defensas de las casillas
+            }
+        }
     }
     
     public abstract void realizarAtaque(Jugador atacado,String[] comando);

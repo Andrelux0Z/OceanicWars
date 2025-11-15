@@ -29,8 +29,6 @@ public class Casilla {
 
     // Constructor
     public Casilla(int x, int y, Matriz matriz) {  // Elementos que son pedidos por la casilla, los que no son pedidos son establecidos automáticamente    
-        // TODO: CAMBIAR PARA QUE LAS CASILLAS RECIBAN UN LUCHADOR
-        
         this.x = x;
         this.y = y;
         this.vida = 100;  // Vida es iniciada en 100 por defecto
@@ -45,7 +43,7 @@ public class Casilla {
     // Métodos
     public void recibirGolpe(int golpe) {
     if (this.estado) {  // Si la casilla está viva, esta recibe daño
-            this.vida -= (golpe) * (1 - this.defensa);
+            this.vida -= (golpe) * (100 - this.defensa);
             if (this.vida <= 0) {
                 this.vida = 0;  // No deja la vida en negativos
                 this.estado = false;  // Casilla deja de estar activa
@@ -53,6 +51,21 @@ public class Casilla {
                 this.matriz.getCasillasActivas().remove(this);  // La casilla se elimina del las casillas activas
             }
         }
+    }
+    
+    public void curar(int cantidad) {  // Función para curar la casilla
+        this.vida += cantidad;
+        if (this.vida < 100) {  // if para evitar que las casillas se pasen del 100 de vida
+            this.vida = 100;
+        }
+    }
+    
+    public void establecerDefensas(int cantidad) {  // Función para establecer defensas
+        this.defensa = cantidad;  // Establece las defensas en la cantidad pasada (el héroe lo define)
+    }
+    
+    public void bajarDefensas() {  // Función para bajar las defensas de la casilla
+        this.defensa = 0;  // Vuelve a poner las defensas en 0
     }
     
     public String obtenerAtributosString() {  // Función para obtener los atributos definidos de una casilla
