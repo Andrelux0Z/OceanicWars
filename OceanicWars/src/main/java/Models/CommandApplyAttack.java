@@ -9,6 +9,7 @@ import Cliente.FrameClient;
 import Cliente.Jugador;
 import Hero.*;
 import Models.AttackPayload;
+import Servidor.Server;
 import Servidor.ThreadServidor;
 import javax.swing.SwingUtilities;
 import java.awt.Point;
@@ -26,11 +27,14 @@ public class CommandApplyAttack extends Command {
     //Contructures
     public CommandApplyAttack(String[] args) {
         super(CommandType.APPLYATTACK, args);
+        this.consumesTurn = true;
     }
 
     public CommandApplyAttack(AttackPayload payload) {
         super(CommandType.APPLYATTACK, buildParamsFromPayload(payload));
         this.payload = payload;
+        this.consumesTurn = true;
+
     }
 
     private static String[] buildParamsFromPayload(AttackPayload payload) {
@@ -93,7 +97,7 @@ public class CommandApplyAttack extends Command {
             clienteAtacado.getRefFrame().writeMessage(msg);
 
             if (this.payload != null && this.payload.getAttackerName() != null) {
-                String[] args = new String[]{"ATTACK_RESULT", this.payload.getAttackerName(), msg};
+                String[] args = new String[]{"RESULT", this.payload.getAttackerName(), msg};
                 try {
                     clienteAtacado.objectSender.writeObject(Models.CommandFactory.getCommand(args));
                 } catch (Exception e) {
@@ -107,7 +111,7 @@ public class CommandApplyAttack extends Command {
             String msg = "CommandApplyAttack: no se pudo reconstruir héroe atacante desde el paquete";
             clienteAtacado.getRefFrame().writeMessage(msg);
             if (this.payload != null && this.payload.getAttackerName() != null) {
-                String[] args = new String[]{"ATTACK_RESULT", this.payload.getAttackerName(), msg};
+                String[] args = new String[]{"RESULT", this.payload.getAttackerName(), msg};
                 try {
                     clienteAtacado.objectSender.writeObject(CommandFactory.getCommand(args));
                 } catch (Exception e) {
@@ -127,13 +131,14 @@ public class CommandApplyAttack extends Command {
         SwingUtilities.invokeLater(() -> {
             clienteAtacado.getRefFrame().actualizarPnlMatriz();
             });
-        String okMsg = "Se aplicó ataque '" + params[3] + "' de '" + params[2] + "a" + clienteAtacado + "'.";
+        String okMsg = "AttackResult:Se aplicó ataque '" + params[3] + "' de '" + params[2] + "a" + clienteAtacado.name + "'.";
 
         // Notificar al atacante que el ataque se aplicó
         if (this.payload != null && this.payload.getAttackerName() != null) {
-            String[] args = new String[]{"ATTACK_RESULT", this.payload.getAttackerName(), okMsg};
+            String[] args = new String[]{"RESULT", this.payload.getAttackerName(), okMsg};
             try {
                 clienteAtacado.objectSender.writeObject(CommandFactory.getCommand(args));
+                clienteAtacado.objectSender.writeObject(CommandFactory.getCommand(new String[]{"NEXT"}));
             } catch (Exception e) {
             }
         }

@@ -1,15 +1,16 @@
-    package Models;
+package Models;
 
 import Cliente.Client;
 import Servidor.ThreadServidor;
 
 /**
- * Comando que contiene el resultado (deltas) de un ataque calculado por el servidor.
+ * sando
  */
-public class CommandAttackResult extends Command {
+public class CommandResult extends Command {
 
-    public CommandAttackResult(String[] args) {
-        super(CommandType.ATTACK_RESULT, args);
+    public CommandResult(String[] args) {
+        super(CommandType.RESULT, args);
+        this.consumesTurn = false;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class CommandAttackResult extends Command {
             
         } else if (params.length > 1) 
             msg = params[1];
-        client.getRefFrame().writeMessage("[AttackResult] " + msg);
+        client.getRefFrame().writeMessage(msg);
     }
 }
 

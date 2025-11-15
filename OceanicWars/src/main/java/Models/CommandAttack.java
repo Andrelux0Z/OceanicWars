@@ -8,8 +8,11 @@ import Cliente.Client;
 import Cliente.Jugador;
 import Hero.Hero;
 import Hero.HeroPackage;
+import Servidor.Server;
 import Servidor.ThreadServidor;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,6 +22,7 @@ public class CommandAttack extends Command{
 
     public CommandAttack(String[] args) { //ATTACK Andres 5 7
         super(CommandType.ATTACK, args);
+        this.consumesTurn = false;
     }
     
     @Override
@@ -77,7 +81,7 @@ public class CommandAttack extends Command{
         try {
             cliente.objectSender.writeObject(sendComando);
         } catch (IOException ex) {
-            System.getLogger(CommandAttack.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            Logger.getLogger(CommandAttack.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
