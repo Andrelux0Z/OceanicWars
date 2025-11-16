@@ -5,20 +5,11 @@
 package Cliente;
 
 import Hero.*;
-import Hero.Customs.*;
 import Models.Command;
-import Models.CommandAttack;
 import Models.CommandFactory;
-import Models.CommandMessage;
 import Models.CommandUtil;
-import java.awt.BorderLayout;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -92,14 +83,11 @@ public class FrameClient extends javax.swing.JFrame {
                 "Undersea Volcanoes"
         };
 
-        // Mapear arquetipos a héroes disponibles
-        Map<String, String[]> heroesPorArquetipo = new HashMap<>();
-        heroesPorArquetipo.put("Thunders Under The Sea", new String[] { "Goku", "Zanka" });
-        heroesPorArquetipo.put("Fish Telepathy", new String[] { "Alien", "Frisk" });
-        heroesPorArquetipo.put("Release The Kraken", new String[] { "Omniman", "James" });
-        heroesPorArquetipo.put("Waves Control", new String[] { "Tentaculo", "Papaleta" });
-        heroesPorArquetipo.put("The Trident", new String[] { "Luffy", "Popeye" });
-        heroesPorArquetipo.put("Undersea Volcanoes", new String[] { "Forky", "Penitente" });
+        // Obtener todas las apariencias disponibles de HeroList
+        String[] aparienciasDisponibles = HeroList.getAllHeroNames();
+
+        // Lista para rastrear las apariencias ya seleccionadas
+        ArrayList<String> aparienciasSeleccionadas = new ArrayList<>();
 
         int porcentajeTotal = 0;
 
@@ -128,23 +116,31 @@ public class FrameClient extends javax.swing.JFrame {
                 return false;
             }
 
-            // Obtener los héroes correspondientes al arquetipo seleccionado
-            String[] heroesDisponibles = heroesPorArquetipo.get(arquetipoSeleccionado);
+            // Filtrar las apariencias que aún no han sido seleccionadas
+            ArrayList<String> aparienciasRestantes = new ArrayList<>();
+            for (String apariencia : aparienciasDisponibles) {
+                if (!aparienciasSeleccionadas.contains(apariencia)) {
+                    aparienciasRestantes.add(apariencia);
+                }
+            }
 
-            // Ahora, seleccionar el héroe específico dentro del arquetipo
-            String tipoSeleccionado = (String) JOptionPane.showInputDialog(
+            // Ahora, seleccionar la apariencia del héroe
+            String aparienciaSeleccionada = (String) JOptionPane.showInputDialog(
                     this,
-                    "Selecciona el héroe del arquetipo \"" + arquetipoSeleccionado + "\":",
-                    "Selección de Héroe",
+                    "Selecciona la apariencia del héroe #" + (i + 1) + "\nArquetipo: " + arquetipoSeleccionado,
+                    "Selección de Apariencia",
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    heroesDisponibles,
-                    heroesDisponibles[0]);
+                    aparienciasRestantes.toArray(new String[0]),
+                    aparienciasRestantes.get(0));
 
             // Si el usuario cierra la ventana, cancelar todo
-            if (tipoSeleccionado == null) {
+            if (aparienciaSeleccionada == null) {
                 return false;
             }
+
+            // Agregar la apariencia seleccionada a la lista para evitar repeticiones
+            aparienciasSeleccionadas.add(aparienciaSeleccionada);
 
             int porcentaje = 0;
             boolean porcentajeValido = false;
@@ -245,7 +241,7 @@ public class FrameClient extends javax.swing.JFrame {
 
                 int seleccion = JOptionPane.showOptionDialog(
                         this,
-                        "Héroe #" + (i + 1) + " - " + tipoSeleccionado + "\n" +
+                        "Héroe #" + (i + 1) + " - " + aparienciaSeleccionada + " (" + arquetipoSeleccionado + ")\n" +
                                 "Selecciona el valor para " + nombresEstadisticas[j] + ":\n\n" +
                                 "Estadísticas disponibles:\n" +
                                 "  100: " + disponibles100 + " disponible(s)\n" +
@@ -299,83 +295,27 @@ public class FrameClient extends javax.swing.JFrame {
                 textoHeroe = TextoHeroe3;
             }
 
-            switch (tipoSeleccionado) {
-                case "Goku":
-                    colorHeroe = Goku.COLOR;
-                    imagePath = Goku.IMAGE_PATH;
-                    heroeCreado = new Goku(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Zanka":
-                    colorHeroe = Zanka.COLOR;
-                    imagePath = Zanka.IMAGE_PATH;
-                    heroeCreado = new Zanka(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Alien":
-                    colorHeroe = Alien.COLOR;
-                    imagePath = Alien.IMAGE_PATH;
-                    heroeCreado = new Alien(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Frisk":
-                    colorHeroe = Frisk.COLOR;
-                    imagePath = Frisk.IMAGE_PATH;
-                    heroeCreado = new Frisk(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Omniman":
-                    colorHeroe = Omniman.COLOR;
-                    imagePath = Omniman.IMAGE_PATH;
-                    heroeCreado = new Omniman(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "James":
-                    colorHeroe = James.COLOR;
-                    imagePath = James.IMAGE_PATH;
-                    heroeCreado = new James(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Tentaculo":
-                    colorHeroe = Tentaculo.COLOR;
-                    imagePath = Tentaculo.IMAGE_PATH;
-                    heroeCreado = new Tentaculo(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Papaleta":
-                    colorHeroe = Papaleta.COLOR;
-                    imagePath = Papaleta.IMAGE_PATH;
-                    heroeCreado = new Papaleta(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Luffy":
-                    colorHeroe = Luffy.COLOR;
-                    imagePath = Luffy.IMAGE_PATH;
-                    heroeCreado = new Luffy(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Popeye":
-                    colorHeroe = Popeye.COLOR;
-                    imagePath = Popeye.IMAGE_PATH;
-                    heroeCreado = new Popeye(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Forky":
-                    colorHeroe = Forky.COLOR;
-                    imagePath = Forky.IMAGE_PATH;
-                    heroeCreado = new Forky(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                case "Penitente":
-                    colorHeroe = Penitente.COLOR;
-                    imagePath = Penitente.IMAGE_PATH;
-                    heroeCreado = new Penitente(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
-                            estadisticasHeroe[2]);
-                    break;
-                default:
-                    colorHeroe = java.awt.Color.BLACK;
-                    imagePath = "";
-                    heroeCreado = null;
+            // Obtener la apariencia del héroe desde HeroList
+            HeroList.AparienciaHeroe apariencia = HeroList.getApariencia(aparienciaSeleccionada);
+
+            if (apariencia != null) {
+                colorHeroe = apariencia.getColor();
+                imagePath = apariencia.getImagePath();
+
+                // Crear el héroe usando HeroList con el arquetipo seleccionado
+                heroeCreado = HeroList.createHero(
+                        arquetipoSeleccionado,
+                        aparienciaSeleccionada,
+                        imagePath,
+                        colorHeroe,
+                        porcentaje,
+                        estadisticasHeroe[0],
+                        estadisticasHeroe[1],
+                        estadisticasHeroe[2]);
+            } else {
+                colorHeroe = java.awt.Color.BLACK;
+                imagePath = "";
+                heroeCreado = null;
             }
 
             // Agregar el héroe a la matriz si se creó correctamente
@@ -416,7 +356,7 @@ public class FrameClient extends javax.swing.JFrame {
             }
 
             // Llenar el TextPane con la información del héroe usando el método con colores
-            llenarInfoHeroe(textoHeroe, porcentaje, tipoSeleccionado, arquetipoHeroe, colorHeroe,
+            llenarInfoHeroe(textoHeroe, porcentaje, aparienciaSeleccionada, arquetipoHeroe, colorHeroe,
                     estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
         }
 
