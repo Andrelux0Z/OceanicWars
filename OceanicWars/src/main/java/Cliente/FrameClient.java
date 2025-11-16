@@ -4,8 +4,8 @@
  */
 package Cliente;
 
-import Hero.Customs.*;
 import Hero.*;
+import Hero.Customs.*;
 import Models.Command;
 import Models.CommandAttack;
 import Models.CommandFactory;
@@ -36,8 +36,8 @@ import javax.swing.text.StyledDocument;
  */
 public class FrameClient extends javax.swing.JFrame {
 
-    static final int DELAY = 5;  // Delay para mostrar el texto en milisegundos
-    
+    static final int DELAY = 5; // Delay para mostrar el texto en milisegundos
+
     private Client client;
     private Matriz matriz;
 
@@ -69,7 +69,7 @@ public class FrameClient extends javax.swing.JFrame {
         this.setTitle("Cliente de " + name); // Se pone el nombre introducido como título de la ventana
         client = new Client(this, name); // Creamos un nuevo cliente c
         matriz = new Matriz(20, 30, this); // Creación de la matriz (20 filas, 30 columnas y la referencia al frame del
-                                           // cliente)                               
+                                           // cliente)
 
         // Si inicializarHeroes retorna false, significa que el usuario canceló
         if (!inicializarHeroes()) {
@@ -91,24 +91,24 @@ public class FrameClient extends javax.swing.JFrame {
                 "The Trident",
                 "Undersea Volcanoes"
         };
-        
+
         // Mapear arquetipos a héroes disponibles
         Map<String, String[]> heroesPorArquetipo = new HashMap<>();
-        heroesPorArquetipo.put("Thunders Under The Sea", new String[]{"Goku", "Zanka", "Pim"});
-        heroesPorArquetipo.put("Fish Telepathy", new String[]{"Alien", "Frisk"});
-        heroesPorArquetipo.put("Release The Kraken", new String[]{"Omniman", "James", "Charlie"});
-        heroesPorArquetipo.put("Waves Control", new String[]{"Tentaculo", "Papaleta"});
-        heroesPorArquetipo.put("The Trident", new String[]{"Luffy", "Popeye"});
-        heroesPorArquetipo.put("Undersea Volcanoes", new String[]{"Forky", "Penitente"});
+        heroesPorArquetipo.put("Thunders Under The Sea", new String[] { "Goku", "Zanka" });
+        heroesPorArquetipo.put("Fish Telepathy", new String[] { "Alien", "Frisk" });
+        heroesPorArquetipo.put("Release The Kraken", new String[] { "Omniman", "James" });
+        heroesPorArquetipo.put("Waves Control", new String[] { "Tentaculo", "Papaleta" });
+        heroesPorArquetipo.put("The Trident", new String[] { "Luffy", "Popeye" });
+        heroesPorArquetipo.put("Undersea Volcanoes", new String[] { "Forky", "Penitente" });
 
         int porcentajeTotal = 0;
-        
+
         // Estadísticas disponibles
         int disponibles100 = 3;
         int disponibles75 = 3;
         int disponibles50 = 3;
-        
-        // Guardar las estadísticas de cada héroe 
+
+        // Guardar las estadísticas de cada héroe
         ArrayList<int[]> estadisticasHeroes = new ArrayList<>();
 
         // Pedir datos para cada uno de los 3 héroes
@@ -127,10 +127,10 @@ public class FrameClient extends javax.swing.JFrame {
             if (arquetipoSeleccionado == null) {
                 return false;
             }
-            
+
             // Obtener los héroes correspondientes al arquetipo seleccionado
             String[] heroesDisponibles = heroesPorArquetipo.get(arquetipoSeleccionado);
-            
+
             // Ahora, seleccionar el héroe específico dentro del arquetipo
             String tipoSeleccionado = (String) JOptionPane.showInputDialog(
                     this,
@@ -195,25 +195,28 @@ public class FrameClient extends javax.swing.JFrame {
             porcentajeTotal += porcentaje;
 
             // Seleccionar las estadísticas del héroe (Sanidad, Fuerza, Resistencia)
-            String[] nombresEstadisticas = {"Sanidad", "Fuerza", "Resistencia"};
+            String[] nombresEstadisticas = { "Sanidad", "Fuerza", "Resistencia" };
             int[] estadisticasHeroe = new int[3];
-            
+
             for (int j = 0; j < 3; j++) {
                 // Crear botones personalizados para cada opción disponible
                 Object[] opciones;
                 ArrayList<Integer> valoresDisponibles = new ArrayList<>();
-                
-                if (disponibles100 > 0) valoresDisponibles.add(100);
-                if (disponibles75 > 0) valoresDisponibles.add(75);
-                if (disponibles50 > 0) valoresDisponibles.add(50);
-                
+
+                if (disponibles100 > 0)
+                    valoresDisponibles.add(100);
+                if (disponibles75 > 0)
+                    valoresDisponibles.add(75);
+                if (disponibles50 > 0)
+                    valoresDisponibles.add(50);
+
                 // Crear las opciones de botones con el conteo
                 opciones = new Object[valoresDisponibles.size()];
                 for (int k = 0; k < valoresDisponibles.size(); k++) {
                     int valor = valoresDisponibles.get(k);
                     int count;
                     String textoDisponible;
-                    
+
                     if (valor == 100) {
                         count = disponibles100;
                         if (disponibles100 > 1) {
@@ -236,33 +239,33 @@ public class FrameClient extends javax.swing.JFrame {
                             textoDisponible = "";
                         }
                     }
-                    
+
                     opciones[k] = valor + " (" + count + " disponible" + textoDisponible + ")";
                 }
-                
+
                 int seleccion = JOptionPane.showOptionDialog(
                         this,
                         "Héroe #" + (i + 1) + " - " + tipoSeleccionado + "\n" +
-                        "Selecciona el valor para " + nombresEstadisticas[j] + ":\n\n" +
-                        "Estadísticas disponibles:\n" +
-                        "  100: " + disponibles100 + " disponible(s)\n" +
-                        "  75: " + disponibles75 + " disponible(s)\n" +
-                        "  50: " + disponibles50 + " disponible(s)",
+                                "Selecciona el valor para " + nombresEstadisticas[j] + ":\n\n" +
+                                "Estadísticas disponibles:\n" +
+                                "  100: " + disponibles100 + " disponible(s)\n" +
+                                "  75: " + disponibles75 + " disponible(s)\n" +
+                                "  50: " + disponibles50 + " disponible(s)",
                         "Selección de Estadísticas",
                         JOptionPane.DEFAULT_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
                         null,
                         opciones,
                         opciones[0]);
-                
+
                 // Si el usuario cierra la ventana
                 if (seleccion == JOptionPane.CLOSED_OPTION) {
                     return false;
                 }
-                
+
                 int valorEstadistica = valoresDisponibles.get(seleccion);
                 estadisticasHeroe[j] = valorEstadistica;
-                
+
                 // Decrementar el contador correspondiente
                 if (valorEstadistica == 100) {
                     disponibles100--;
@@ -272,7 +275,7 @@ public class FrameClient extends javax.swing.JFrame {
                     disponibles50--;
                 }
             }
-            
+
             // Guardar las estadísticas del héroe
             estadisticasHeroes.add(estadisticasHeroe);
 
@@ -300,72 +303,74 @@ public class FrameClient extends javax.swing.JFrame {
                 case "Goku":
                     colorHeroe = Goku.COLOR;
                     imagePath = Goku.IMAGE_PATH;
-                    heroeCreado = new Goku(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Goku(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Zanka":
                     colorHeroe = Zanka.COLOR;
                     imagePath = Zanka.IMAGE_PATH;
-                    heroeCreado = new Zanka(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Zanka(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Alien":
                     colorHeroe = Alien.COLOR;
                     imagePath = Alien.IMAGE_PATH;
-                    heroeCreado = new Alien(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Alien(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Frisk":
                     colorHeroe = Frisk.COLOR;
                     imagePath = Frisk.IMAGE_PATH;
-                    heroeCreado = new Frisk(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Frisk(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Omniman":
                     colorHeroe = Omniman.COLOR;
                     imagePath = Omniman.IMAGE_PATH;
-                    heroeCreado = new Omniman(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Omniman(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "James":
                     colorHeroe = James.COLOR;
                     imagePath = James.IMAGE_PATH;
-                    heroeCreado = new James(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new James(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Tentaculo":
                     colorHeroe = Tentaculo.COLOR;
                     imagePath = Tentaculo.IMAGE_PATH;
-                    heroeCreado = new Tentaculo(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Tentaculo(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Papaleta":
                     colorHeroe = Papaleta.COLOR;
                     imagePath = Papaleta.IMAGE_PATH;
-                    heroeCreado = new Papaleta(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Papaleta(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Luffy":
                     colorHeroe = Luffy.COLOR;
                     imagePath = Luffy.IMAGE_PATH;
-                    heroeCreado = new Luffy(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Luffy(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Popeye":
                     colorHeroe = Popeye.COLOR;
                     imagePath = Popeye.IMAGE_PATH;
-                    heroeCreado = new Popeye(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Popeye(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Forky":
                     colorHeroe = Forky.COLOR;
                     imagePath = Forky.IMAGE_PATH;
-                    heroeCreado = new Forky(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Forky(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 case "Penitente":
                     colorHeroe = Penitente.COLOR;
                     imagePath = Penitente.IMAGE_PATH;
-                    heroeCreado = new Penitente(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
-                    break;
-                case "Charlie":
-                    colorHeroe = Charlie.COLOR;
-                    imagePath = Charlie.IMAGE_PATH;
-                    heroeCreado = new Charlie(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
-                    break;
-                case "Pim":
-                    colorHeroe = Pim.COLOR;
-                    imagePath = Pim.IMAGE_PATH;
-                    heroeCreado = new Pim(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+                    heroeCreado = new Penitente(colorHeroe, porcentaje, estadisticasHeroe[0], estadisticasHeroe[1],
+                            estadisticasHeroe[2]);
                     break;
                 default:
                     colorHeroe = java.awt.Color.BLACK;
@@ -411,12 +416,12 @@ public class FrameClient extends javax.swing.JFrame {
             }
 
             // Llenar el TextPane con la información del héroe usando el método con colores
-            llenarInfoHeroe(textoHeroe, porcentaje, tipoSeleccionado, arquetipoHeroe, colorHeroe, 
-                           estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
+            llenarInfoHeroe(textoHeroe, porcentaje, tipoSeleccionado, arquetipoHeroe, colorHeroe,
+                    estadisticasHeroe[0], estadisticasHeroe[1], estadisticasHeroe[2]);
         }
 
         // Crear la matriz con los héroes configurados y el jugador respectivo
-        this.client.setJugador(new Jugador(this.client.name,matriz,matriz.getHeroes(),new ArrayList<String>()));
+        this.client.setJugador(new Jugador(this.client.name, matriz, matriz.getHeroes(), new ArrayList<String>()));
         matriz.crearMatriz();
         matriz.repaint();
 
@@ -487,7 +492,8 @@ public class FrameClient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -507,6 +513,7 @@ public class FrameClient extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txaLastMove = new javax.swing.JTextArea();
         btnSend = new javax.swing.JButton();
+        pnlResumen = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -551,54 +558,62 @@ public class FrameClient extends javax.swing.JFrame {
         javax.swing.GroupLayout pnlLuchadoresLayout = new javax.swing.GroupLayout(pnlLuchadores);
         pnlLuchadores.setLayout(pnlLuchadoresLayout);
         pnlLuchadoresLayout.setHorizontalGroup(
-            pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5))
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4)))
-                .addContainerGap())
-        );
+                pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pnlLuchadoresLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe1, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 126,
+                                                        Short.MAX_VALUE))
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe3, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane5))
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe2, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane4)))
+                                .addContainerGap()));
         pnlLuchadoresLayout.setVerticalGroup(
-            pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLuchadoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addComponent(IconHeroe1, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4)
-                    .addComponent(IconHeroe2, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(IconHeroe3, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                pnlLuchadoresLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jScrollPane3)
+                                                .addComponent(IconHeroe1, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jScrollPane4)
+                                                .addComponent(IconHeroe2, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(IconHeroe3, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(jScrollPane5))
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         pnlMatriz.setForeground(new java.awt.Color(255, 102, 102));
 
         javax.swing.GroupLayout pnlMatrizLayout = new javax.swing.GroupLayout(pnlMatriz);
         pnlMatriz.setLayout(pnlMatrizLayout);
         pnlMatrizLayout.setHorizontalGroup(
-            pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 780, Short.MAX_VALUE)
-        );
+                pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 818, Short.MAX_VALUE));
         pnlMatrizLayout.setVerticalGroup(
-            pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
-        );
+                pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 470, Short.MAX_VALUE));
 
         txaLastMove.setColumns(20);
         txaLastMove.setRows(5);
@@ -615,50 +630,75 @@ public class FrameClient extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout pnlResumenLayout = new javax.swing.GroupLayout(pnlResumen);
+        pnlResumen.setLayout(pnlResumenLayout);
+        pnlResumenLayout.setHorizontalGroup(
+                pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE));
+        pnlResumenLayout.setVerticalGroup(
+                pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))
-                        .addGap(31, 31, 31)
-                        .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(pnlLuchadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txfCommand)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSend)
-                        .addGap(33, 33, 33))))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                false)
+                                                        .addComponent(jScrollPane1,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, 250,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(jScrollPane2))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(pnlMatriz, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(pnlResumen, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(pnlLuchadores, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(13, 13, 13))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txfCommand)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnSend)
+                                                .addGap(33, 33, 33)))));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlLuchadores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))
-                        .addGap(18, 18, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(61, Short.MAX_VALUE)
-                        .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(pnlResumen, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(pnlLuchadores, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 214,
+                                                        Short.MAX_VALUE)))
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txfCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 75,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 75,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -671,7 +711,7 @@ public class FrameClient extends javax.swing.JFrame {
             if (args.length > 0) {
                 Command comando = CommandFactory.getCommand(args);
                 if (comando != null) {
-                    try {   
+                    try {
                         client.objectSender.writeObject(comando);
                     } catch (IOException ex) {
 
@@ -742,6 +782,7 @@ public class FrameClient extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPanel pnlLuchadores;
     private javax.swing.JPanel pnlMatriz;
+    private javax.swing.JPanel pnlResumen;
     private javax.swing.JTextArea txaLastMove;
     private javax.swing.JTextArea txaMessages;
     private javax.swing.JTextField txfCommand;
@@ -751,7 +792,7 @@ public class FrameClient extends javax.swing.JFrame {
     public int getDELAY() {
         return DELAY;
     }
-    
+
     public Client getClient() {
         return client;
     }
@@ -783,6 +824,5 @@ public class FrameClient extends javax.swing.JFrame {
     public Matriz getMatriz() {
         return matriz;
     }
-    
 
 }
