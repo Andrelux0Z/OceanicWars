@@ -72,7 +72,8 @@ public class ThreadServidor extends Thread{
                 //Si el jugador esta vivo
                 } else if (isActive) {
                     server.executeCommand(comando, this);
-                }
+                } else if (this.isTurn)
+                    server.nextTurn();
                         
                 
             } catch (IOException ex) {
