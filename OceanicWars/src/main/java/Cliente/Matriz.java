@@ -193,8 +193,8 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
     }
     
     public Casilla buscarCasillaEnClick(MouseEvent e) {  // Función que, en función de un evento del mouse, consigue sus coords y revisa la casilla pisada
-        int x = e.getX();  // Se consigue el x pisado
-        int y = e.getY();  // Se consigue el y pisado
+        int x = e.getX() - MARGEN_IZQUIERDO;  // Se consigue el x pisado
+        int y = e.getY() - MARGEN_SUPERIOR;  // Se consigue el y pisado
         
         int filaCasilla = y / this.sizeAlto;
         int columnaCasilla = x / this.sizeLargo;
