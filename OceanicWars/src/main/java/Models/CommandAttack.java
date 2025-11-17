@@ -17,9 +17,9 @@ import java.util.logging.Logger;
  *
  * @author diego
  */
-public class CommandAttack extends Command{
+public class CommandAttack extends Command {
 
-    public CommandAttack(String[] args) { //ATTACK Andres 5 7
+    public CommandAttack(String[] args) { // ATTACK Andres 5 7
         super(CommandType.ATTACK, args);
         this.consumesTurn = false;
         this.ownCommand = true;
@@ -29,17 +29,17 @@ public class CommandAttack extends Command{
     public void processForServer(ThreadServidor threadServidor) {
         this.setIsBroadcast(false);
     }
-            
+
     @Override
-    public void processInClient(Client cliente) { //Cliente     
-        
+    public void processInClient(Client cliente) { // Cliente
+
         Command sendComando;
-        boolean flag = false;       //Indica si se detecta un error
+        boolean flag = false; // Indica si se detecta un error
         Jugador atacante = cliente.getJugador();
 
         // Validar que el jugador local esté inicializado
         if (atacante == null) {
-            if (cliente.getRefFrame() != null) 
+            if (cliente.getRefFrame() != null)
                 cliente.getRefFrame().writeMessage("Imposible realizar ataque: jugador local no inicializado");
             return;
         }
@@ -57,14 +57,23 @@ public class CommandAttack extends Command{
             return;
             
         // Ver si el ataque y parametros extra son correctos
-        } else if (!heroeAtacante.buscarHeroes(params[3])) {   // indice 3 deberia contener el ataque
+        } else {
+        
+            try {
+                heroeAtacante.setMatrizAtaque(atacante.getMatriz());
+            } catch (Exception ignore) {
+        }
+        
+        
+        
+        if (!heroeAtacante.buscarHeroes(params[3])) {   // indice 3 deberia contener el ataque
             if (params[3].equalsIgnoreCase("ControlTheKraken"))
                 cliente.getRefFrame().writeMessage("Este ataque se encuentra activo de forma pasiva");
             else 
                 cliente.getRefFrame().writeMessage("El ataque escrito no existe");
             return;
         }
-
+    }
         
         cliente.getJugador().deshabilitarResistencias();
 
@@ -73,12 +82,16 @@ public class CommandAttack extends Command{
         String targetName = params[1];
         // heroType should be the hero *type* (as used by HeroFactory), not the instance name.
         HeroPackage hp = null;
-        if (atacante != null) hp = atacante.buildHeroPackage(params[2]);
         String heroType = (hp != null && hp.getHeroType() != null) ? hp.getHeroType() : params[2].toUpperCase();
         String attackType = params[3];
         String[] extras = new String[params.length - 4];
-        for (int i = 4; i < params.length; i++) extras[i - 4] = params[i];
-        AttackPayload payload = new AttackPayload(attackerName, targetName, heroType, params[2], attackType, extras, hp);
+        for (int i = 4; i < params.length; i++)
+            extras[i - 4] = params[i];
+
+        if (atacante != null)
+            hp = atacante.buildHeroPackage(params[2]);
+
+        AttackPayload payload = new AttackPayload(attackerName, targetName, heroType, params[2],attackType, extras, hp);
         sendComando = new CommandApplyAttack(payload);
 
         try {
@@ -88,7 +101,5 @@ public class CommandAttack extends Command{
         }
 
     }
-
-
 
 }
