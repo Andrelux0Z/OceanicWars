@@ -20,14 +20,15 @@ import javax.swing.JPanel;
  * @author kokoju
  */
 
-public class Matriz extends JPanel implements Serializable, MouseListener { // Hereda de JPanel para la creación de componentes visuales
+public class Matriz extends JPanel implements Serializable, MouseListener { // Hereda de JPanel para la creación de
+                                                                            // componentes visuales
     // Atributos
     // Cantidades (tanto de filas como columnas)
     private final int cantidadFilas;
     private final int cantidadColumnas;
 
     // Márgenes para las etiquetas de coordenadas
-    private static final int MARGEN_SUPERIOR = 25;  // Espacio para números de columnas
+    private static final int MARGEN_SUPERIOR = 25; // Espacio para números de columnas
     private static final int MARGEN_IZQUIERDO = 30; // Espacio para números de filas
 
     private int cantidadCasillas;
@@ -49,9 +50,9 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
     private FrameClient refCliente; // Referencia al Cliente para acceder a sus espacios
 
     // Atributos para mostrar información de una casilla
-    private Casilla casillaInfoMostrada;  // Casilla que es ha sido recientemente mostrada en la bitácora
-    private javax.swing.Timer timerInfoCasilla;  // Timer que almacenará el tiempo que fue seleccionado la casilla
-    
+    private Casilla casillaInfoMostrada; // Casilla que es ha sido recientemente mostrada en la bitácora
+    private javax.swing.Timer timerInfoCasilla; // Timer que almacenará el tiempo que fue seleccionado la casilla
+
     // Constructor
     public Matriz(int cantidadFilas, int cantidadColumnas, FrameClient refCliente) {
         // Se establece el tamaño del componente 'matriz' para que sea el mismo que el
@@ -62,14 +63,20 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
         this.cantidadFilas = cantidadFilas;
         this.cantidadColumnas = cantidadColumnas;
         this.cantidadCasillas = this.cantidadFilas * this.cantidadColumnas;
-        this.sizeAlto = (this.refCliente.getPnlMatriz().getHeight() - MARGEN_SUPERIOR) / this.cantidadFilas; // Conseguimos la altura del
-                                                                                         // componente pnlMatriz para
-                                                                                         // crear casillas con la medida
-                                                                                         // correcta
-        this.sizeLargo = (this.refCliente.getPnlMatriz().getWidth() - MARGEN_IZQUIERDO) / this.cantidadColumnas; // Conseguimos el largo del
-                                                                                            // componente pnlMatriz para
-                                                                                            // crear casillas con la
-                                                                                            // medida correta
+        this.sizeAlto = (this.refCliente.getPnlMatriz().getHeight() - MARGEN_SUPERIOR) / this.cantidadFilas; // Conseguimos
+                                                                                                             // la
+                                                                                                             // altura
+                                                                                                             // del
+        // componente pnlMatriz para
+        // crear casillas con la medida
+        // correcta
+        this.sizeLargo = (this.refCliente.getPnlMatriz().getWidth() - MARGEN_IZQUIERDO) / this.cantidadColumnas; // Conseguimos
+                                                                                                                 // el
+                                                                                                                 // largo
+                                                                                                                 // del
+        // componente pnlMatriz para
+        // crear casillas con la
+        // medida correta
         this.matriz = new Casilla[this.cantidadFilas][this.cantidadColumnas]; // Creamos una matriz del tamaño desado
 
         this.heroes = new ArrayList<Hero>(); // Una matriz está conformada por casillas pertenecientes a 3 héroes: suena
@@ -77,11 +84,12 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
 
         this.casillasActivas = new ArrayList<Casilla>();
         this.casillasTotales = new ArrayList<Casilla>();
-        this.casillaInfoMostrada = null;  // Inicialmente, la casilla mostrada es nula
-        
-        // La matriz misma se suma a la lista de los Listeners del Mouse. Esto es importante para acceder a las bitácoras de las casillas
+        this.casillaInfoMostrada = null; // Inicialmente, la casilla mostrada es nula
+
+        // La matriz misma se suma a la lista de los Listeners del Mouse. Esto es
+        // importante para acceder a las bitácoras de las casillas
         this.addMouseListener(this);
-        
+
         this.crearMatriz(); // Se crea la matriz
     }
 
@@ -91,13 +99,11 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
     protected void paintComponent(Graphics g) { // Función encarga de cambiar el visual para cada casilla
         super.paintComponent(g); // Limpia el fondo (necesario para que no dibuje un elemento sobre otro anterior
 
-
-        
         // Dibujar etiquetas de coordenadas
         g.setColor(Color.BLACK);
         java.awt.Font fuenteOriginal = g.getFont();
         g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
-        
+
         // Etiquetas de columnas
         for (int j = 0; j < this.cantidadColumnas; j++) {
             String label = String.valueOf(j);
@@ -105,7 +111,7 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
             int y = MARGEN_SUPERIOR - 8;
             g.drawString(label, x, y);
         }
-        
+
         // Etiquetas de filas
         for (int i = 0; i < this.cantidadFilas; i++) {
             String label = String.valueOf(i);
@@ -113,10 +119,8 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
             int y = MARGEN_SUPERIOR + i * sizeAlto + sizeAlto / 2 + 5;
             g.drawString(label, x, y);
         }
-        
+
         g.setFont(fuenteOriginal);
-
-
 
         // Se recorre toda la matriz
         for (int i = 0; i < this.cantidadFilas; i++) {
@@ -128,14 +132,28 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
                 int posX = MARGEN_IZQUIERDO + j * sizeLargo;
                 int posY = MARGEN_SUPERIOR + i * sizeAlto;
                 g.fillRect(posX + 1, posY + 1, sizeLargo - 2, sizeAlto - 2); // Se hace un rectángulo
-                                                                              // relleno con ese color
+                                                                             // relleno con ese color
                 g.setColor(Color.BLACK); // Se pone en color negro
                 g.drawRect(posX, posY, sizeLargo - 1, sizeAlto - 1); // Se hace un rectángulo sin
-                                                                      // relleno de borde negro para
-                                                                      // hacer la ilusión de división
-                if (!c.getEstado()) {  // Si la casilla revisada está muerta, se hace una X encima
-                    g.drawLine(j * sizeLargo, i * sizeAlto, (j + 1) * sizeLargo, (i + 1) * sizeAlto);  // Línea diagonal desde la esquina superior izquierda a la esquina inferior derecha
-                    g.drawLine(j * sizeLargo, (i + 1) * sizeAlto, (j + 1) * sizeLargo , i * sizeAlto);  // Línea diagonal desde la esquina inferior izquierda a la esquina superior derecha
+                                                                     // relleno de borde negro para
+                                                                     // hacer la ilusión de división
+                if (!c.getEstado()) { // Si la casilla revisada está muerta, se hace una X encima
+                    g.drawLine(j * sizeLargo, i * sizeAlto, (j + 1) * sizeLargo, (i + 1) * sizeAlto); // Línea diagonal
+                                                                                                      // desde la
+                                                                                                      // esquina
+                                                                                                      // superior
+                                                                                                      // izquierda a la
+                                                                                                      // esquina
+                                                                                                      // inferior
+                                                                                                      // derecha
+                    g.drawLine(j * sizeLargo, (i + 1) * sizeAlto, (j + 1) * sizeLargo, i * sizeAlto); // Línea diagonal
+                                                                                                      // desde la
+                                                                                                      // esquina
+                                                                                                      // inferior
+                                                                                                      // izquierda a la
+                                                                                                      // esquina
+                                                                                                      // superior
+                                                                                                      // derecha
                 }
             }
         }
@@ -166,10 +184,14 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
                                                                                                  // casillas por
                                                                                                  // peleador
                 Casilla c = casillasPorPintar.remove(0);
-                c.setHero(hero); // Se toma una casilla cualquiera de las que quedan por pintar y se le asigna el héroe
-                c.getHero().getCasillasEnPosesion().add(c);  // Se añade la casilla a las que tiene el héroe
+                c.setHero(hero); // Se toma una casilla cualquiera de las que quedan por pintar y se le asigna el
+                                 // héroe
+                c.getHero().getCasillasEnPosesion().add(c); // Se añade la casilla a las que tiene el hérue
             }
         }
+
+        // Actualizar el panel de resumen con las estadísticas iniciales
+        refCliente.actualizarPanelResumen();
     }
 
     public boolean IsCasillaEnRadio(int centro_x, int centro_y, int x, int y, int radio) { // Algunas funciones
@@ -201,10 +223,14 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
 
         return matriz[filaCasilla][columnaCasilla];
     }
-    
-    public void iniciarActualizacionInfo() {  // Función que toma una Casilla y muestra su info en el panel del Cliente (txaLastMove
-        String texto = this.casillaInfoMostrada.mostrarInfoCasilla();  // Método encargado de sacar TODA la info de una casilla
-        Typewritter.typeText(this.refCliente.getTxaLastMove(), texto, this.refCliente.getDELAY());  // Escribe el texto de manera gradual con Typewritter
+
+    public void iniciarActualizacionInfo() { // Función que toma una Casilla y muestra su info en el panel del Cliente
+                                             // (txaLastMove
+        String texto = this.casillaInfoMostrada.mostrarInfoCasilla(); // Método encargado de sacar TODA la info de una
+                                                                      // casilla
+        Typewritter.typeText(this.refCliente.getTxaLastMove(), texto, this.refCliente.getDELAY()); // Escribe el texto
+                                                                                                   // de manera gradual
+                                                                                                   // con Typewritter
 
         // Crear un nuevo Timer que actualice cada segundo
         timerInfoCasilla = new javax.swing.Timer(1000, e -> {
@@ -215,12 +241,12 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
         timerInfoCasilla.start();
     }
 
-    
     @Override
     public void mouseClicked(MouseEvent e) {
-        Casilla casillaElegida = buscarCasillaEnClick(e);  // Se busca la casilla que tocó el jugador
-        this.casillaInfoMostrada = casillaElegida;  // Esta casilla se establece como la casilla de la cual se muestra su info
-        iniciarActualizacionInfo();  // Se llama a la función iniciarActualizacionInfo() para mostrar la información
+        Casilla casillaElegida = buscarCasillaEnClick(e); // Se busca la casilla que tocó el jugador
+        this.casillaInfoMostrada = casillaElegida; // Esta casilla se establece como la casilla de la cual se muestra su
+                                                   // info
+        iniciarActualizacionInfo(); // Se llama a la función iniciarActualizacionInfo() para mostrar la información
     }
 
     @Override
@@ -278,5 +304,30 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
 
     public ArrayList<Hero> getHeroes() {
         return heroes;
+    }
+
+    // Métodos para calcular estadísticas del tablero
+
+    // Calcula el porcentaje de casillas vivas
+    public double calcularPorcentajeVida() {
+        if (casillasTotales.isEmpty())
+            return 0;
+        return (casillasActivas.size() * 100.0) / casillasTotales.size();
+    }
+
+    // Calcula la cantidad de casillas destruidas
+    public int calcularCasillasDestruidas() {
+        return casillasTotales.size() - casillasActivas.size();
+    }
+
+    // Calcula las casillas vivas de un héroe específico
+    public int calcularCasillasVivasHeroe(Hero heroe) {
+        int contador = 0;
+        for (Casilla casilla : casillasActivas) {
+            if (casilla.getHero() == heroe) {
+                contador++;
+            }
+        }
+        return contador;
     }
 }

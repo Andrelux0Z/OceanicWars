@@ -433,7 +433,9 @@ public class FrameClient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -454,6 +456,12 @@ public class FrameClient extends javax.swing.JFrame {
         txaLastMove = new javax.swing.JTextArea();
         btnSend = new javax.swing.JButton();
         pnlResumen = new javax.swing.JPanel();
+        destruidas = new javax.swing.JLabel();
+        vida = new javax.swing.JLabel();
+        heroe2 = new javax.swing.JLabel();
+        heroe1 = new javax.swing.JLabel();
+        heroe3 = new javax.swing.JLabel();
+        labelfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -535,6 +543,7 @@ public class FrameClient extends javax.swing.JFrame {
         );
 
         pnlMatriz.setForeground(new java.awt.Color(255, 102, 102));
+        pnlMatriz.setOpaque(false);
 
         javax.swing.GroupLayout pnlMatrizLayout = new javax.swing.GroupLayout(pnlMatriz);
         pnlMatriz.setLayout(pnlMatrizLayout);
@@ -562,61 +571,144 @@ public class FrameClient extends javax.swing.JFrame {
             }
         });
 
+        pnlResumen.setBackground(new java.awt.Color(153, 255, 255));
+        pnlResumen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlResumen.setForeground(new java.awt.Color(102, 102, 102));
+        pnlResumen.setOpaque(false);
+
+        destruidas.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        destruidas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        destruidas.setText("Casillas destruídas");
+
+        vida.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        vida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vida.setText("Vida");
+
+        heroe2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        heroe2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        heroe2.setText("hola");
+
+        heroe1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        heroe1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        heroe1.setText("hola");
+
+        heroe3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        heroe3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        heroe3.setText("hola");
+
         javax.swing.GroupLayout pnlResumenLayout = new javax.swing.GroupLayout(pnlResumen);
         pnlResumen.setLayout(pnlResumenLayout);
         pnlResumenLayout.setHorizontalGroup(
-            pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+                pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlResumenLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pnlResumenLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                pnlResumenLayout.createSequentialGroup()
+                                                        .addComponent(heroe1, javax.swing.GroupLayout.DEFAULT_SIZE, 183,
+                                                                Short.MAX_VALUE)
+                                                        .addGap(126, 126, 126)
+                                                        .addComponent(heroe2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(100, 100, 100)
+                                                        .addComponent(heroe3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(25, 25, 25))
+                                        .addGroup(pnlResumenLayout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(vida, javax.swing.GroupLayout.PREFERRED_SIZE, 187,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(60, 60, 60)
+                                                .addComponent(destruidas, javax.swing.GroupLayout.PREFERRED_SIZE, 327,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(85, 85, 85)))));
         pnlResumenLayout.setVerticalGroup(
-            pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+                pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlResumenLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(
+                                        pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(vida)
+                                                .addComponent(destruidas))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(
+                                        pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(heroe2, javax.swing.GroupLayout.Alignment.LEADING,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                                                .addComponent(heroe1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(heroe3, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap()));
+
+        labelfondo.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                false)
+                                                        .addComponent(jScrollPane1,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, 250,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(jScrollPane2))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(pnlMatriz, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(pnlResumen, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(pnlLuchadores, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(13, 13, 13))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txfCommand)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnSend)
+                                                .addGap(33, 33, 33))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlMatriz, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlResumen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlLuchadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txfCommand)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSend)
-                        .addGap(33, 33, 33))))
-        );
+                                .addComponent(labelfondo, javax.swing.GroupLayout.Alignment.TRAILING,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, 1390, Short.MAX_VALUE)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlResumen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(pnlLuchadores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(pnlMatriz, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(pnlResumen, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(pnlLuchadores, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane2)))
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txfCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 75,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 75,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelfondo, javax.swing.GroupLayout.Alignment.TRAILING,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -693,17 +785,23 @@ public class FrameClient extends javax.swing.JFrame {
     private javax.swing.JTextPane TextoHeroe2;
     private javax.swing.JTextPane TextoHeroe3;
     private javax.swing.JButton btnSend;
+    private javax.swing.JLabel destruidas;
+    private javax.swing.JLabel heroe1;
+    private javax.swing.JLabel heroe2;
+    private javax.swing.JLabel heroe3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JLabel labelfondo;
     private javax.swing.JPanel pnlLuchadores;
     private javax.swing.JPanel pnlMatriz;
     private javax.swing.JPanel pnlResumen;
     private javax.swing.JTextArea txaLastMove;
     private javax.swing.JTextArea txaMessages;
     private javax.swing.JTextField txfCommand;
+    private javax.swing.JLabel vida;
     // End of variables declaration//GEN-END:variables
 
     // Getters
@@ -741,6 +839,67 @@ public class FrameClient extends javax.swing.JFrame {
 
     public Matriz getMatriz() {
         return matriz;
+    }
+
+    // Actualiza los labels del panel de resumen con las estadísticas actuales
+    public void actualizarPanelResumen() {
+        if (matriz == null)
+            return;
+
+        // Actualizar porcentaje de vida
+        double porcentajeVida = matriz.calcularPorcentajeVida();
+        vida.setText(String.format("Vida: %.1f%%", porcentajeVida));
+
+        // Actualizar casillas destruidas
+        int destruidas = matriz.calcularCasillasDestruidas();
+        this.destruidas.setText("Casillas destruídas: " + destruidas);
+
+        // Actualizar información de cada héroe (si existen)
+        ArrayList<Hero> heroes = matriz.getHeroes();
+        if (heroes.size() > 0) {
+            Hero heroe = heroes.get(0);
+            int casillasVivas = matriz.calcularCasillasVivasHeroe(heroe);
+            int casillasOriginales = heroe.getCasillasEnPosesion().size();
+            String colorHex = String.format("#%02x%02x%02x",
+                    heroe.getColor().getRed(),
+                    heroe.getColor().getGreen(),
+                    heroe.getColor().getBlue());
+            heroe1.setText("<html><div style='text-align:center'>" +
+                    "<span style='color:" + colorHex + "'>" + heroe.getNombre() + "</span><br>" +
+                    "<span style='font-size:11px'>" + casillasVivas + " de " + casillasOriginales
+                    + " casillas activas</span>" +
+                    "</div></html>");
+        }
+
+        if (heroes.size() > 1) {
+            Hero heroe = heroes.get(1);
+            int casillasVivas = matriz.calcularCasillasVivasHeroe(heroe);
+            int casillasOriginales = heroe.getCasillasEnPosesion().size();
+            String colorHex = String.format("#%02x%02x%02x",
+                    heroe.getColor().getRed(),
+                    heroe.getColor().getGreen(),
+                    heroe.getColor().getBlue());
+            heroe2.setText("<html><div style='text-align:center'>" +
+                    "<span style='color:" + colorHex + "'>" + heroe.getNombre() + "</span><br>" +
+                    "<span style='font-size:11px'>" + casillasVivas + " de " + casillasOriginales
+                    + " casillas activas</span>" +
+                    "</div></html>");
+        }
+
+        if (heroes.size() > 2) {
+            Hero heroe = heroes.get(2);
+            int casillasVivas = matriz.calcularCasillasVivasHeroe(heroe);
+            int casillasOriginales = heroe.getCasillasEnPosesion().size();
+            String colorHex = String.format("#%02x%02x%02x",
+                    heroe.getColor().getRed(),
+                    heroe.getColor().getGreen(),
+                    heroe.getColor().getBlue());
+            heroe3.setText("<html><div style='text-align:center'>" +
+                    "<span style='color:" + colorHex + "'>" + heroe.getNombre() + "</span><br>" +
+                    "<span style='font-size:11px'>" + casillasVivas + " de " + casillasOriginales
+                    + " casillas activas</span>" +
+                    "</div></html>");
+        }
     }
 
 }
