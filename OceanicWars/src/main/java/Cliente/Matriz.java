@@ -138,7 +138,7 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
                                                                      // relleno de borde negro para
                                                                      // hacer la ilusión de división
                 if (!c.getEstado()) { // Si la casilla revisada está muerta, se hace una X encima
-                    g.drawLine(j * sizeLargo, i * sizeAlto, (j + 1) * sizeLargo, (i + 1) * sizeAlto); // Línea diagonal
+                    g.drawLine(posX, posY, posX + sizeLargo, posY + sizeAlto); // Línea diagonal
                                                                                                       // desde la
                                                                                                       // esquina
                                                                                                       // superior
@@ -146,7 +146,7 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
                                                                                                       // esquina
                                                                                                       // inferior
                                                                                                       // derecha
-                    g.drawLine(j * sizeLargo, (i + 1) * sizeAlto, (j + 1) * sizeLargo, i * sizeAlto); // Línea diagonal
+                    g.drawLine(posX, posY + sizeAlto, posX + sizeLargo, posY); // Línea diagonal
                                                                                                       // desde la
                                                                                                       // esquina
                                                                                                       // inferior
