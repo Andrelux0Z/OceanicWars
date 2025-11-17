@@ -50,12 +50,11 @@ public class PoseidonThunders extends Ataque {
                                                                                                                  // en
                                                                                                                  // el
                                                                                                                  // arreglo
-                int danoEpicentro = casilla.getVida(); // Recibe el mismo daño de su vida ('instakill')
-                casilla.recibirGolpe(danoEpicentro);
-                casilla.getBitacora()
+            casilla.recibirGolpe(casilla.getVida()); // Recibe el mismo daño de su vida ('instakill')
+            casilla.getBitacora()
                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
-                        + ") fue seleccionada como epicentro de una onda del 'Poseidon Thunders' de "
-                        + hero.getNombre() + ", recibiendo " + danoEpicentro + " puntos de daño"); // Mensaje
+                            + ") fue seleccionada como epicentro de una onda del 'Poseidon Thunders' de "
+                            + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño"); // Mensaje
                                                                                                            // agregado a
                                                                                                            // la
                                                                                                            // bitácora
@@ -64,12 +63,11 @@ public class PoseidonThunders extends Ataque {
 
             for (Casilla c : matriz.getCasillasActivas()) { // Revisamos en las casillas activas
                 if (matriz.IsCasillaEnRadio(casilla.getX(), casilla.getY(), c.getX(), c.getY(), radioObtenido)) {
-                        int dano = c.getVida(); // Recibe el mismo daño de su vida ('instakill')
-                        c.recibirGolpe(dano);
-                        c.getBitacora()
+                    c.recibirGolpe(c.getVida()); // Recibe el mismo daño de su vida ('instakill')
+                    c.getBitacora()
                             .add("La casilla (" + c.getX() + ", " + c.getY()
-                                + ") fue golpeada por una onda expansiva del 'Poseidon Thunders' de "
-                                + hero.getNombre() + ", recibiendo " + dano + " puntos de daño"); // Mensaje
+                                    + ") fue golpeada por una onda expansiva del 'Poseidon Thunders' de "
+                                    + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño"); // Mensaje
                                                                                                              // agregado
                                                                                                              // a la
                                                                                                              // bitácora
