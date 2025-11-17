@@ -16,6 +16,7 @@ public class CommandReady extends Command{
     public CommandReady(String[] args) {
         super(CommandType.READY, args);
         this.consumesTurn = false;
+        this.ownCommand = false;
 
     }
 

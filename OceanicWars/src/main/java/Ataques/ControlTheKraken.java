@@ -15,6 +15,8 @@ import java.awt.Point;
  * @author kokoju
  */
 
+//CLASE NO UTILIZADA PERO ME DA COSA BORRARLA TODO BORRARLA
+
 public class ControlTheKraken extends Ataque {
     // Atributos
     private Point casillaElegida;  // Espacio para la casilla en dónde se inicio el ataque

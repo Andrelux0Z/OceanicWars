@@ -37,7 +37,7 @@ public class FishTelepathy extends Hero {
     }
 
     @Override
-    public boolean buscarAtaque(String[] comando) {
+    public boolean validarHeroes(String[] comando) {
         if (comando == null || comando.length < 4) return false;
         String tipoAtaque = comando[3].toUpperCase();
         switch (tipoAtaque) {
@@ -45,6 +45,20 @@ public class FishTelepathy extends Hero {
             case "SHARKATTACK":
             case "PULP":
                 // No requieren parámetros extra de posicionamiento
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean buscarHeroes(String attackName) {
+        if (attackName == null) return false;
+        String tipo = attackName.toUpperCase();
+        switch (tipo) {
+            case "CARDUMEN":
+            case "SHARKATTACK":
+            case "PULP":
                 return true;
             default:
                 return false;
@@ -70,6 +84,6 @@ public class FishTelepathy extends Hero {
 
     @Override
     public String getArquetipo() {
-        return "Undersea Fire"; 
+        return "Fish Telepathy";
     }
 }

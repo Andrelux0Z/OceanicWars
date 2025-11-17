@@ -8,6 +8,7 @@ import Cliente.Casilla;
 import Cliente.Jugador;
 import Hero.Hero;
 import java.awt.Point;
+import Ataques.ElementosAtaques.Kraken;
 
 /**
  *
@@ -51,6 +52,7 @@ public class ReleaseTheKraken extends Ataque {
             Casilla casilla = matriz.getMatriz()[this.casillaElegida.x][this.casillaElegida.y]; // Toma la casilla
                                                                                                 // elegida por el
                                                                                                 // usuario
+            casilla.setObjetoPresente(new Kraken(this.radioObtenido));
             casilla.getBitacora()
                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                             + ") fue seleccionada como lugar de apararición del Kraken del 'Release The Kraken' de "

@@ -29,10 +29,14 @@ public class CommandFactory {
                 return new CommandName(args);
             case "BOOST":
                 return new CommandBoost(args);
+            case "LOG":
+                return new CommandLog(args);
             case "READY":
                 return new CommandReady(args);
             case "NEXT":
                 return new CommandNextTurn(args);
+            case "SKIP":
+                return new CommandSkip(args);
             default:
                 return null;
         }

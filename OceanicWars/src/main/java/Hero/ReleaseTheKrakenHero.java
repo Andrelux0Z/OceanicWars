@@ -48,9 +48,9 @@ public class ReleaseTheKrakenHero extends Hero {
         habilidad3.ejecutar();
     }
 
-    //Todo buscarAtaque y realizarAtaque estan hechos con copilot, es algo provisional
+    //Todo validarHeroes y realizarAtaque estan hechos con copilot, es algo provisional
     @Override
-    public boolean buscarAtaque(String[] comando) {
+    public boolean validarHeroes(String[] comando) {
         if (comando == null || comando.length < 4) return false;
         String tipo = comando[3].toUpperCase();
         switch (tipo) {
@@ -72,35 +72,25 @@ public class ReleaseTheKrakenHero extends Hero {
                 return true;
             }
             case "KRAKENBREATH": {
-                // expect x y direction
-                if (comando.length < 7) return false;
-                if (this.getMatrizAtaque() == null) return false;
-                try {
-                    int x = Integer.parseInt(comando[4]);
-                    int y = Integer.parseInt(comando[5]);
-                    String dir = comando[6].toUpperCase();
-                    if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
-                    Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
-                    if (c == null) return false;
-                    if (c.getObjetoPresente() != null) return false;
-                    Direcciones.valueOf(dir); // validate direction (will throw if invalid)
-                } catch (Exception ex) { return false; }
-                return true;
+                return this.validarCoordAndDir(comando);
             }
             case "RELEASETHEKRAKEN": {
-                // expect single coordinate pair
-                if (comando.length < 6) return false;
-                if (this.getMatrizAtaque() == null) return false;
-                try {
-                    int x = Integer.parseInt(comando[4]);
-                    int y = Integer.parseInt(comando[5]);
-                    if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
-                    Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
-                    if (c == null) return false;
-                    if (c.getObjetoPresente() != null) return false;
-                } catch (NumberFormatException ex) { return false; }
-                return true;
+                return this.validarParCoords(comando);
             }
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean buscarHeroes(String attackName) {
+        if (attackName == null) return false;
+        String tipo = attackName.toUpperCase();
+        switch (tipo) {
+            case "TENTACULOS":
+            case "KRAKENBREATH":
+            case "RELEASETHEKRAKEN":
+                return true;
             default:
                 return false;
         }

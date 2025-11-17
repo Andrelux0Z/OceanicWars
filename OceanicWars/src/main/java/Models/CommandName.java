@@ -16,6 +16,7 @@ public class CommandName extends Command{
     public CommandName(String[] args) { //name Diego
         super(CommandType.NAME, args);
         this.consumesTurn = false;
+        this.ownCommand = true;
     }
 
     @Override

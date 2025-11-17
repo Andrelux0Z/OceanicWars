@@ -11,7 +11,8 @@ import Models.CommandApplyAttack;
 import Models.AttackPayload;
 import Hero.HeroFactory;
 import Hero.Hero;
-import static Models.CommandType.*;
+import Hero.HeroType;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -101,7 +102,7 @@ public class Server {
     void executeCommand(Command comando, ThreadServidor origin) {
         // Si es un ApplyyAttack, validar el payload antes de reenviar
         try {
-            if (comando.getType() == APPLYATTACK) {
+                if (comando.getType() == CommandType.APPLYATTACK) {
 
                 if (comando instanceof CommandApplyAttack) {
 
@@ -136,20 +137,26 @@ public class Server {
             return;
         }
         
-
+        if(comando.getType() == CommandType.SKIP){
+            nextTurn();
+        }
+        
         // Reenviar el comando según su tipo de difusión -> PERDON :(
         //Si es broadcast true
-        if (comando.getIsBroadcast())
+        if (comando.getIsBroadcast()){
+            this.getRefFrame().writeMessage("Actividad broadcast del jugador " + origin.name + "(ver cliente)");
             this.broadcast(comando);
+        }
         
-        //Si es broadcast false y se encuentra al jugador receptor
-        else if (buscarJugador(comando.getParameters()[1])) {
-            if(comando.getType() == PRIVATE_MESSAGE || comando.getType() == APPLYATTACK)
-                this.sendPrivate(comando);
-            else
-                processPrivate(comando,origin);
+        //Si es comando propio
+        else if (comando.isOwnCommand()) {
+                processPrivate(comando,origin);             
             
-        //Si no se encuentra receptor
+        //Si es uno que se refleja en cliente enemigo
+        } else if(comando.getParameters().length > 1 && this.buscarJugador(comando.getParameters()[1])){  //Enviar privado
+            this.sendPrivate(comando);
+            
+        //Si no se encuentra receptor    
         } else {
             String[] args = new String[]{"RESULT", "Server: Jugador objetivo no encontrado"};
             try {
@@ -174,8 +181,6 @@ public class Server {
     
     
     public void processPrivate(Command comando,ThreadServidor own){
-        if (comando.getParameters().length <= 1)
-            return;
         
                 try {
                     own.objectSender.writeObject(comando);

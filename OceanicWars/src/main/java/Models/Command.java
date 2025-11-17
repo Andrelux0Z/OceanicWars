@@ -18,6 +18,7 @@ public abstract class Command implements Serializable{
     private String[] parameters;
     private boolean isBroadcast;
     protected boolean consumesTurn;  //Atributo para determinar si un comando deberia consumir el turno o no
+    protected boolean ownCommand;// si el comando debe ser ejecutado en la consola que se envia
 
     public Command(CommandType type, String[] parameters) {
         this.type = type;
@@ -52,6 +53,12 @@ public abstract class Command implements Serializable{
 
     public boolean isConsumesTurn() {
         return consumesTurn;
+        
+        
+    }
+
+    public boolean isOwnCommand() {
+        return ownCommand;
     }
     
     
