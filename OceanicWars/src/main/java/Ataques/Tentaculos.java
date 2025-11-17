@@ -41,11 +41,12 @@ public class Tentaculos extends Ataque {
                 for (Casilla c : matriz.getCasillasActivas()) {
                     if (matriz.IsCasillaEnRadio(casilla.getX(), casilla.getY(), c.getX(), c.getY(),
                             this.radioObtenido)) {
-                        c.recibirGolpe(c.getVida()); // Recibe el mismo daño de su vida ('instakill')
+                        int dano = c.getVida(); // Recibe el mismo daño de su vida ('instakill')
+                        c.recibirGolpe(dano);
                         c.getBitacora()
-                                .add("La casilla (" + c.getX() + ", " + c.getY()
-                                        + ") fue golpeada por un tentáculo del 'Tentáculos' de " + hero.getNombre()
-                                        + ", recibiendo " + c.getVida() + " puntos de daño"); // Mensaje agregado a la
+                            .add("La casilla (" + c.getX() + ", " + c.getY()
+                                + ") fue golpeada por un tentáculo del 'Tentáculos' de " + hero.getNombre()
+                                + ", recibiendo " + dano + " puntos de daño"); // Mensaje agregado a la
                                                                                               // bitácora de la casilla
                     }
                 }

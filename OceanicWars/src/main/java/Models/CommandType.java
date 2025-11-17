@@ -17,6 +17,7 @@ public enum CommandType {
     PRIVATE_MESSAGE(3), //private Andres hola andres
     GIVEUP (1), //giveup
     NAME (2),
+    SKIP (1),
     NEXT (1),
     READY (1),   //ready  -> para iniciar juego
     BOOST (3); //BOOST <HERO> <HEAL/PROTECT/STRENGTHEN>

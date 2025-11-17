@@ -40,33 +40,37 @@ public class SharkAttack extends Ataque {
             switch(val) {  // Se hace un switch en función del val revisado
                 case SUP_IZQ:
                     for (Casilla c : matriz.getCasillasActivas()) {  // Revisamos en las casillas activas
-                        if (matriz.IsCasillaEnRadio(0, 0, c.getX(), c.getY(), this.radioObtenido)) {
-                            c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+                            if (matriz.IsCasillaEnRadio(0, 0, c.getX(), c.getY(), this.radioObtenido)) {
+                            int dano = c.getVida();
+                            c.recibirGolpe(dano);  // Recibe el mismo daño de su vida ('instakill')
+                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + dano + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                         }
                     }
                     break;
                 case SUP_DER:
                     for (Casilla c : matriz.getCasillasActivas()) {  // Revisamos en las casillas activas
-                        if (matriz.IsCasillaEnRadio(matriz.getCantidadColumnas() - 1, 0, c.getX(), c.getY(), this.radioObtenido)) {
-                            c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+                            if (matriz.IsCasillaEnRadio(matriz.getCantidadColumnas() - 1, 0, c.getX(), c.getY(), this.radioObtenido)) {
+                            int dano = c.getVida();
+                            c.recibirGolpe(dano);  // Recibe el mismo daño de su vida ('instakill')
+                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + dano + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                         }
                     }
                     break;
                 case INF_IZQ:
                     for (Casilla c : matriz.getCasillasActivas()) {  // Revisamos en las casillas activas
-                        if (matriz.IsCasillaEnRadio(0, matriz.getCantidadFilas() - 1, c.getX(), c.getY(), this.radioObtenido)) {
-                            c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+                            if (matriz.IsCasillaEnRadio(0, matriz.getCantidadFilas() - 1, c.getX(), c.getY(), this.radioObtenido)) {
+                            int dano = c.getVida();
+                            c.recibirGolpe(dano);  // Recibe el mismo daño de su vida ('instakill')
+                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + dano + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                         }
                     }
                     break;
                 case INF_DER:
                     for (Casilla c : matriz.getCasillasActivas()) {  // Revisamos en las casillas activas
-                        if (matriz.IsCasillaEnRadio(matriz.getCantidadColumnas() - 1, matriz.getCantidadFilas() - 1, c.getX(), c.getY(), this.radioObtenido)) {
-                            c.recibirGolpe(c.getVida());  // Recibe el mismo daño de su vida ('instakill')
-                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+                            if (matriz.IsCasillaEnRadio(matriz.getCantidadColumnas() - 1, matriz.getCantidadFilas() - 1, c.getX(), c.getY(), this.radioObtenido)) {
+                            int dano = c.getVida();
+                            c.recibirGolpe(dano);  // Recibe el mismo daño de su vida ('instakill')
+                            c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY() + ") fue golpeada por un tiburón del 'Shark Attack' de " + hero.getNombre() + ", recibiendo " + dano + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
                         }
                     }
                     break;

@@ -8,6 +8,8 @@ import Cliente.Client;
 import Hero.Hero;
 import Servidor.ThreadServidor;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +18,7 @@ import java.io.IOException;
 public class CommandBoost extends Command {
     
     public CommandBoost(String[] args) {
-        super(CommandType.MESSAGE, args);
+        super(CommandType.BOOST, args);
         this.consumesTurn = true;
         this.ownCommand = true;
     }
@@ -54,7 +56,7 @@ public class CommandBoost extends Command {
             try {
                 client.objectSender.writeObject(CommandFactory.getCommand(new String[]{"NEXT"}));
             } catch (IOException ex) {
-                System.getLogger(CommandBoost.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                Logger.getLogger(CommandBoost.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

@@ -11,6 +11,7 @@ import Models.CommandApplyAttack;
 import Models.AttackPayload;
 import Hero.HeroFactory;
 import Hero.Hero;
+import Hero.HeroType;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -136,21 +137,26 @@ public class Server {
             return;
         }
         
-
-        // Reenviar el comando según su tipo de difusión -> PERDON :(
+        if(comando.getType() == CommandType.SKIP){
+            nextTurn();
+        }
+        
         // Reenviar el comando según su tipo de difusión -> PERDON :(
         //Si es broadcast true
-        if (comando.getIsBroadcast())
+        if (comando.getIsBroadcast()){
+            this.getRefFrame().writeMessage("Actividad broadcast del jugador " + origin.name + "(ver cliente)");
             this.broadcast(comando);
+        }
         
-        //Si es broadcast false y se encuentra al jugador receptor
+        //Si es comando propio
         else if (comando.isOwnCommand()) {
-            if(comando.getParameters().length > 1 && this.buscarJugador(comando.getParameters()[1]))  //Enviar privado
-                this.sendPrivate(comando);
-            else
-                processPrivate(comando,origin);             //Procesar en el propio
+                processPrivate(comando,origin);             
             
-        //Si no se encuentra receptor
+        //Si es uno que se refleja en cliente enemigo
+        } else if(comando.getParameters().length > 1 && this.buscarJugador(comando.getParameters()[1])){  //Enviar privado
+            this.sendPrivate(comando);
+            
+        //Si no se encuentra receptor    
         } else {
             String[] args = new String[]{"RESULT", "Server: Jugador objetivo no encontrado"};
             try {

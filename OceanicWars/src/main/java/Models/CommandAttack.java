@@ -80,16 +80,16 @@ public class CommandAttack extends Command {
         // Construir payload con HeroPackage
         String attackerName = cliente.name;
         String targetName = params[1];
-        // heroType should be the hero *type* (as used by HeroFactory), not the instance name.
+        // Reconstruir el HeroPackage antes de decidir el heroType
         HeroPackage hp = null;
-        String heroType = (hp != null && hp.getHeroType() != null) ? hp.getHeroType() : params[2].toUpperCase();
+        if (atacante != null) hp = atacante.buildHeroPackage(params[2]);
+        // heroType debe ser el tipo usado por HeroFactory; si no está disponible, usar el nombre de la clase del héroe
+        String heroType = (hp != null && hp.getHeroType() != null) ? hp.getHeroType() : (heroeAtacante != null ? heroeAtacante.getClass().getSimpleName().toUpperCase() : params[2].toUpperCase());
         String attackType = params[3];
         String[] extras = new String[params.length - 4];
         for (int i = 4; i < params.length; i++)
             extras[i - 4] = params[i];
 
-        if (atacante != null)
-            hp = atacante.buildHeroPackage(params[2]);
 
         AttackPayload payload = new AttackPayload(attackerName, targetName, heroType, params[2],attackType, extras, hp);
         sendComando = new CommandApplyAttack(payload);

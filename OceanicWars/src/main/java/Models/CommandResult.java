@@ -53,7 +53,7 @@ public class CommandResult extends Command {
         } else if (params.length > 2) {
             msg = params[2];
             String name = params[1];    //Caso en el que el resultado va a un jugador especifico
-            if (name != client.name)
+            if (!client.name.equalsIgnoreCase(name))
                 return;
         } else
             msg = params[1];

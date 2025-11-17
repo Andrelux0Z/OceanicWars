@@ -69,11 +69,14 @@ public class PoseidonTrident extends Hero {
                 return true;
             }
             case "THREENUMBERS": {
-                // Expect 3 integer numbers
+                // Espera 3 int
                 int extras = comando.length - 4;
                 if (extras < 3) return false;
                 for (int i = 4; i < comando.length && i < 7; i++) {
-                    try { Integer.parseInt(comando[i]); } catch (NumberFormatException ex) { return false; }
+                    try {
+                        int v = Integer.parseInt(comando[i]);
+                        if (v < 0 || v > 9) return false;
+                    } catch (NumberFormatException ex) { return false; }
                 }
                 return true;
             }

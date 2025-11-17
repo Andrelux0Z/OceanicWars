@@ -5,6 +5,7 @@
 package Hero;
 
 import Cliente.Casilla;
+import java.awt.Component;
 import Cliente.Jugador;
 import Cliente.Matriz;
 import java.awt.Color;
@@ -32,6 +33,8 @@ public abstract class Hero implements Serializable {
     private boolean siguientePotenciado; // Booleano que indica si el usuario pasó turno y su siguiente ataque se
                                  // potencia
     private Matriz matrizAtaque; // Matriz que va a atacar el héroe en su próximo movimiento
+    // Parent component (UI) for popups; transient so it is not serialized in network payloads
+    private transient Component parentComponent;
 
     // Constructor
     public Hero(String nombre, String imagen, Color color, int ocupacion, int sanidad, int fuerza, int resistencia) {
@@ -153,14 +156,24 @@ public abstract class Hero implements Serializable {
         return matrizAtaque;
     }
 
+    public Component getParentComponent() {
+        return parentComponent;
+    }
+
+    public void setParentComponent(Component parent) {
+        this.parentComponent = parent;
+    }
+
     public boolean isSiguientePotenciado() {
         return siguientePotenciado;
     }
 
     // Helper: valida que exista una casilla válida en los parámetros x/y en posiciones 4/5
     protected boolean validarParCoords(String[] comando) {
-        if (comando == null || comando.length < 6) return false;
-        if (this.getMatrizAtaque() == null) return false;
+        if (comando == null || comando.length < 6) 
+            return false;
+        if (this.getMatrizAtaque() == null) 
+            return false;
         try {
             int x = Integer.parseInt(comando[4]);
             int y = Integer.parseInt(comando[5]);

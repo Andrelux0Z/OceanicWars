@@ -35,6 +35,8 @@ public class CommandFactory {
                 return new CommandReady(args);
             case "NEXT":
                 return new CommandNextTurn(args);
+            case "SKIP":
+                return new CommandSkip(args);
             default:
                 return null;
         }

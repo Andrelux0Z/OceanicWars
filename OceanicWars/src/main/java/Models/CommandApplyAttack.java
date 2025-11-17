@@ -15,6 +15,8 @@ import javax.swing.SwingUtilities;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,6 +38,8 @@ public class CommandApplyAttack extends Command {
         super(CommandType.APPLYATTACK, buildParamsFromPayload(payload));
         this.payload = payload;
         this.consumesTurn = true;
+        this.ownCommand = false;
+
 
     }
 
@@ -91,6 +95,17 @@ public class CommandApplyAttack extends Command {
         Hero atacanteHero = null;
         if (this.payload != null && this.payload.getHeroPackage() != null) {
             atacanteHero = HeroFactory.createFromPackage(this.payload.getHeroPackage());
+            // Asignar la matriz objetivo al héroe reconstruido para que las validaciones y la ejecución
+            // que dependen de `getMatrizAtaque()` funcionen correctamente en el cliente receptor.
+            if (atacanteHero != null && atacado != null && atacado.getMatriz() != null) {
+                atacanteHero.setMatrizAtaque(atacado.getMatriz());
+                try {
+                    // Attach UI parent (FrameClient) to the reconstructed hero so attacks can show popups
+                    if (clienteAtacado.getRefFrame() != null) {
+                        atacanteHero.setParentComponent(clienteAtacado.getRefFrame());
+                    }
+                } catch (Exception ignore) {}
+            }
         }
 
         // Registrar en bitácora del receptor que se recibió un ataque
@@ -106,7 +121,7 @@ public class CommandApplyAttack extends Command {
         try {
             droppedByMutualReflect = handleMutualReflect(clienteAtacado, atacado);
         } catch (IOException ex) {
-            System.getLogger(CommandApplyAttack.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.out.println("entra exepcion 1");
         }
         if (droppedByMutualReflect) 
             return;
@@ -137,6 +152,8 @@ public class CommandApplyAttack extends Command {
                 } catch (Exception e) {
                 }
             }
+            // No podemos validar ni ejecutar sin un héroe atacante reconstruido
+            return;
         }
 
         // Validar que el ataque y sus parámetros son correctos usando la lógica del héroe atacante
@@ -180,7 +197,7 @@ public class CommandApplyAttack extends Command {
         try {
             reflected = tryReflectKraken(clienteAtacado, atacado);
         } catch (IOException ex) {
-            System.getLogger(CommandApplyAttack.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            Logger.getLogger(CommandApplyAttack.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (reflected) 
