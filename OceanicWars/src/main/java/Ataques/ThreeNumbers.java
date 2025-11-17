@@ -61,8 +61,8 @@ public class ThreeNumbers extends Ataque {
             for (int i = 0; i < cantidadGolpeada; i++) {  // Para cada golpe que haremos
                 // Elección de casilla
                 Casilla casilla = matriz.getCasillasActivas().get(rand.nextInt(matriz.getCasillasActivas().size()));  // Toma una casilla aleatoria de las que están presentes en el arreglo
-                casilla.recibirGolpe(casilla.getVida());  // Derrota a la casilla
                 casilla.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY() + ") fue golpeada por un ataque del 'Three Numbers' de " + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");  // Mensaje agregado a la bitácora de la casilla
+                casilla.recibirGolpe(casilla.getVida());  // Derrota a la casilla
             }
         }
     */

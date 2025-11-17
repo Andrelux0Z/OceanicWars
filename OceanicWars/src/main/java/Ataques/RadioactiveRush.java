@@ -45,6 +45,10 @@ public class RadioactiveRush extends Ataque {
                 if (b.getIsToxico()) {
                     c.recibirGolpe(10 * this.tiempoActiva); // La casilla recibe los 10 ticks de daño, multiplicados por
                                                             // el tiempo que la basura está activa
+                    c.getBitacora()
+                        .add("La casilla (" + c.getX() + ", " + c.getY()
+                        + ") fue golpeada por la toxicidad de una basura del 'Radioactive Rush' de " + hero.getNombre()
+                        + ", recibiendo " + (10 * this.tiempoActiva) + " puntos de daño");
                 }
             }
         }

@@ -50,7 +50,6 @@ public class PoseidonThunders extends Ataque {
                                                                                                                  // en
                                                                                                                  // el
                                                                                                                  // arreglo
-            casilla.recibirGolpe(casilla.getVida()); // Recibe el mismo daño de su vida ('instakill')
             casilla.getBitacora()
                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                             + ") fue seleccionada como epicentro de una onda del 'Poseidon Thunders' de "
@@ -60,10 +59,11 @@ public class PoseidonThunders extends Ataque {
                                                                                                            // bitácora
                                                                                                            // de la
                                                                                                            // casilla
+            casilla.recibirGolpe(casilla.getVida()); // Recibe el mismo daño de su vida ('instakill')
+
 
             for (Casilla c : matriz.getCasillasActivas()) { // Revisamos en las casillas activas
                 if (matriz.IsCasillaEnRadio(casilla.getX(), casilla.getY(), c.getX(), c.getY(), radioObtenido)) {
-                    c.recibirGolpe(c.getVida()); // Recibe el mismo daño de su vida ('instakill')
                     c.getBitacora()
                             .add("La casilla (" + c.getX() + ", " + c.getY()
                                     + ") fue golpeada por una onda expansiva del 'Poseidon Thunders' de "
@@ -73,6 +73,7 @@ public class PoseidonThunders extends Ataque {
                                                                                                              // bitácora
                                                                                                              // de la
                                                                                                              // casilla
+                    c.recibirGolpe(c.getVida()); // Recibe el mismo daño de su vida ('instakill')
                 }
             }
         }

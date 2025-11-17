@@ -41,13 +41,13 @@ public class SwirlRaising extends Ataque {
             Casilla casilla = matriz.getMatriz()[this.casillaElegida.x][this.casillaElegida.y]; // Toma la casilla
                                                                                                 // elegida por el
                                                                                                 // usuario
-            casilla.recibirGolpe(casilla.getVida()); // La casilla donde sale el remolino es derrotada
             casilla.setObjetoPresente(new Remolino(this.radioObtenido)); // Se crea el objeto del remolino (además de
                                                                          // darle el radio)
             casilla.getBitacora()
                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                             + ") fue seleccionada como lugar de apararición del remolino del 'Swirl Raising' de "
                             + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+            casilla.recibirGolpe(casilla.getVida()); // La casilla donde sale el remolino es derrotada
             for (Casilla c : matriz.getCasillasActivas()) {
                 if (matriz.IsCasillaEnRadio(casilla.getX(), casilla.getY(), c.getX(), c.getY(), this.radioObtenido)) { // Si
                                                                                                                        // la
@@ -59,11 +59,11 @@ public class SwirlRaising extends Ataque {
                                                                                                                        // onda
                                                                                                                        // de
                                                                                                                        // expansión
-                    c.recibirGolpe(c.getVida());
                     c.getBitacora()
                             .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                                     + ") fue golpeada por el remolino del 'Swirl Raising' de " + hero.getNombre()
                                     + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                    c.recibirGolpe(c.getVida());
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {

@@ -44,11 +44,12 @@ public class ThreeLines extends Ataque {
             // Elección de casilla
             try {
                 Casilla casilla = matriz.getMatriz()[punto.x][punto.y]; // Toma la casilla elegida por el usuario
-                casilla.recibirGolpe(casilla.getVida()); // Golpea la casilla inicial del ataque
+               
                 casilla.getBitacora()
                         .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                                 + ") fue seleccionada como lugar de apararición del ataque del 'Three Lines' de "
                                 + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                casilla.recibirGolpe(casilla.getVida()); // Golpea la casilla inicial del ataque
                 Direcciones direccion = Direcciones.values()[rand.nextInt(Direcciones.values().length)]; // Se elige una
                                                                                                          // dirección
                                                                                                          // aleatoria
@@ -65,11 +66,11 @@ public class ThreeLines extends Ataque {
                                 break;
                             }
                             Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i]; // Se elige la casilla
-                            c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                             c.getBitacora()
                                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                                             + ") fue golpeada por el ataque del 'Three Lines' de " + hero.getNombre()
                                             + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                            c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                         }
                         break;
                     case ABAJO: // Al elegir la dirección ABAJO
@@ -81,11 +82,11 @@ public class ThreeLines extends Ataque {
                                 break;
                             }
                             Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i];
-                            c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                             c.getBitacora()
                                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                                             + ") fue golpeada por el ataque del 'Three Lines' de " + hero.getNombre()
                                             + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                            c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                         }
                         break;
                     case IZQUIERDA: // Al elegir la dirección IZQUIERDA
@@ -95,11 +96,11 @@ public class ThreeLines extends Ataque {
                                 break;
                             }
                             Casilla c = matriz.getMatriz()[casilla.getX() - i][casilla.getY()];
-                            c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                             c.getBitacora()
                                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                                             + ") fue golpeada por el ataque del 'Three Lines' de " + hero.getNombre()
                                             + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                            c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                         }
                         break;
                     case DERECHA: // Al elegir la dirección DERECHA
@@ -112,11 +113,11 @@ public class ThreeLines extends Ataque {
                                 break;
                             }
                             Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i];
-                            c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                             c.getBitacora()
                                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                                             + ") fue golpeada por el ataque del 'Three Lines' de " + hero.getNombre()
                                             + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                            c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                         }
                         break;
                 }
