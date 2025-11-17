@@ -52,13 +52,12 @@ public class ReleaseTheKraken extends Ataque {
             Casilla casilla = matriz.getMatriz()[this.casillaElegida.x][this.casillaElegida.y]; // Toma la casilla
                                                                                                 // elegida por el
                                                                                                 // usuario
-                casilla.recibirGolpe(casilla.getVida()); // La casilla donde sale el kraken es derrotada
-                // Colocar el Kraken como objeto presente en la casilla epicentro
-                casilla.setObjetoPresente(new Kraken(this.radioObtenido));
-                casilla.getBitacora()
+            casilla.setObjetoPresente(new Kraken(this.radioObtenido));
+            casilla.getBitacora()
                     .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
-                        + ") fue seleccionada como lugar de apararición del Kraken del 'Release The Kraken' de "
-                        + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                            + ") fue seleccionada como lugar de apararición del Kraken del 'Release The Kraken' de "
+                            + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+            casilla.recibirGolpe(casilla.getVida()); // La casilla donde sale el kraken es derrotada
             for (Casilla c : matriz.getCasillasActivas()) {
                 if (matriz.IsCasillaEnRadio(casilla.getX(), casilla.getY(), c.getX(), c.getY(), this.radioObtenido)) { // Si
                                                                                                                        // la
@@ -70,11 +69,11 @@ public class ReleaseTheKraken extends Ataque {
                                                                                                                        // onda
                                                                                                                        // de
                                                                                                                        // expansión
-                    c.recibirGolpe(c.getVida());
                     c.getBitacora()
                             .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
                                     + ") fue golpeada por la onda del Kraken del 'Release The Kraken' de "
                                     + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                    c.recibirGolpe(c.getVida());
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {

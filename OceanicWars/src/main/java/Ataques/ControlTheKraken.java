@@ -20,8 +20,6 @@ import java.awt.Point;
 public class ControlTheKraken extends Ataque {
     // Atributos
     private Point casillaElegida;  // Espacio para la casilla en dónde se inicio el ataque
-    
-    // TODO: AL RECIBIR ATAQUES, BUSCAR UNA FORMA DE RECUPERAR LOS ATRIBUTOS
 
     // Constructor
     public ControlTheKraken(Hero hero, Jugador contrincante, Point casillaElegida) {
