@@ -4,8 +4,7 @@
  */
 package Hero;
 
-import java.util.Locale;
-
+ 
 /**
  *
  * @author sando
@@ -27,7 +26,7 @@ public class HeroFactory {
                 FishTelepathy heroe = new FishTelepathy(heroPaq.getAttackerName(), "", FishTelepathy.COLOR_DEFAULT,
                         heroPaq.getOcupacion(), heroPaq.getSanidad(), heroPaq.getFuerza(), heroPaq.getResistencia());
                 if (heroPaq.isSiguientePotenciado())
-                    heroe.Strenghten();
+                    heroe.Strengthen();
                 return heroe;
             }
             case "THUNDERSUNDERTHESEA": {
@@ -35,7 +34,7 @@ public class HeroFactory {
                         ThundersUnderTheSea.COLOR_DEFAULT, heroPaq.getOcupacion(), heroPaq.getSanidad(),
                         heroPaq.getFuerza(), heroPaq.getResistencia());
                 if (heroPaq.isSiguientePotenciado())
-                    heroe.Strenghten();
+                    heroe.Strengthen();
                 return heroe;
             }
             case "POSEIDONTRIDENT": {
@@ -43,7 +42,7 @@ public class HeroFactory {
                         PoseidonTrident.COLOR_DEFAULT, heroPaq.getOcupacion(), heroPaq.getSanidad(),
                         heroPaq.getFuerza(), heroPaq.getResistencia());
                 if (heroPaq.isSiguientePotenciado())
-                    heroe.Strenghten();
+                    heroe.Strengthen();
                 return heroe;
             }
             case "RELEASETHEKRAKEN": {
@@ -51,21 +50,21 @@ public class HeroFactory {
                         ReleaseTheKrakenHero.COLOR_DEFAULT, heroPaq.getOcupacion(), heroPaq.getSanidad(),
                         heroPaq.getFuerza(), heroPaq.getResistencia());
                 if (heroPaq.isSiguientePotenciado())
-                    heroe.Strenghten();
+                    heroe.Strengthen();
                 return heroe;
             }
             case "WAVESCONTROL": {
                 WavesControl heroe = new WavesControl(heroPaq.getAttackerName(), "", WavesControl.COLOR_DEFAULT,
                         heroPaq.getOcupacion(), heroPaq.getSanidad(), heroPaq.getFuerza(), heroPaq.getResistencia());
                 if (heroPaq.isSiguientePotenciado())
-                    heroe.Strenghten();
+                    heroe.Strengthen();
                 return heroe;
             }
             case "UNDERSEAFIRE": {
                 UnderseaFire heroe = new UnderseaFire(heroPaq.getAttackerName(), "", UnderseaFire.COLOR_DEFAULT,
                         heroPaq.getOcupacion(), heroPaq.getSanidad(), heroPaq.getFuerza(), heroPaq.getResistencia());
                 if (heroPaq.isSiguientePotenciado())
-                    heroe.Strenghten();
+                    heroe.Strengthen();
                 return heroe;
             }
             default:

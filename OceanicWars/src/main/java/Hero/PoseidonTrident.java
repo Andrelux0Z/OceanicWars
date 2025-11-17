@@ -43,15 +43,10 @@ public class PoseidonTrident extends Hero {
         habilidad2.ejecutar();
     }
 
-    public void habilidad3(Jugador contrincante, Point casillaElegida) {
-        Ataque habilidad3 = new ControlTheKraken(this, contrincante, casillaElegida);
-        habilidad3.ejecutar();
-    }
 
-
-    //TODO buscarAtaque y realizarAtaque estan hechos con copilot, es algo provisional
+    //TODO validarHeroes y realizarAtaque estan hechos con copilot, es algo provisional
     @Override
-    public boolean buscarAtaque(String[] comando) {
+    public boolean validarHeroes(String[] comando) {
         if (comando == null || comando.length < 4) return false;
         String tipo = comando[3].toUpperCase();
         // extras start at index 4
@@ -82,20 +77,20 @@ public class PoseidonTrident extends Hero {
                 }
                 return true;
             }
-            case "CONTROLTHEKRAKEN": {
-                // Expect a single coordinate pair
-                if (comando.length < 6) return false;
-                if (this.getMatrizAtaque() == null) return false;
-                try {
-                    int x = Integer.parseInt(comando[4]);
-                    int y = Integer.parseInt(comando[5]);
-                    if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
-                    Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
-                    if (c == null) return false;
-                    if (c.getObjetoPresente() != null) return false;
-                } catch (NumberFormatException ex) { return false; }
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean buscarHeroes(String attackName) {
+        if (attackName == null) return false;
+        String tipo = attackName.toUpperCase();
+        switch (tipo) {
+            case "THREELINES":
+            case "THREENUMBERS":
+            case "CONTROLTHEKRAKEN":
                 return true;
-            }
             default:
                 return false;
         }
@@ -124,14 +119,6 @@ public class PoseidonTrident extends Hero {
                     try { nums.add(Integer.parseInt(comando[i])); } catch (NumberFormatException ex) { }
                 }
                 if (!nums.isEmpty()) this.habilidad2(atacado, nums);
-                break;
-            }
-            case "CONTROLTHEKRAKEN": {
-                try {
-                    int x = Integer.parseInt(comando[4]);
-                    int y = Integer.parseInt(comando[5]);
-                    this.habilidad3(atacado, new Point(x, y));
-                } catch (Exception ex) { }
                 break;
             }
         }

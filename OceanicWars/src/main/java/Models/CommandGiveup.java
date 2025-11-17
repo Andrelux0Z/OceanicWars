@@ -16,6 +16,7 @@ public class CommandGiveup  extends Command{
     public CommandGiveup(String[] args) {
         super(CommandType.PRIVATE_MESSAGE, args);
         this.consumesTurn = false;
+        this.ownCommand = true;
 
     }
 

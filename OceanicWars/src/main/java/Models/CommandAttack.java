@@ -8,7 +8,6 @@ import Cliente.Client;
 import Cliente.Jugador;
 import Hero.Hero;
 import Hero.HeroPackage;
-import Servidor.Server;
 import Servidor.ThreadServidor;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -23,8 +22,9 @@ public class CommandAttack extends Command{
     public CommandAttack(String[] args) { //ATTACK Andres 5 7
         super(CommandType.ATTACK, args);
         this.consumesTurn = false;
+        this.ownCommand = true;
     }
-    
+
     @Override
     public void processForServer(ThreadServidor threadServidor) {
         this.setIsBroadcast(false);
@@ -54,28 +54,31 @@ public class CommandAttack extends Command{
         // Ver si el heroe existe
         if (heroeAtacante == null) {
             cliente.getRefFrame().writeMessage("El heroe escrito no existe");
-            flag = true;
+            return;
             
         // Ver si el ataque y parametros extra son correctos
-        } else if (!heroeAtacante.buscarAtaque(params)) {   // Ya valida parametros extra
-            cliente.getRefFrame().writeMessage("El ataque escrito no existe");
-            flag = true;
+        } else if (!heroeAtacante.buscarHeroes(params[3])) {   // indice 3 deberia contener el ataque
+            if (params[3].equalsIgnoreCase("ControlTheKraken"))
+                cliente.getRefFrame().writeMessage("Este ataque se encuentra activo de forma pasiva");
+            else 
+                cliente.getRefFrame().writeMessage("El ataque escrito no existe");
+            return;
         }
 
-        if (flag) return;
+        
+        cliente.getJugador().deshabilitarResistencias();
 
         // Construir payload con HeroPackage
         String attackerName = cliente.name;
         String targetName = params[1];
-        String heroType = params[2];
+        // heroType should be the hero *type* (as used by HeroFactory), not the instance name.
+        HeroPackage hp = null;
+        if (atacante != null) hp = atacante.buildHeroPackage(params[2]);
+        String heroType = (hp != null && hp.getHeroType() != null) ? hp.getHeroType() : params[2].toUpperCase();
         String attackType = params[3];
         String[] extras = new String[params.length - 4];
         for (int i = 4; i < params.length; i++) extras[i - 4] = params[i];
-
-        HeroPackage hp = null;
-        if (atacante != null) hp = atacante.buildHeroPackage(params[2]);
-
-        AttackPayload payload = new AttackPayload(attackerName, targetName, heroType, attackType, extras, hp);
+        AttackPayload payload = new AttackPayload(attackerName, targetName, heroType, params[2], attackType, extras, hp);
         sendComando = new CommandApplyAttack(payload);
 
         try {

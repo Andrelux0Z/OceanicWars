@@ -79,6 +79,10 @@ public class Client {
     public FrameClient getRefFrame() {
         return refFrame;
     }
+
+    public ThreadClient getThreadClient() {
+        return threadClient;
+    }
     
     
     

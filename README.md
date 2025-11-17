@@ -32,12 +32,12 @@ El juego soporta los siguientes comandos de consola:
    Consume turno: Sí
 
 6. **boost**  
-   Modo de uso: `boost <NombreHeroe> <HEAL/PROTECT/STRENGHTEN>`  
+   Modo de uso: `boost <NombreHeroe> <HEAL/PROTECT/STRENGTHEN>`  
    Descripción: Mejora a un héroe específico con una de las opciones disponibles:
 
    - HEAL: Restaura la salud del héroe
    - PROTECT: Aumenta la resistencia del héroe
-   - STRENGHTEN: Aumenta la fuerza del héroe  
+   - STRENGTHEN: Aumenta la fuerza del héroe  
      Consume turno: Sí
 
 7. **next**  

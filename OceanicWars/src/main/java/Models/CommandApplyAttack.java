@@ -13,6 +13,7 @@ import Servidor.Server;
 import Servidor.ThreadServidor;
 import javax.swing.SwingUtilities;
 import java.awt.Point;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,7 @@ public class CommandApplyAttack extends Command {
     public CommandApplyAttack(String[] args) {
         super(CommandType.APPLYATTACK, args);
         this.consumesTurn = true;
+        this.ownCommand = false;
     }
 
     public CommandApplyAttack(AttackPayload payload) {
@@ -91,6 +93,24 @@ public class CommandApplyAttack extends Command {
             atacanteHero = HeroFactory.createFromPackage(this.payload.getHeroPackage());
         }
 
+        // Registrar en bitácora del receptor que se recibió un ataque
+        try {
+            if (clienteAtacado.getThreadClient() != null && this.payload != null) {
+                String entradaRecibida = "ATTACK_RECEIVED: Ataque '" + this.payload.getAttackType() + "' del héroe '" + this.payload.getHeroType() + "' (atacante: " + this.payload.getAttackerName() + ") dirigido a " + this.payload.getTargetName();
+                clienteAtacado.getThreadClient().addBitacora(entradaRecibida);
+            }
+        } catch (Exception e) {}
+
+        // Comprobar y manejar reflejo mutuo en método separado
+        boolean droppedByMutualReflect = false;
+        try {
+            droppedByMutualReflect = handleMutualReflect(clienteAtacado, atacado);
+        } catch (IOException ex) {
+            System.getLogger(CommandApplyAttack.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        if (droppedByMutualReflect) 
+            return;
+
         // Verificaciones defensivas: asegurarse de que el jugador atacado y el atacante existan
         if (atacado == null) {
             String msg = "CommandApplyAttack: jugador atacado no inicializado";
@@ -117,6 +137,22 @@ public class CommandApplyAttack extends Command {
                 } catch (Exception e) {
                 }
             }
+        }
+
+        // Validar que el ataque y sus parámetros son correctos usando la lógica del héroe atacante
+        boolean ataqueValido = atacanteHero.validarHeroes(params);
+ 
+
+        if (!ataqueValido) {
+            String msg = "CommandApplyAttack: parámetros extra incorrectos";
+            if (this.payload != null && this.payload.getAttackerName() != null) {
+                String[] args = new String[]{"RESULT", this.payload.getAttackerName(), msg};
+                try {
+                    clienteAtacado.objectSender.writeObject(CommandFactory.getCommand(args));
+                } catch (Exception e) {
+                    // ignore send failures
+                }
+            }
             return;
         }
 
@@ -132,16 +168,96 @@ public class CommandApplyAttack extends Command {
             clienteAtacado.getRefFrame().actualizarPnlMatriz();
             });
         String okMsg = "AttackResult:Se aplicó ataque '" + params[3] + "' de '" + params[2] + "a" + clienteAtacado.name + "'.";
+        // Registrar en bitácora del receptor que el ataque se ejecutó
+        try {
+            if (clienteAtacado.getThreadClient() != null && this.payload != null) {
+                String entrada = "ATTACK_RECEIVED: Se aplicó ataque '" + params[3] + "' de '" + params[2] + "' sobre " + clienteAtacado.name + ".";
+                clienteAtacado.getThreadClient().addBitacora(entrada);
+            }
+        } catch (Exception e) {}
+
+        boolean reflected = false;
+        try {
+            reflected = tryReflectKraken(clienteAtacado, atacado);
+        } catch (IOException ex) {
+            System.getLogger(CommandApplyAttack.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+        if (reflected) 
+            return;
 
         // Notificar al atacante que el ataque se aplicó
         if (this.payload != null && this.payload.getAttackerName() != null) {
-            String[] args = new String[]{"RESULT", this.payload.getAttackerName(), okMsg};
+            String heroName = this.payload.getHeroName();
+            String[] args = new String[]{"RESULT", this.payload.getAttackerName(), "ATTACK_APPLIED", heroName, okMsg};
             try {
                 clienteAtacado.objectSender.writeObject(CommandFactory.getCommand(args));
-                clienteAtacado.objectSender.writeObject(CommandFactory.getCommand(new String[]{"NEXT"}));
+                clienteAtacado.objectSender.writeObject(CommandFactory.getCommand(new String[]{"NEXT"})); 
             } catch (Exception e) {
             }
         }
+    }
+
+    
+    
+    
+
+    private boolean tryReflectKraken(Client clienteAtacado, Jugador atacado) throws java.io.IOException {
+        if (this.payload == null || this.payload.getAttackType() == null) return false;
+        if (!this.payload.getAttackType().equalsIgnoreCase("RELEASETHEKRAKEN")) return false;
+
+        Hero heroeReflector = null;
+        for (Hero h : atacado.getHeroes()) {
+            if (h == null) continue;
+            if ("PoseidonTrident".equalsIgnoreCase(h.getClass().getSimpleName())) {
+                heroeReflector = h;
+                break;
+            }
+        }
+
+        if (heroeReflector == null) return false;
+        if (this.payload.getAttackerName() == null) return false;
+
+        // Construir HeroPackage y payload reflejado (marcado como reflejado)
+        HeroPackage hp = atacado.buildHeroPackage(heroeReflector.getNombre());
+        String[] extras = this.payload.getExtras();
+        AttackPayload reflected = new AttackPayload(clienteAtacado.name, this.payload.getAttackerName(), heroeReflector.getNombre(), heroeReflector.getNombre(), this.payload.getAttackType(), extras, hp, true);
+
+        if (clienteAtacado.getThreadClient() != null) {
+            clienteAtacado.getThreadClient().addBitacora("ATTACK_REFLECTED: El jugador " + clienteAtacado.name + " reflejó un Kraken hacia " + this.payload.getAttackerName());
+        }
+
+        clienteAtacado.objectSender.writeObject(new CommandApplyAttack(reflected));
+        return true;
+    }
+
+    // Mueve la lógica de detección/descarte de reflejo mutuo aquí para mantener processInClient limpio.
+    // Retorna true si el ataque reflejado debe ser descartado (ambos pueden reflejar).
+    private boolean handleMutualReflect(Client clienteAtacado, Jugador atacado) throws java.io.IOException {
+        if (this.payload == null || !this.payload.isReflected()) return false;
+
+        boolean hasPoseidon = false;
+        for (Hero h : atacado.getHeroes()) {
+            if (h == null) continue;
+            if ("PoseidonTrident".equalsIgnoreCase(h.getClass().getSimpleName())) {
+                hasPoseidon = true;
+                break;
+            }
+        }
+
+        if (!hasPoseidon) return false;
+
+        // Registrar en bitácora y no aplicar
+        if (clienteAtacado.getThreadClient() != null) {
+            clienteAtacado.getThreadClient().addBitacora("ATTACK_DROPPED_MUTUAL_REFLECT: Se descartó un ataque reflejado de " + this.payload.getAttackerName() + " porque el receptor también puede reflejar.");
+        }
+
+        // Informar al atacante original que su ataque fue neutralizado (opcional)
+        if (this.payload.getAttackerName() != null) {
+            clienteAtacado.objectSender.writeObject(CommandFactory.getCommand(new String[]{"RESULT", this.payload.getAttackerName(), "ATTACK_NEUTRALIZED_BY_MUTUAL_REFLECT"}));
+        }
+
+        return true;
     }
 
 }

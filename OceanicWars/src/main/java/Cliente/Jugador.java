@@ -59,6 +59,11 @@ public class Jugador {  // Clase del Jugador: guarda su matriz, sus 3 héroes el
             new HeroPackage(heroType, this.nombre, heroe.getOcupacion(), heroe.getSanidad(), heroe.getFuerza(), heroe.getResistencia(), heroe.isSiguientePotenciado());
     }
     
+    public void deshabilitarResistencias() {
+        for(Hero heroe : this.heroes) {
+            this.matriz.deshabilitarResistenciaHeroe(heroe);
+        }
+    }
     
     // Métodos
     // Getters

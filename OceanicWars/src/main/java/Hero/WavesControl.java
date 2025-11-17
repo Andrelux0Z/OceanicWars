@@ -7,6 +7,7 @@ package Hero;
 import Ataques.Ataque;
 import Ataques.RadioactiveRush;
 import Ataques.SendHumanGarbage;
+import Ataques.ElementosAtaques.Remolino;
 import Ataques.SwirlRaising;
 import Cliente.Casilla;
 import Cliente.Jugador;
@@ -45,15 +46,17 @@ public class WavesControl extends Hero {
         habilidad3.ejecutar();
     }
 
-    //TODO buscarAtaque y realizarAtaque estan hechos con copilot, es algo provisional
+    //TODO validarHeroes y realizarAtaque estan hechos con copilot, es algo provisional
     @Override
-    public boolean buscarAtaque(String[] comando) {
+    public boolean validarHeroes(String[] comando) {
         if (comando == null || comando.length < 4) return false;
         String tipo = comando[3].toUpperCase();
         switch (tipo) {
-            case "SWIRLRAISING":
+            case "SWIRLRAISING": {
+                return this.validarParCoords(comando);
+            }
             case "SENDHUMANGARBAGE": {
-                // expect a coordinate pair
+                // SendHumanGarbage requires targeting an existing Remolino
                 if (comando.length < 6) return false;
                 if (this.getMatrizAtaque() == null) return false;
                 try {
@@ -62,10 +65,25 @@ public class WavesControl extends Hero {
                     if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
                     Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
                     if (c == null) return false;
-                    if (c.getObjetoPresente() != null) return false;
+                    Object obj = c.getObjetoPresente();
+                    if (!(obj instanceof Remolino)) return false; // object must be a Remolino
                 } catch (NumberFormatException ex) { return false; }
                 return true;
             }
+            case "RADIOACTIVERUSH":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean buscarHeroes(String attackName) {
+        if (attackName == null) return false;
+        String tipo = attackName.toUpperCase();
+        switch (tipo) {
+            case "SWIRLRAISING":
+            case "SENDHUMANGARBAGE":
             case "RADIOACTIVERUSH":
                 return true;
             default:

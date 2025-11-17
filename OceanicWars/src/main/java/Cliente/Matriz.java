@@ -330,4 +330,12 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
         }
         return contador;
     }
+    
+    public void deshabilitarResistenciaHeroe(Hero heroe) {
+        for (Casilla casilla : casillasActivas) {
+            if (casilla.getHero() == heroe) {
+                casilla.bajarDefensas();
+            }
+        }
+    }
 }

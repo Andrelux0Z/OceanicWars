@@ -58,7 +58,7 @@ public abstract class Hero implements Serializable {
         }
     }
     
-    public void Strenghten() {  // Método para potenciar el siguiente ataque del usuario
+    public void Strengthen() {  // Método para potenciar el siguiente ataque del usuario
         this.siguientePotenciado = true;
     }
     
@@ -71,8 +71,12 @@ public abstract class Hero implements Serializable {
     }
     
     public abstract void realizarAtaque(Jugador atacado,String[] comando);
-    
-    public abstract boolean buscarAtaque(String[] comando); //Es boolean para indicar si el ataque se realizo con exito
+
+    // Valida los parámetros del ataque (equivalente al antiguo buscarAtaque)
+    public abstract boolean validarHeroes(String[] comando); //Es boolean para indicar si el ataque se realizo con exito
+
+    // Comprueba únicamente si el nombre del ataque existe para este héroe
+    public abstract boolean buscarHeroes(String attackName);
     
     public boolean activarBoost(String boostCommand){ //Boolean para validar si es correcto o no el boost enviado
         
@@ -80,8 +84,8 @@ public abstract class Hero implements Serializable {
             case "PROTECT":
                 this.Protect();
                 return true;
-            case "STRENGHTEN":
-                this.Strenghten();
+            case "STRENGTHEN":
+                this.Strengthen();
                 return true;
             case "HEAL":
                 this.Heal();
@@ -153,6 +157,76 @@ public abstract class Hero implements Serializable {
         return siguientePotenciado;
     }
 
+    // Helper: valida que exista una casilla válida en los parámetros x/y en posiciones 4/5
+    protected boolean validarParCoords(String[] comando) {
+        if (comando == null || comando.length < 6) return false;
+        if (this.getMatrizAtaque() == null) return false;
+        try {
+            int x = Integer.parseInt(comando[4]);
+            int y = Integer.parseInt(comando[5]);
+            if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
+            Cliente.Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
+            if (c == null) return false;
+            if (c.getObjetoPresente() != null) return false;
+        } catch (NumberFormatException ex) { return false; }
+        return true;
+    }
+
+    // Helper: valida x,y en posiciones 4/5 y una dirección en posición 6
+    protected boolean validarCoordAndDir(String[] comando) {
+        if (comando == null || comando.length < 7) return false;
+        if (this.getMatrizAtaque() == null) return false;
+        try {
+            int x = Integer.parseInt(comando[4]);
+            int y = Integer.parseInt(comando[5]);
+            String dir = comando[6].toUpperCase();
+            if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
+            Cliente.Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
+            if (c == null) return false;
+            // Validate direction enum
+            Ataques.ElementosAtaques.Direcciones.valueOf(dir);
+        } catch (NumberFormatException ex) { return false; }
+        catch (IllegalArgumentException ex) { return false; }
+        return true;
+    }
+
+    // Helper: valida que haya al menos `minPairs` pares de coordenadas (empezando en índice 4)
+    protected boolean validarNCoords(String[] comando, int minPairs) {
+        if (comando == null) return false;
+        int extras = comando.length - 4;
+        if (extras < 2 * minPairs) return false;
+        if (this.getMatrizAtaque() == null) return false;
+        try {
+            for (int i = 4; i + 1 < comando.length; i += 2) {
+                int x = Integer.parseInt(comando[i]);
+                int y = Integer.parseInt(comando[i + 1]);
+                if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
+                Cliente.Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
+                if (c == null) return false;
+                if (c.getObjetoPresente() != null) return false;
+            }
+        } catch (NumberFormatException ex) { return false; }
+        return true;
+    }
+
+    // Helper: valida que haya al menos `minNums` enteros en los extras (empezando en índice 4)
+    protected boolean validarNNumeros(String[] comando, int minNums) {
+        if (comando == null) return false;
+        int extras = comando.length - 4;
+        if (extras < minNums) return false;
+        try {
+            for (int i = 4; i < 4 + minNums && i < comando.length; i++) {
+                Integer.parseInt(comando[i]);
+            }
+        } catch (NumberFormatException ex) { return false; }
+        return true;
+    }
+
+    // Consumir el boost: se usa cuando se ejecuta un ataque potenciado
+    public void consumirStrengthen() {
+        this.siguientePotenciado = false;
+    }
+    
     // Setters
     public void setMatrizAtaque(Matriz matrizAtaque) { // Set para configurar la matriz atacada
         this.matrizAtaque = matrizAtaque;
@@ -164,4 +238,10 @@ public abstract class Hero implements Serializable {
     public ArrayList<Casilla> getCasillasEnPosesion() {
         return casillasEnPosesion;
     }
+
+    public boolean isEstado() {
+        return estado;
+    }
+    
+    
 }

@@ -15,6 +15,7 @@ public class CommandNextTurn extends Command {
     public CommandNextTurn(String[] args) {
         super(CommandType.NEXT, args);
         this.consumesTurn = false;
+        this.ownCommand = false;
     }
 
     @Override

@@ -16,6 +16,7 @@ public class CommandPrivateMessage extends Command{
     public CommandPrivateMessage(String[] args) {
         super(CommandType.PRIVATE_MESSAGE, args);
         this.consumesTurn = false;
+        this.ownCommand = false;
     }
 
     @Override

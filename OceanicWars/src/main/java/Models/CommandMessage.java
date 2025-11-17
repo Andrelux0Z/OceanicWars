@@ -16,6 +16,7 @@ public class CommandMessage extends Command{
     public CommandMessage(String[] args) {
         super(CommandType.MESSAGE, args);
         this.consumesTurn = false;
+        this.ownCommand = false;
 
     }
 

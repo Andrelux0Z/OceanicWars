@@ -10,6 +10,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,9 +22,25 @@ public class ThreadClient extends Thread{
     private Client client;
     
     private boolean isRunning = true;
+    // Bitácora local al thread (guarda eventos relevantes para este cliente)
+    private ArrayList<String> bitacora;
+
+    public void addBitacora(String entrada) {
+        if (bitacora == null) 
+            bitacora = new ArrayList<>();
+        bitacora.add(entrada);
+    }
+
+    public ArrayList<String> getBitacora() {
+        if (bitacora == null) 
+            bitacora = new ArrayList<>();
+        return bitacora;
+    }
 
     public ThreadClient(Client client) {
         this.client = client;
+
+        this.bitacora = new ArrayList<>();
 
     }
     

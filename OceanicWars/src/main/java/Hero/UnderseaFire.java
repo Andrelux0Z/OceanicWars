@@ -8,7 +8,6 @@ import Ataques.Ataque;
 import Ataques.TermalRush;
 import Ataques.VolcanoExplosion;
 import Ataques.VolcanoRaising;
-import Cliente.Casilla;
 import Cliente.Jugador;
 import java.awt.Color;
 import java.awt.Point;
@@ -46,27 +45,31 @@ public class UnderseaFire extends Hero {
         habilidad3.ejecutar();
     }
 
-    //TODO buscarAtaque y realizarAtaque estan hechos con copilot, es algo provisional
+    //TODO validarHeroes y realizarAtaque estan hechos con copilot, es algo provisional
     @Override
-    public boolean buscarAtaque(String[] comando) {
+    public boolean validarHeroes(String[] comando) {
         if (comando == null || comando.length < 4) return false;
         String tipo = comando[3].toUpperCase();
         switch (tipo) {
             case "VOLCANORAISING":
             case "VOLCANOEXPLOSION":
             case "TERMALRUSH": {
-                if (comando.length < 6) return false;
-                if (this.getMatrizAtaque() == null) return false;
-                try {
-                    int x = Integer.parseInt(comando[4]);
-                    int y = Integer.parseInt(comando[5]);
-                    if (x < 0 || y < 0 || x >= this.getMatrizAtaque().getCantidadFilas() || y >= this.getMatrizAtaque().getCantidadColumnas()) return false;
-                    Casilla c = this.getMatrizAtaque().getMatriz()[x][y];
-                    if (c == null) return false;
-                    if (c.getObjetoPresente() != null) return false;
-                } catch (NumberFormatException ex) { return false; }
-                return true;
+                return this.validarParCoords(comando);
             }
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean buscarHeroes(String attackName) {
+        if (attackName == null) return false;
+        String tipo = attackName.toUpperCase();
+        switch (tipo) {
+            case "VOLCANORAISING":
+            case "VOLCANOEXPLOSION":
+            case "TERMALRUSH":
+                return true;
             default:
                 return false;
         }

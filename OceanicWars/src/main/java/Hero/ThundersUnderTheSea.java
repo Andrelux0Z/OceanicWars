@@ -45,9 +45,23 @@ public class ThundersUnderTheSea extends Hero {
     }
 
     @Override
-    public boolean buscarAtaque(String[] comando) {
+    public boolean validarHeroes(String[] comando) {
         if (comando == null || comando.length < 4) return false;
         String tipo = comando[3].toUpperCase();
+        switch (tipo) {
+            case "THUNDERRAIN":
+            case "POSEIDONTHUNDERS":
+            case "EELATTACK":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean buscarHeroes(String attackName) {
+        if (attackName == null) return false;
+        String tipo = attackName.toUpperCase();
         switch (tipo) {
             case "THUNDERRAIN":
             case "POSEIDONTHUNDERS":

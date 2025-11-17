@@ -11,7 +11,7 @@ import Models.CommandApplyAttack;
 import Models.AttackPayload;
 import Hero.HeroFactory;
 import Hero.Hero;
-import static Models.CommandType.*;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -101,7 +101,7 @@ public class Server {
     void executeCommand(Command comando, ThreadServidor origin) {
         // Si es un ApplyyAttack, validar el payload antes de reenviar
         try {
-            if (comando.getType() == APPLYATTACK) {
+                if (comando.getType() == CommandType.APPLYATTACK) {
 
                 if (comando instanceof CommandApplyAttack) {
 
@@ -138,16 +138,17 @@ public class Server {
         
 
         // Reenviar el comando según su tipo de difusión -> PERDON :(
+        // Reenviar el comando según su tipo de difusión -> PERDON :(
         //Si es broadcast true
         if (comando.getIsBroadcast())
             this.broadcast(comando);
         
         //Si es broadcast false y se encuentra al jugador receptor
-        else if (buscarJugador(comando.getParameters()[1])) {
-            if(comando.getType() == PRIVATE_MESSAGE || comando.getType() == APPLYATTACK)
+        else if (comando.isOwnCommand()) {
+            if(comando.getParameters().length > 1 && this.buscarJugador(comando.getParameters()[1]))  //Enviar privado
                 this.sendPrivate(comando);
             else
-                processPrivate(comando,origin);
+                processPrivate(comando,origin);             //Procesar en el propio
             
         //Si no se encuentra receptor
         } else {
@@ -174,8 +175,6 @@ public class Server {
     
     
     public void processPrivate(Command comando,ThreadServidor own){
-        if (comando.getParameters().length <= 1)
-            return;
         
                 try {
                     own.objectSender.writeObject(comando);

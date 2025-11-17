@@ -5,12 +5,9 @@
 package Models;
 
 import Cliente.Client;
-import Cliente.Jugador;
 import Hero.Hero;
-import Servidor.Server;
 import Servidor.ThreadServidor;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  *
@@ -21,23 +18,26 @@ public class CommandBoost extends Command {
     public CommandBoost(String[] args) {
         super(CommandType.MESSAGE, args);
         this.consumesTurn = true;
+        this.ownCommand = true;
     }
 
     @Override
     public void processForServer(ThreadServidor threadServidor) {
-        this.setIsBroadcast(true);
+        this.setIsBroadcast(false);
         
     }
     
     @Override
     public void processInClient(Client client) { //Cliente propio
-        //Forma: BOOST <Heroe> <HEAL/PROTECT/STRENGHTEN>
+        //Forma: BOOST <Heroe> <HEAL/PROTECT/STRENGTHEN>
         
         //Buscar heroe, si no existe, mensaje de error
         String heroeName = this.getParameters()[1].toUpperCase();
         String tipoBoost = this.getParameters()[2].toUpperCase();
         Hero heroe = client.getJugador().buscarHeroe(heroeName);
         boolean flag = false;
+        
+        client.getJugador().deshabilitarResistencias();
                 
         if(heroe == null) {
             client.getRefFrame().writeMessage("Heroe seleccionado no existe: " + heroeName);
@@ -46,9 +46,10 @@ public class CommandBoost extends Command {
         //Activa el boosteo y regresa el true, si no lo encuentra obviamente no activa nada y regresa false
         else if(!heroe.activarBoost(tipoBoost)) {  
                 client.getRefFrame().writeMessage("Mejora seleccionada no existe: " + tipoBoost);
+                flag = true;
         }  
         
-        if(flag) {
+        if(!flag) {
             client.getRefFrame().writeMessage("El jugador " + client.name + " ha usado " + this.getParameters()[1] + " para ayudar a su civilizacion con " + this.getParameters()[2]);
             try {
                 client.objectSender.writeObject(CommandFactory.getCommand(new String[]{"NEXT"}));
