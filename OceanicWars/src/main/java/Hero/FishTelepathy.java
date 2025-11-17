@@ -70,6 +70,6 @@ public class FishTelepathy extends Hero {
 
     @Override
     public String getArquetipo() {
-        return "Undersea Fire"; 
+        return "Fish Telepathy"; 
     }
 }

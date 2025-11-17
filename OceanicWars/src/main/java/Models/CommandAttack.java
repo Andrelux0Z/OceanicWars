@@ -18,28 +18,28 @@ import java.util.logging.Logger;
  *
  * @author diego
  */
-public class CommandAttack extends Command{
+public class CommandAttack extends Command {
 
-    public CommandAttack(String[] args) { //ATTACK Andres 5 7
+    public CommandAttack(String[] args) { // ATTACK Andres 5 7
         super(CommandType.ATTACK, args);
         this.consumesTurn = false;
     }
-    
+
     @Override
     public void processForServer(ThreadServidor threadServidor) {
         this.setIsBroadcast(false);
     }
-            
+
     @Override
-    public void processInClient(Client cliente) { //Cliente     
-        
+    public void processInClient(Client cliente) { // Cliente
+
         Command sendComando;
-        boolean flag = false;       //Indica si se detecta un error
+        boolean flag = false; // Indica si se detecta un error
         Jugador atacante = cliente.getJugador();
 
         // Validar que el jugador local esté inicializado
         if (atacante == null) {
-            if (cliente.getRefFrame() != null) 
+            if (cliente.getRefFrame() != null)
                 cliente.getRefFrame().writeMessage("Imposible realizar ataque: jugador local no inicializado");
             return;
         }
@@ -55,14 +55,24 @@ public class CommandAttack extends Command{
         if (heroeAtacante == null) {
             cliente.getRefFrame().writeMessage("El heroe escrito no existe");
             flag = true;
-            
-        // Ver si el ataque y parametros extra son correctos
-        } else if (!heroeAtacante.buscarAtaque(params)) {   // Ya valida parametros extra
-            cliente.getRefFrame().writeMessage("El ataque escrito no existe");
-            flag = true;
+
+            // Ver si el ataque y parametros extra son correctos
+        } else {
+            // Contexto mínimo para validación sintáctica: asignar matriz local
+            // (dimensiones)
+            try {
+                heroeAtacante.setMatrizAtaque(atacante.getMatriz());
+            } catch (Exception ignore) {
+            }
+
+            if (!heroeAtacante.buscarAtaque(params)) { // Ya valida parametros extra
+                cliente.getRefFrame().writeMessage("El ataque escrito no existe");
+                flag = true;
+            }
         }
 
-        if (flag) return;
+        if (flag)
+            return;
 
         // Construir payload con HeroPackage
         String attackerName = cliente.name;
@@ -70,10 +80,12 @@ public class CommandAttack extends Command{
         String heroType = params[2];
         String attackType = params[3];
         String[] extras = new String[params.length - 4];
-        for (int i = 4; i < params.length; i++) extras[i - 4] = params[i];
+        for (int i = 4; i < params.length; i++)
+            extras[i - 4] = params[i];
 
         HeroPackage hp = null;
-        if (atacante != null) hp = atacante.buildHeroPackage(params[2]);
+        if (atacante != null)
+            hp = atacante.buildHeroPackage(params[2]);
 
         AttackPayload payload = new AttackPayload(attackerName, targetName, heroType, attackType, extras, hp);
         sendComando = new CommandApplyAttack(payload);
@@ -85,7 +97,5 @@ public class CommandAttack extends Command{
         }
 
     }
-
-
 
 }
