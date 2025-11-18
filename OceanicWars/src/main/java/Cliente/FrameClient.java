@@ -866,6 +866,12 @@ public class FrameClient extends javax.swing.JFrame {
         if (matriz == null)
             return;
 
+        // Chequear derrota local (todas casillas muertas)
+        try {
+            BoardDefeatChecker.check(this.getClient());
+        } catch (Exception ignored) {
+        }
+
         // Actualizar porcentaje de vida
         double porcentajeVida = matriz.calcularPorcentajeVida();
         vida.setText(String.format("Vida: %.1f%%", porcentajeVida));
