@@ -27,9 +27,88 @@ El juego soporta los siguientes comandos de consola:
 ### Comandos de Juego
 
 5. **attack**  
-   Modo de uso: `attack <NombreJugador> <X> <Y>`  
-   Descripción: Ejecuta un comando de ataque dirigido al jugador especificado en las coordenadas dadas  
+   Modo de uso: `attack <NombreJugadorObjetivo> <NombreHeroeApariencia> <TipoAtaque> [Parámetros]`  
+   Descripción: Ejecuta un ataque específico del héroe indicado contra el jugador objetivo  
    Consume turno: Sí
+
+   **Importante**: Debes usar el nombre de apariencia del héroe (el nombre que elegiste al crearlo), no el arquetipo.
+
+   #### Ataques por Héroe:
+
+   **Thunders Under The Sea**
+
+   - `ATTACK <jugador> <heroe> THUNDERRAIN`  
+     Ataque de lluvia de rayos que afecta múltiples casillas aleatorias
+
+   - `ATTACK <jugador> <heroe> POSEIDONTHUNDERS`  
+     Rayos de Poseidón con mayor poder destructivo
+
+   - `ATTACK <jugador> <heroe> EELATTACK`  
+     Ataque de anguilas eléctricas
+
+   **Fish Telepathy**
+
+   - `ATTACK <jugador> <heroe> CARDUMEN <x1> <y1> <x2> <y2> ... <xN> <yN>`  
+     Ataque de cardumen en múltiples coordenadas (mínimo 1 par de coordenadas)
+
+   - `ATTACK <jugador> <heroe> SHARKATTACK`  
+     Ataque de tiburones de alto impacto
+
+   - `ATTACK <jugador> <heroe> PULP <x1> <y1> <x2> <y2> ... <xN> <yN>`  
+     Ataque de pulpos en múltiples coordenadas (mínimo 1 par de coordenadas)
+
+   **Release The Kraken**
+
+   - `ATTACK <jugador> <heroe> TENTACULOS <x1> <y1> <x2> <y2> ... <xN> <yN>`  
+     Ataque con tentáculos del Kraken (mínimo 1 par de coordenadas)
+
+   - `ATTACK <jugador> <heroe> KRAKENBREATH <x> <y> <DIRECCION>`  
+     Aliento del Kraken en línea (DIRECCION: ARRIBA, ABAJO, IZQUIERDA o DERECHA)
+
+   - `ATTACK <jugador> <heroe> RELEASETHEKRAKEN <x> <y>`  
+     Libera al Kraken en las coordenadas especificadas
+
+   **Waves Control**
+
+   - `ATTACK <jugador> <heroe> SWIRLRAISING <x> <y>`  
+     Levanta un remolino en las coordenadas dadas
+
+   - `ATTACK <jugador> <heroe> SENDHUMANGARBAGE <x> <y>`  
+     Envía basura humana a las coordenadas especificadas
+
+   - `ATTACK <jugador> <heroe> RADIOACTIVERUSH`  
+     Ataque radioactivo masivo sin coordenadas específicas
+
+   **The Trident (Poseidon Trident)**
+
+   - `ATTACK <jugador> <heroe> THREELINES <x1> <y1> <x2> <y2> <x3> <y3> ...`  
+     Ataque en tres líneas (mínimo 3 pares de coordenadas)
+
+   - `ATTACK <jugador> <heroe> THREENUMBERS <num1> <num2> <num3>`  
+     Ataque basado en tres números
+
+   - `ATTACK <jugador> <heroe> CONTROLTHEKRAKEN <x> <y>`  
+     Controla al Kraken en las coordenadas especificadas
+
+   **Undersea Volcanoes (Undersea Fire)**
+
+   - `ATTACK <jugador> <heroe> VOLCANORAISING <x> <y>`  
+     Levanta un volcán en las coordenadas dadas
+
+   - `ATTACK <jugador> <heroe> VOLCANOEXPLOSION <x> <y>`  
+     Hace explotar un volcán en las coordenadas especificadas
+
+   - `ATTACK <jugador> <heroe> TERMALRUSH <x> <y>`  
+     Ataque de corriente termal en las coordenadas dadas
+
+   **Ejemplos de uso**:
+
+   ```
+   ATTACK sol Omniman KRAKENBREATH 6 7 ARRIBA
+   ATTACK luna Goku THUNDERRAIN
+   ATTACK andre Zanka VOLCANOEXPLOSION 5 5
+   ATTACK player1 Luffy TENTACULOS 3 4 5 6 7 8
+   ```
 
 6. **boost**  
    Modo de uso: `boost <NombreHeroe> <HEAL/PROTECT/STRENGHTEN>`  
