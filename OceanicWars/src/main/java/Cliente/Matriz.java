@@ -155,6 +155,16 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
                                                                                                       // superior
                                                                                                       // derecha
                 }
+                else if (c.getVida() != 100) {  // Verificar daños
+                    g.drawLine(posX, posY + sizeAlto, posX + sizeLargo, posY); // Línea diagonal
+                                                                               // desde la
+                                                                               // esquina
+                                                                               // inferior
+                                                                               // izquierda a la
+                                                                               // esquina
+                                                                               // superior
+                                                                               // derecha
+                }
             }
         }
     }

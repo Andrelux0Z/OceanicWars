@@ -70,9 +70,9 @@ public class ReleaseTheKraken extends Ataque {
                                                                                                                        // de
                                                                                                                        // expansión
                     c.getBitacora()
-                            .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
+                            .add("La casilla (" + c.getX() + ", " + c.getY()
                                     + ") fue golpeada por la onda del Kraken del 'Release The Kraken' de "
-                                    + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                                    + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");
                     c.recibirGolpe(c.getVida());
                 }
             }
