@@ -223,6 +223,18 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
         return false;
     }
 
+    // Actualiza la lista de casillasActivas recorriendo toda la matriz
+    public void actualizarCasillasActivas() {
+        casillasActivas.clear();
+        for (int i = 0; i < cantidadFilas; i++) {
+            for (int j = 0; j < cantidadColumnas; j++) {
+                if (matriz[i][j].getEstado()) {
+                    casillasActivas.add(matriz[i][j]);
+                }
+            }
+        }
+    }
+
     public Casilla buscarCasillaEnClick(MouseEvent e) { // Función que, en función de un evento del mouse, consigue sus
                                                         // coords y revisa la casilla pisada
         int x = e.getX() - MARGEN_IZQUIERDO; // Se consigue el x pisado

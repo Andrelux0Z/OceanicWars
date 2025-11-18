@@ -133,14 +133,31 @@ public class ThreeNumbers extends Ataque {
         // Aplicar daños a casillas aleatorias
         int casillasDestruidas = 0;
         for (int i = 0; i < cantidadADestruir; i++) {
+            // Actualizar la lista de casillas activas antes de cada selección
+            matriz.actualizarCasillasActivas();
+
+            // Verificar que hay casillas disponibles
+            if (matriz.getCasillasActivas().isEmpty()) {
+                System.out.println("No hay más casillas activas para destruir. Se destruyeron " + casillasDestruidas
+                        + " de " + cantidadADestruir);
+                break;
+            }
+
             Casilla c = matriz.getCasillasActivas().get(rand.nextInt(matriz.getCasillasActivas().size()));
             int vidaAntes = c.getVida();
+            boolean estabaViva = c.getEstado();
+
             c.recibirGolpe(c.getVida());
-            c.getBitacora()
-                    .add("La casilla (" + c.getX() + ", " + c.getY()
-                            + ") fue destruida por el ataque 'Three Numbers' de " + hero.getNombre() + ", recibiendo "
-                            + vidaAntes + " puntos de daño");
-            casillasDestruidas++;
+
+            // Solo agregar mensaje a bitácora y contar si realmente se destruyó
+            if (estabaViva && !c.getEstado()) {
+                c.getBitacora()
+                        .add("La casilla (" + c.getX() + ", " + c.getY()
+                                + ") fue destruida por el ataque 'Three Numbers' de " + hero.getNombre()
+                                + ", recibiendo "
+                                + vidaAntes + " puntos de daño");
+                casillasDestruidas++;
+            }
         }
 
         System.out.println("ThreeNumbers ejecutado: " + casillasDestruidas + " casillas destruidas de "

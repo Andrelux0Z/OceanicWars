@@ -33,6 +33,14 @@ public class ThunderRain extends Ataque {
     @Override
     public void ejecutar() {
         for (int i = 0; i < 100; i++) { // For para hacer 100 rayos
+            // Actualizar la lista de casillas activas
+            matriz.actualizarCasillasActivas();
+
+            // Verificar que haya casillas disponibles
+            if (matriz.getCasillasActivas().isEmpty()) {
+                break;
+            }
+
             // Elección de casilla
             Casilla casilla = matriz.getCasillasActivas().get(rand.nextInt(matriz.getCasillasActivas().size())); // Toma
                                                                                                                  // una

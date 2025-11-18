@@ -34,6 +34,14 @@ public class PoseidonThunders extends Ataque {
         // Al ser un ataque "Instakill", el elemento que aumenta la fuerza será la
         // cantidad de rayos, no su alcance
         for (int i = 0; i < this.cantidadRayos; i++) {
+            // Actualizar la lista de casillas activas
+            matriz.actualizarCasillasActivas();
+
+            // Verificar que haya casillas disponibles
+            if (matriz.getCasillasActivas().isEmpty()) {
+                break;
+            }
+
             // Elección de radio
             int radioObtenido = (2 + rand.nextInt(9)); // Radio de 2 hasta 10
 
@@ -60,7 +68,6 @@ public class PoseidonThunders extends Ataque {
                                                                                                            // de la
                                                                                                            // casilla
             casilla.recibirGolpe(casilla.getVida()); // Recibe el mismo daño de su vida ('instakill')
-
 
             for (Casilla c : matriz.getCasillasActivas()) { // Revisamos en las casillas activas
                 if (matriz.IsCasillaEnRadio(casilla.getX(), casilla.getY(), c.getX(), c.getY(), radioObtenido)) {
