@@ -84,17 +84,7 @@ public class popupThree {
                     continue;
                 }
 
-                // Validar que no esté repetido
-                if (numerosYaSeleccionados.contains(numero)) {
-                    JOptionPane.showMessageDialog(
-                            parent,
-                            "Error: El número " + numero
-                                    + " ya fue seleccionado.\nPor favor, elige un número distinto.",
-                            "Número Repetido",
-                            JOptionPane.ERROR_MESSAGE);
-                    continue;
-                }
-
+                // Los números pueden repetirse para el ataque ThreeNumbers
                 return numero;
 
             } catch (NumberFormatException e) {
