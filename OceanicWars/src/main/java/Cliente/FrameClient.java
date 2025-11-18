@@ -441,6 +441,11 @@ public class FrameClient extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txaMessages = new javax.swing.JTextArea();
         txfCommand = new javax.swing.JTextField();
+        txfCommand.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfCommandKeyPressed(evt);
+            }
+        });
         pnlLuchadores = new javax.swing.JPanel();
         IconHeroe3 = new javax.swing.JLabel();
         IconHeroe1 = new javax.swing.JLabel();
@@ -506,41 +511,51 @@ public class FrameClient extends javax.swing.JFrame {
         javax.swing.GroupLayout pnlLuchadoresLayout = new javax.swing.GroupLayout(pnlLuchadores);
         pnlLuchadores.setLayout(pnlLuchadoresLayout);
         pnlLuchadoresLayout.setHorizontalGroup(
-            pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5))
-                    .addGroup(pnlLuchadoresLayout.createSequentialGroup()
-                        .addComponent(IconHeroe2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4)))
-                .addContainerGap())
-        );
+                pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pnlLuchadoresLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe1, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 126,
+                                                        Short.MAX_VALUE))
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe3, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane5))
+                                        .addGroup(pnlLuchadoresLayout.createSequentialGroup()
+                                                .addComponent(IconHeroe2, javax.swing.GroupLayout.PREFERRED_SIZE, 131,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane4)))
+                                .addContainerGap()));
         pnlLuchadoresLayout.setVerticalGroup(
-            pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLuchadoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addComponent(IconHeroe1, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4)
-                    .addComponent(IconHeroe2, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(IconHeroe3, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                pnlLuchadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                pnlLuchadoresLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jScrollPane3)
+                                                .addComponent(IconHeroe1, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jScrollPane4)
+                                                .addComponent(IconHeroe2, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlLuchadoresLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(IconHeroe3, javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(jScrollPane5))
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         pnlMatriz.setForeground(new java.awt.Color(255, 102, 102));
         pnlMatriz.setOpaque(false);
@@ -548,13 +563,11 @@ public class FrameClient extends javax.swing.JFrame {
         javax.swing.GroupLayout pnlMatrizLayout = new javax.swing.GroupLayout(pnlMatriz);
         pnlMatriz.setLayout(pnlMatrizLayout);
         pnlMatrizLayout.setHorizontalGroup(
-            pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
+                pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 818, Short.MAX_VALUE));
         pnlMatrizLayout.setVerticalGroup(
-            pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
-        );
+                pnlMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 470, Short.MAX_VALUE));
 
         txaLastMove.setColumns(20);
         txaLastMove.setRows(5);
@@ -723,6 +736,7 @@ public class FrameClient extends javax.swing.JFrame {
                 if (comando != null) {
                     try {
                         client.objectSender.writeObject(comando);
+                        txfCommand.setText(""); // Limpiar campo de texto después de enviar
                     } catch (IOException ex) {
 
                     }
@@ -733,6 +747,12 @@ public class FrameClient extends javax.swing.JFrame {
             }
         }
     }// GEN-LAST:event_btnSendActionPerformed
+
+    private void txfCommandKeyPressed(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnSend.doClick(); // Simular clic en botón SEND
+        }
+    }
 
     /**
      * @param args the command line arguments
