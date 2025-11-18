@@ -133,11 +133,6 @@ public class ThreeNumbers extends Ataque {
         // Aplicar daños a casillas aleatorias
         int casillasDestruidas = 0;
         for (int i = 0; i < cantidadADestruir; i++) {
-            if (matriz.getCasillasActivas() == null || matriz.getCasillasActivas().isEmpty()) {
-                System.out.println("No hay más casillas activas para destruir");
-                break;
-            }
-
             Casilla c = matriz.getCasillasActivas().get(rand.nextInt(matriz.getCasillasActivas().size()));
             int vidaAntes = c.getVida();
             c.recibirGolpe(c.getVida());
