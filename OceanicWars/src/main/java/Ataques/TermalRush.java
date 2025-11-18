@@ -58,7 +58,7 @@ public class TermalRush extends Ataque {
                                                                                                                        // del
                                                                                                                        // rango
                     c.recibirGolpe(golpeCalentamiento * this.tiempoActiva);
-                    c.getBitacora().add("La casilla (" + casilla.getX() + ", " + casilla.getY()
+                    c.getBitacora().add("La casilla (" + c.getX() + ", " + c.getY()
                             + ") fue golpeada por la creación del volcán del 'Volcano Raising' de " + hero.getNombre()
                             + ", recibiendo " + (golpeCalentamiento * this.tiempoActiva) + " puntos de daño");
                 }

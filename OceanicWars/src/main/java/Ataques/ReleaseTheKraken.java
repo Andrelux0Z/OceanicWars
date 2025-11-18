@@ -69,7 +69,8 @@ public class ReleaseTheKraken extends Ataque {
                                                                                                                        // onda
                                                                                                                        // de
                                                                                                                        // expansión
-                    c.getBitacora()
+                        System.out.println("DAÑO DEBERIA HACERSE A " + c.getX() +", " + c.getY());
+                        c.getBitacora()
                             .add("La casilla (" + c.getX() + ", " + c.getY()
                                     + ") fue golpeada por la onda del Kraken del 'Release The Kraken' de "
                                     + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");

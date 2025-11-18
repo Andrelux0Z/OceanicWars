@@ -58,9 +58,9 @@ public class KrakenBreath extends Ataque {
                         }
                         Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i]; // Se elige la casilla
                         c.getBitacora()
-                                .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
+                                .add("La casilla (" + c.getX() + ", " + c.getY()
                                         + ") fue golpeada por el aliento del 'Kraken Breath' de " + hero.getNombre()
-                                        + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                                        + ", recibiendo " + c.getVida() + " puntos de daño");
                         c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'    
                     }
                     break;
@@ -73,9 +73,9 @@ public class KrakenBreath extends Ataque {
                         }
                         Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i];
                         c.getBitacora()
-                                .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
+                                .add("La casilla (" + c.getX() + ", " + c.getY()
                                         + ") fue golpeada por el aliento del 'Kraken Breath' de " + hero.getNombre()
-                                        + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                                        + ", recibiendo " + c.getVida() + " puntos de daño");
                         c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                     }
                     break;
@@ -87,7 +87,7 @@ public class KrakenBreath extends Ataque {
                         }
                         Casilla c = matriz.getMatriz()[casilla.getX() - i][casilla.getY()];
                         c.getBitacora()
-                                .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
+                                .add("La casilla (" + c.getX() + ", " + c.getY()
                                         + ") fue golpeada por el aliento del 'Kraken Breath' de " + hero.getNombre()
                                         + ", recibiendo " + casilla.getVida() + " puntos de daño");
                         c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
@@ -103,9 +103,9 @@ public class KrakenBreath extends Ataque {
                         }
                         Casilla c = matriz.getMatriz()[casilla.getX()][casilla.getY() - i];
                         c.getBitacora()
-                                .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
+                                .add("La casilla (" + c.getX() + ", " + c.getY()
                                         + ") fue golpeada por el aliento del 'Kraken Breath' de " + hero.getNombre()
-                                        + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                                        + ", recibiendo " + c.getVida() + " puntos de daño");
                         c.recibirGolpe(c.getVida()); // La casilla recibe el mismo daño que su vida: 'instakill'
                     }
                     break;

@@ -60,9 +60,9 @@ public class VolcanoRaising extends Ataque {
                                                                                                                        // de
                                                                                                                        // expansión
                     c.getBitacora()
-                            .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
+                            .add("La casilla (" + c.getX() + ", " + c.getY()
                                     + ") fue golpeada por la creación del volcán del 'Volcano Raising' de "
-                                    + hero.getNombre() + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                                    + hero.getNombre() + ", recibiendo " + c.getVida() + " puntos de daño");
                     c.recibirGolpe(c.getVida());
                 }
             }

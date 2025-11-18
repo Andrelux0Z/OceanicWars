@@ -60,9 +60,9 @@ public class SwirlRaising extends Ataque {
                                                                                                                        // de
                                                                                                                        // expansión
                     c.getBitacora()
-                            .add("La casilla (" + casilla.getX() + ", " + casilla.getY()
+                            .add("La casilla (" + c.getX() + ", " + c.getY()
                                     + ") fue golpeada por el remolino del 'Swirl Raising' de " + hero.getNombre()
-                                    + ", recibiendo " + casilla.getVida() + " puntos de daño");
+                                    + ", recibiendo " + c.getVida() + " puntos de daño");
                     c.recibirGolpe(c.getVida());
                 }
             }
