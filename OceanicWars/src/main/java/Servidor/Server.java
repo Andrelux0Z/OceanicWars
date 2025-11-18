@@ -29,11 +29,11 @@ public class Server {
     private final int maxConections = 4;
     private ServerSocket serverSocket;
     private LinkedList<ThreadServidor> connectedClients; // arreglo de hilos por cada cliente conectado
-    //referencia a la pantalla
+    // referencia a la pantalla
     FrameServer refFrame;
     private ThreadConnections connectionsThread;
-    
-    //Juego iniciado?
+
+    // Juego iniciado?
     private boolean start = false;
 
     public Server(FrameServer refFrame) {
@@ -43,9 +43,9 @@ public class Server {
         connectionsThread = new ThreadConnections(this);
         connectionsThread.start();
     }
-    
-    //método que inicializa el server
-    private void init(){
+
+    // método que inicializa el server
+    private void init() {
         try {
             serverSocket = new ServerSocket(PORT);
             refFrame.writeMessage("Server running!!!");
@@ -53,12 +53,12 @@ public class Server {
             refFrame.writeMessage("Error: " + ex.getMessage());
         }
     }
-    
+
     public void startGame(ThreadServidor origin) {
-        
-        //Si el juego ya esta iniciado, no deja entrar a mas jugadores
-        if(start) {
-            String[] args = new String[]{"RESULT", "Server: Juego ya iniciado"};
+
+        // Si el juego ya esta iniciado, no deja entrar a mas jugadores
+        if (start) {
+            String[] args = new String[] { "RESULT", "Server: Juego ya iniciado" };
             Command comando = CommandFactory.getCommand(args);
             comando.setIsBroadcast(false);
             try {
@@ -68,41 +68,37 @@ public class Server {
             }
             return;
         }
-            
 
-        //Si no esta iniciado, marcar como listo al que manda el comando
+        // Si no esta iniciado, marcar como listo al que manda el comando
         origin.isReady = true;
         boolean isReady = true;
-        
-        
-        //Imprimir lista de clientes listos o no para jugar
+
+        // Imprimir lista de clientes listos o no para jugar
         this.refFrame.writeMessage("Clientes listos para jugar: ");
-        
-        for (ThreadServidor client : connectedClients){
-            if(!client.isReady){
+
+        for (ThreadServidor client : connectedClients) {
+            if (!client.isReady) {
                 isReady = false;
                 this.refFrame.writeMessage(client.name + ": No esta listo");
                 continue;
             }
             this.refFrame.writeMessage(client.name + ": Esta listo");
         }
-        
-        //Iniciar juego si todos estan listos y si hay 2 jugadores o mas conectados
-        if(isReady && connectedClients.size() >= 2) {
+
+        // Iniciar juego si todos estan listos y si hay 2 jugadores o mas conectados
+        if (isReady && connectedClients.size() >= 2) {
             this.refFrame.writeMessage("Todos listos para jugar");
             declareActiveClients();
-            this.nextTurn();    //Primer turno
+            this.nextTurn(); // Primer turno
             start = true;
         }
-        
-    }
-    
 
-    
+    }
+
     void executeCommand(Command comando, ThreadServidor origin) {
         // Si es un ApplyyAttack, validar el payload antes de reenviar
         try {
-                if (comando.getType() == CommandType.APPLYATTACK) {
+            if (comando.getType() == CommandType.APPLYATTACK) {
 
                 if (comando instanceof CommandApplyAttack) {
 
@@ -112,11 +108,12 @@ public class Server {
                     if (payload != null && payload.getHeroPackage() != null) {
                         Hero prueba = HeroFactory.createFromPackage(payload.getHeroPackage());
                         if (prueba == null) {
-                            
+
                             // Noticar al que envia el ataque que hubo un error utilizando RESULT
-                            String msg = "Server: invalid HeroPackage in attack from '" + payload.getAttackerName() + "'";
-                            String[] args = new String[]{"RESULT", origin.name, msg};
-                            
+                            String msg = "Server: invalid HeroPackage in attack from '" + payload.getAttackerName()
+                                    + "'";
+                            String[] args = new String[] { "RESULT", origin.name, msg };
+
                             try {
                                 origin.objectSender.writeObject(CommandFactory.getCommand(args));
                             } catch (IOException e) {
@@ -130,144 +127,148 @@ public class Server {
         } catch (Exception ex) {
             // validation failure; notificar al server
             try {
-                String[] args = new String[]{"RESULT", origin.name, "Server: error validating attack payload"};
+                String[] args = new String[] { "RESULT", origin.name, "Server: error validating attack payload" };
                 origin.objectSender.writeObject(CommandFactory.getCommand(args));
             } catch (IOException e) {
             }
             return;
         }
-        
-        if(comando.getType() == CommandType.SKIP){
+
+        if (comando.getType() == CommandType.SKIP) {
             nextTurn();
         }
-        
+
         // Reenviar el comando según su tipo de difusión -> PERDON :(
-        //Si es broadcast true
-        if (comando.getIsBroadcast()){
+        // Si es broadcast true
+        if (comando.getIsBroadcast()) {
             this.getRefFrame().writeMessage("Actividad broadcast del jugador " + origin.name + "(ver cliente)");
             this.broadcast(comando);
         }
-        
-        //Si es comando propio
+
+        // Si es comando propio
         else if (comando.isOwnCommand()) {
-                processPrivate(comando,origin);             
-            
-        //Si es uno que se refleja en cliente enemigo
-        } else if(comando.getParameters().length > 1 && this.buscarJugador(comando.getParameters()[1])){  //Enviar privado
+            processPrivate(comando, origin);
+
+            // Si es uno que se refleja en cliente enemigo
+        } else if (comando.getParameters().length > 1 && this.buscarJugador(comando.getParameters()[1])) { // Enviar
+                                                                                                           // privado
             this.sendPrivate(comando);
-            
-        //Si no se encuentra receptor    
+
+            // Si no se encuentra receptor
         } else {
-            String[] args = new String[]{"RESULT", "Server: Jugador objetivo no encontrado"};
+            String[] args = new String[] { "RESULT", "Server: Jugador objetivo no encontrado" };
             try {
                 origin.objectSender.writeObject(CommandFactory.getCommand(args));
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }      
+        }
+        // Después de procesar el comando, comprobar condición de victoria
+        try {
+            GameVictoryManager.checkVictory(this);
+        } catch (Exception ignored) {
+        }
     }
 
-    
-    public void broadcast(Command comando){
+    public void broadcast(Command comando) {
         for (ThreadServidor client : connectedClients) {
             try {
                 client.objectSender.writeObject(comando);
             } catch (IOException ex) {
-                
+
             }
         }
 
     }
-    
-    
-    public void processPrivate(Command comando,ThreadServidor own){
-        
-                try {
-                    own.objectSender.writeObject(comando);
-                    
-                } catch (IOException ex) {
-                
-                }
+
+    public void processPrivate(Command comando, ThreadServidor own) {
+
+        try {
+            own.objectSender.writeObject(comando);
+
+        } catch (IOException ex) {
+
+        }
     }
-    
-    public void sendPrivate(Command comando){
-        //asumo que el nombre del cliente viene en la posición 1 .  private_message Andres "Hola"
+
+    public void sendPrivate(Command comando) {
+        // asumo que el nombre del cliente viene en la posición 1 . private_message
+        // Andres "Hola"
         if (comando.getParameters().length <= 1)
             return;
-        
-        String searchName =  comando.getParameters()[1].toUpperCase(); 
-        
+
+        String searchName = comando.getParameters()[1].toUpperCase();
+
         for (ThreadServidor client : connectedClients) {
-            if (client.name.toUpperCase().equals(searchName)){
+            if (client.name.toUpperCase().equals(searchName)) {
                 try {
                     client.objectSender.writeObject(comando);
                     break;
                 } catch (IOException ex) {
-                
+
                 }
             }
         }
     }
-    
-    
-    //Probablemente no sea la mejor implementacion :(
+
+    // Probablemente no sea la mejor implementacion :(
     public void nextTurn() {
-        
+
         for (ThreadServidor client : connectedClients) {
-            if (client.isTurn){                                  //Buscar el del turno actual
-                
-                client.setIsTurn(false);                         //Quitarle el turno
-                int indice = connectedClients.indexOf(client);   //Obtener indice
-                
-                if(indice+1 >= connectedClients.size()){         //Era el ultima de la lista?
-                    connectedClients.getFirst().setIsTurn(true); //Si, dele el turno al primero
-                    
-                    if(connectedClients.getFirst().isActive){   //Esta activo?
-                        //SI, entonces imprimir de quien es el turno y terminar
+            if (client.isTurn) { // Buscar el del turno actual
+
+                client.setIsTurn(false); // Quitarle el turno
+                int indice = connectedClients.indexOf(client); // Obtener indice
+
+                if (indice + 1 >= connectedClients.size()) { // Era el ultima de la lista?
+                    connectedClients.getFirst().setIsTurn(true); // Si, dele el turno al primero
+
+                    if (connectedClients.getFirst().isActive) { // Esta activo?
+                        // SI, entonces imprimir de quien es el turno y terminar
                         this.refFrame.writeMessage("Turno de: " + connectedClients.getFirst().name);
                         return;
                     } else {
-                        //No, entonces repetir el proceso con el nuevo que tiene un turno
+                        // No, entonces repetir el proceso con el nuevo que tiene un turno
                         nextTurn();
                         return;
                     }
                 }
-                connectedClients.get(indice+1).setIsTurn(true);  //No, dele el turno al sigt de la lista
+                connectedClients.get(indice + 1).setIsTurn(true); // No, dele el turno al sigt de la lista
 
-                if(connectedClients.get(indice+1).isActive) {    //Esta activo?
-                    //Si, entonces imprimir de quien es el turno y terminar
-                    this.refFrame.writeMessage("Turno de: " + connectedClients.get(indice+1).name);
+                if (connectedClients.get(indice + 1).isActive) { // Esta activo?
+                    // Si, entonces imprimir de quien es el turno y terminar
+                    this.refFrame.writeMessage("Turno de: " + connectedClients.get(indice + 1).name);
                     return;
                 } else {
-                    //no, repetir y terminar
+                    // no, repetir y terminar
                     nextTurn();
-                    return;   
-                }      
+                    return;
+                }
             }
         }
-        //Si no encuentra a nadie con el isTurn=true, darselo al primero (significa que es el inicio de la partida)
-        connectedClients.getFirst().setIsTurn(true); 
+        // Si no encuentra a nadie con el isTurn=true, darselo al primero (significa que
+        // es el inicio de la partida)
+        connectedClients.getFirst().setIsTurn(true);
         this.refFrame.writeMessage("Turno de: " + connectedClients.getFirst().name);
     }
-    
-    
+
     public boolean buscarJugador(String searchName) {
-        
+
         for (ThreadServidor client : connectedClients) {
             if (client.name.equalsIgnoreCase(searchName))
                 return true;
-                    
+
         }
         return false;
     }
-    
-    public void declareActiveClients(){
-        for (ThreadServidor client : connectedClients){
+
+    public void declareActiveClients() {
+        for (ThreadServidor client : connectedClients) {
             client.isActive = true;
         }
     }
-    
-    public void showAllNames(){
+
+    public void showAllNames() {
         this.refFrame.writeMessage("Usuarios conectados");
         for (ThreadServidor client : connectedClients) {
             this.refFrame.writeMessage(client.name);
@@ -290,13 +291,9 @@ public class Server {
         return refFrame;
     }
 
-    
-    
-    
-    
-    
-    
+    // Exponer estado de inicio de partida
+    public boolean getStart() {
+        return start;
+    }
 
-    
-    
 }

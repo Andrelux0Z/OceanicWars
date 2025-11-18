@@ -11,7 +11,7 @@ import Servidor.ThreadServidor;
  *
  * @author diego
  */
-public class CommandGiveup  extends Command{
+public class CommandGiveup extends Command {
 
     public CommandGiveup(String[] args) {
         super(CommandType.PRIVATE_MESSAGE, args);
@@ -24,8 +24,14 @@ public class CommandGiveup  extends Command{
     public void processForServer(ThreadServidor threadServidor) {
         this.setIsBroadcast(true);
         threadServidor.isActive = false;
+
+        // Verificar si hay un ganador después de marcar como inactivo
+        try {
+            Servidor.GameVictoryManager.checkVictory(threadServidor.getServer());
+        } catch (Exception ignored) {
+        }
     }
-    
+
     @Override
     public String toString() {
         return "El jugador ha decidido rendirse";
