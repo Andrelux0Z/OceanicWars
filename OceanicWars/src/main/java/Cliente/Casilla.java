@@ -49,7 +49,7 @@ public class Casilla {
     // Métodos
     public void recibirGolpe(int golpe) {
         if (this.getEstado()) { // Si la casilla está viva, esta recibe daño
-            this.vida -= (golpe) * (100 - this.defensa);
+            this.vida -= (golpe) * (1 - this.defensa / 100);
             if (this.vida <= 0) {
                 this.vida = 0; // No deja la vida en negativos
                 this.estado = false; // Casilla deja de estar activa
