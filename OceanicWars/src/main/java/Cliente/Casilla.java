@@ -54,8 +54,10 @@ public class Casilla {
                 this.vida = 0; // No deja la vida en negativos
                 this.estado = false; // Casilla deja de estar activa
                 this.bitacora.add("La casilla (" + x + ", " + y + ") fue derrotada"); // Mensaje a la bitácora
-                this.matriz.getRefCliente().actualizarPanelResumen(); // Actualizar las estadísticas del panel
             }
+            // Actualizar el panel de resumen y repintar la matriz después de cualquier daño
+            this.matriz.repaint();
+            this.matriz.getRefCliente().actualizarPanelResumen();
         }
     }
 

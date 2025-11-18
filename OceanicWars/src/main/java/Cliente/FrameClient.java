@@ -879,7 +879,7 @@ public class FrameClient extends javax.swing.JFrame {
         if (heroes.size() > 0) {
             Hero heroe = heroes.get(0);
             int casillasVivas = matriz.calcularCasillasVivasHeroe(heroe);
-            int casillasOriginales = heroe.getCasillasEnPosesion().size();
+            int casillasOriginales = matriz.calcularCasillasTotalesHeroe(heroe);
             String colorHex = String.format("#%02x%02x%02x",
                     heroe.getColor().getRed(),
                     heroe.getColor().getGreen(),
@@ -894,7 +894,7 @@ public class FrameClient extends javax.swing.JFrame {
         if (heroes.size() > 1) {
             Hero heroe = heroes.get(1);
             int casillasVivas = matriz.calcularCasillasVivasHeroe(heroe);
-            int casillasOriginales = heroe.getCasillasEnPosesion().size();
+            int casillasOriginales = matriz.calcularCasillasTotalesHeroe(heroe);
             String colorHex = String.format("#%02x%02x%02x",
                     heroe.getColor().getRed(),
                     heroe.getColor().getGreen(),
@@ -909,7 +909,7 @@ public class FrameClient extends javax.swing.JFrame {
         if (heroes.size() > 2) {
             Hero heroe = heroes.get(2);
             int casillasVivas = matriz.calcularCasillasVivasHeroe(heroe);
-            int casillasOriginales = heroe.getCasillasEnPosesion().size();
+            int casillasOriginales = matriz.calcularCasillasTotalesHeroe(heroe);
             String colorHex = String.format("#%02x%02x%02x",
                     heroe.getColor().getRed(),
                     heroe.getColor().getGreen(),

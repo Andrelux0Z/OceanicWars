@@ -139,23 +139,22 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
                                                                      // hacer la ilusión de división
                 if (!c.getEstado()) { // Si la casilla revisada está muerta, se hace una X encima
                     g.drawLine(posX, posY, posX + sizeLargo, posY + sizeAlto); // Línea diagonal
-                                                                                                      // desde la
-                                                                                                      // esquina
-                                                                                                      // superior
-                                                                                                      // izquierda a la
-                                                                                                      // esquina
-                                                                                                      // inferior
-                                                                                                      // derecha
+                                                                               // desde la
+                                                                               // esquina
+                                                                               // superior
+                                                                               // izquierda a la
+                                                                               // esquina
+                                                                               // inferior
+                                                                               // derecha
                     g.drawLine(posX, posY + sizeAlto, posX + sizeLargo, posY); // Línea diagonal
-                                                                                                      // desde la
-                                                                                                      // esquina
-                                                                                                      // inferior
-                                                                                                      // izquierda a la
-                                                                                                      // esquina
-                                                                                                      // superior
-                                                                                                      // derecha
-                }
-                else if (c.getVida() != 100) {  // Verificar daños
+                                                                               // desde la
+                                                                               // esquina
+                                                                               // inferior
+                                                                               // izquierda a la
+                                                                               // esquina
+                                                                               // superior
+                                                                               // derecha
+                } else if (c.getVida() != 100) { // Verificar daños
                     g.drawLine(posX, posY + sizeAlto, posX + sizeLargo, posY); // Línea diagonal
                                                                                // desde la
                                                                                // esquina
@@ -223,11 +222,12 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
             }
         return false;
     }
-    
-    public Casilla buscarCasillaEnClick(MouseEvent e) {  // Función que, en función de un evento del mouse, consigue sus coords y revisa la casilla pisada
-        int x = e.getX() - MARGEN_IZQUIERDO;  // Se consigue el x pisado
-        int y = e.getY() - MARGEN_SUPERIOR;  // Se consigue el y pisado
-        
+
+    public Casilla buscarCasillaEnClick(MouseEvent e) { // Función que, en función de un evento del mouse, consigue sus
+                                                        // coords y revisa la casilla pisada
+        int x = e.getX() - MARGEN_IZQUIERDO; // Se consigue el x pisado
+        int y = e.getY() - MARGEN_SUPERIOR; // Se consigue el y pisado
+
         int filaCasilla = y / this.sizeAlto;
         int columnaCasilla = x / this.sizeLargo;
 
@@ -318,29 +318,71 @@ public class Matriz extends JPanel implements Serializable, MouseListener { // H
 
     // Métodos para calcular estadísticas del tablero
 
-    // Calcula el porcentaje de casillas vivas
+    // Calcula el porcentaje de casillas vivas recorriendo toda la matriz
     public double calcularPorcentajeVida() {
-        if (casillasTotales.isEmpty())
-            return 0;
-        return (casillasActivas.size() * 100.0) / casillasTotales.size();
-    }
+        int totalCasillas = 0;
+        int casillasVivas = 0;
 
-    // Calcula la cantidad de casillas destruidas
-    public int calcularCasillasDestruidas() {
-        return casillasTotales.size() - casillasActivas.size();
-    }
-
-    // Calcula las casillas vivas de un héroe específico
-    public int calcularCasillasVivasHeroe(Hero heroe) {
-        int contador = 0;
-        for (Casilla casilla : casillasActivas) {
-            if (casilla.getHero() == heroe) {
-                contador++;
+        for (int i = 0; i < cantidadFilas; i++) {
+            for (int j = 0; j < cantidadColumnas; j++) {
+                totalCasillas++;
+                if (matriz[i][j].getEstado()) {
+                    casillasVivas++;
+                }
             }
         }
+
+        if (totalCasillas == 0)
+            return 0;
+        return (casillasVivas * 100.0) / totalCasillas;
+    }
+
+    // Calcula la cantidad de casillas destruidas recorriendo toda la matriz
+    public int calcularCasillasDestruidas() {
+        int casillasDestruidas = 0;
+
+        for (int i = 0; i < cantidadFilas; i++) {
+            for (int j = 0; j < cantidadColumnas; j++) {
+                if (!matriz[i][j].getEstado()) {
+                    casillasDestruidas++;
+                }
+            }
+        }
+
+        return casillasDestruidas;
+    }
+
+    // Calcula las casillas vivas de un héroe específico recorriendo toda la matriz
+    public int calcularCasillasVivasHeroe(Hero heroe) {
+        int contador = 0;
+
+        for (int i = 0; i < cantidadFilas; i++) {
+            for (int j = 0; j < cantidadColumnas; j++) {
+                Casilla casilla = matriz[i][j];
+                if (casilla.getEstado() && casilla.getHero() == heroe) {
+                    contador++;
+                }
+            }
+        }
+
         return contador;
     }
-    
+
+    // Calcula las casillas totales (originales) de un héroe específico
+    public int calcularCasillasTotalesHeroe(Hero heroe) {
+        int contador = 0;
+
+        for (int i = 0; i < cantidadFilas; i++) {
+            for (int j = 0; j < cantidadColumnas; j++) {
+                if (matriz[i][j].getHero() == heroe) {
+                    contador++;
+                }
+            }
+        }
+
+        return contador;
+    }
+
     public void deshabilitarResistenciaHeroe(Hero heroe) {
         for (Casilla casilla : casillasActivas) {
             if (casilla.getHero() == heroe) {
